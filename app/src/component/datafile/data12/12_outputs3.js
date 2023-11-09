@@ -1,0 +1,1 @@
+const myArray = [0]; export default myArray;
