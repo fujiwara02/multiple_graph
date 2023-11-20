@@ -17,6 +17,9 @@ OUTPUT_FILE = "C:/Users/mno41/scrollbar_graph/app/src/component/outputs.pickle"
 
 out: dict[Literal["outputs", "output_lengths", "targets", "target_lengths"], torch.Tensor] = pickle.load(open(OUTPUT_FILE, "rb"))
 
+for cls in range(330):
+  print(out["targets"][cls])
+
 static: StaticType = pickle.load(open("C:/Users/mno41/scrollbar_graph/app/src/component/KSLD1.9.static.pkl", "rb"))
 #C:\Users\mno41\scrollbar_graph\app\src\component
 
@@ -35,7 +38,8 @@ def data_get(idx, number1):
   #tensorから1要素づつ抜き出す
   target_label_2 = "','" .join(map(str, target_label))   
   
-  with codecs.open('targets_word.js', 'w', encoding='utf-8') as fout:
+  #単語ファイル
+  with codecs.open(str(number1) + '_targets_word.js', 'w', encoding='utf-8') as fout:
     fout.write("const myArray = ['")
     fout.write(target_label_2)
     fout.write("']; export default myArray;")
@@ -44,17 +48,17 @@ def data_get(idx, number1):
   #すべての要素が1のファイルを作成する  
   with codecs.open(str(number1) + '_outputs_allone.js', 'w', encoding='utf-8') as fout:
     fout.write("const myArray = [")
-    for cls in range(len(output)):
+    for cls in range(len(output)-1):
       fout.write("1,")
-    fout.write("1,1]; export default myArray;")
+    fout.write("1]; export default myArray;")
 
 
   #すべての要素が0のファイルを作成する
   with codecs.open(str(number1) + '_outputs_allzero.js', 'w', encoding='utf-8') as fout:
     fout.write("const myArray = [")
-    for cls in range(len(output)):
+    for cls in range(len(output)-1):
       fout.write("0, ")
-    fout.write("0,0]; export default myArray;")
+    fout.write("0]; export default myArray;")
 
   #0に初期化する
   with open(str(number1) + '_outputs0.js', 'w') as fout:  fout.write("const myArray = [0]; export default myArray;")
@@ -123,11 +127,23 @@ def data_get(idx, number1):
       
     
     
-
-#使われている動画の種類によって変更する
-IDX = 305 #後
-number1 = 19 #先
-
-#data_get関数を呼び出す
-data_get(IDX, number1)
-
+#ファイル番号、数値データ
+#data_get(1,1)
+#data_get(20,2)
+#data_get(35,3)
+#data_get(50,4)
+#data_get(65,5)
+#data_get(80,6)
+#data_get(95,7)
+#data_get(110,8)
+#data_get(125,9)
+#data_get(140,10)
+#data_get(170,11)
+#data_get(185,12)
+#data_get(200,13)
+#data_get(230,14)
+#data_get(245,15)
+#data_get(260,16)
+#data_get(275,17)
+#data_get(290,18)
+#data_get(305,19)

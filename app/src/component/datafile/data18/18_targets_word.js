@@ -1,0 +1,1 @@
+const myArray = ['弟','サッカー','見る']; export default myArray;

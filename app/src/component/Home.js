@@ -138,8 +138,6 @@ import myArray194 from './datafile/data19/19_outputs4.js';
 import myArray195 from './datafile/data19/19_outputs_allzero.js';
 
 
-
-
 const StockCharts = () => {
 
   useEffect(() => {
@@ -163,7 +161,7 @@ const StockCharts = () => {
       chartContainer.style.height = '50px'; //各要素の縦幅
       
       document.getElementById('chartdiv').appendChild(chartContainer); //chartに描画
-      renderChartRow(ticker, chartContainer, data); //要素を指定
+      renderChartRow(ticker, chartContainer, data, n); //要素を指定
 
     });
 
@@ -193,13 +191,12 @@ const StockCharts = () => {
     let date = new Date();
     date.setHours(0, 0, 0, 0);
 
-    console.log(myArray13)
+    
     const data = [];
     for (let i = 0; i < combinedArrays['myArray'+ n + '0'].length; ++i) {
    
       
       let value = combinedArrays['myArray'+ n + '0'][i];
-      
       let value1 = combinedArrays1['myArray'+ n +'1'][i];
       let value2 = combinedArrays2['myArray'+ n +'2'][i];
       let value3 = combinedArrays3['myArray'+ n +'3'][i];
@@ -222,7 +219,7 @@ const StockCharts = () => {
     return data;
   }
 
-  const renderChartRow = (ticker, container, data) => {
+  const renderChartRow = (ticker, container, data, n) => {
     const row = document.createElement("div"); //1行のコンテナ
     row.style.borderBottom = "1px solid #eee"; //1pxのボーダーを作成
     row.style.clear = "left"; //改行
@@ -258,8 +255,8 @@ const StockCharts = () => {
 
 
     // リンクを作成
-    const link = document.createElement("div");
-    link.href = "https://example.com"; // リンク先URLを指定
+    const link = document.createElement("a");
+    link.href = "/Home_movie/" + n; // リンク先URLを指定
     link.textContent = ticker + "を見る"; // リンクの表示テキスト
 
     // スタイルを設定
@@ -301,6 +298,7 @@ const StockCharts = () => {
     renderer: am5xy.AxisRendererX.new(root, {})
   }));
 
+  
 
     const yAxis = chart.yAxes.push(am5xy.ValueAxis.new(root, {
       strictMinMax: true,

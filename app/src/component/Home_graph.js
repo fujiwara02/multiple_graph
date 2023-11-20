@@ -2,14 +2,163 @@ import React, { useState, useEffect, useRef } from 'react';
 import * as am5 from '@amcharts/amcharts5';
 import './Home.css';
 import * as am5xy from '@amcharts/amcharts5/xy';
+import {useParams } from 'react-router-dom';
+import { Button, Root, Rectangle, color, Circle,Ellipse,Polygon } from '@amcharts/amcharts5';
 
-import myArray from './outputs_all_one.js'; 
-import myArray0 from './outputs0.js';
-import myArray1 from './outputs1.js'; 
-import myArray2 from './outputs2.js'; 
-import myArray3 from './outputs3.js'; 
-import myArray4 from './outputs4.js'; 
-import myArray5 from './outputs_allzero.js'; 
+
+
+import myArray10 from './datafile/data1/1_outputs0.js';
+import myArray11 from './datafile/data1/1_outputs1.js'; 
+import myArray12 from './datafile/data1/1_outputs2.js'; 
+import myArray13 from './datafile/data1/1_outputs3.js'; 
+import myArray14 from './datafile/data1/1_outputs4.js'; 
+import myArray15 from './datafile/data1/1_outputs_allzero.js';
+import myArray16 from './datafile/data1/1_outputs_allone.js';
+
+import myArray20 from './datafile/data2/2_outputs0.js';
+import myArray21 from './datafile/data2/2_outputs1.js'; 
+import myArray22 from './datafile/data2/2_outputs2.js'; 
+import myArray23 from './datafile/data2/2_outputs3.js'; 
+import myArray24 from './datafile/data2/2_outputs4.js'; 
+import myArray25 from './datafile/data2/2_outputs_allzero.js';
+import myArray26 from './datafile/data2/2_outputs_allone.js';
+
+import myArray30 from './datafile/data3/3_outputs0.js';
+import myArray31 from './datafile/data3/3_outputs1.js'; 
+import myArray32 from './datafile/data3/3_outputs2.js'; 
+import myArray33 from './datafile/data3/3_outputs3.js'; 
+import myArray34 from './datafile/data3/3_outputs4.js'; 
+import myArray35 from './datafile/data3/3_outputs_allzero.js';
+import myArray36 from './datafile/data3/3_outputs_allone.js';
+
+import myArray40 from './datafile/data4/4_outputs0.js';
+import myArray41 from './datafile/data4/4_outputs1.js'; 
+import myArray42 from './datafile/data4/4_outputs2.js'; 
+import myArray43 from './datafile/data4/4_outputs3.js'; 
+import myArray44 from './datafile/data4/4_outputs4.js'; 
+import myArray45 from './datafile/data4/4_outputs_allzero.js';
+import myArray46 from './datafile/data4/4_outputs_allone.js';
+
+import myArray50 from './datafile/data5/5_outputs0.js';
+import myArray51 from './datafile/data5/5_outputs1.js'; 
+import myArray52 from './datafile/data5/5_outputs2.js'; 
+import myArray53 from './datafile/data5/5_outputs3.js'; 
+import myArray54 from './datafile/data5/5_outputs4.js'; 
+import myArray55 from './datafile/data5/5_outputs_allzero.js';
+import myArray56 from './datafile/data5/5_outputs_allone.js';
+
+import myArray60 from './datafile/data6/6_outputs0.js';
+import myArray61 from './datafile/data6/6_outputs1.js'; 
+import myArray62 from './datafile/data6/6_outputs2.js'; 
+import myArray63 from './datafile/data6/6_outputs3.js'; 
+import myArray64 from './datafile/data6/6_outputs4.js'; 
+import myArray65 from './datafile/data6/6_outputs_allzero.js';
+import myArray66 from './datafile/data6/6_outputs_allone.js';
+
+import myArray70 from './datafile/data7/7_outputs0.js';
+import myArray71 from './datafile/data7/7_outputs1.js'; 
+import myArray72 from './datafile/data7/7_outputs2.js'; 
+import myArray73 from './datafile/data7/7_outputs3.js'; 
+import myArray74 from './datafile/data7/7_outputs4.js'; 
+import myArray75 from './datafile/data7/7_outputs_allzero.js';
+import myArray76 from './datafile/data7/7_outputs_allone.js';
+
+import myArray80 from './datafile/data8/8_outputs0.js';
+import myArray81 from './datafile/data8/8_outputs1.js'; 
+import myArray82 from './datafile/data8/8_outputs2.js'; 
+import myArray83 from './datafile/data8/8_outputs3.js'; 
+import myArray84 from './datafile/data8/8_outputs4.js'; 
+import myArray85 from './datafile/data8/8_outputs_allzero.js';
+import myArray86 from './datafile/data8/8_outputs_allone.js';
+
+import myArray90 from './datafile/data9/9_outputs0.js';
+import myArray91 from './datafile/data9/9_outputs1.js'; 
+import myArray92 from './datafile/data9/9_outputs2.js'; 
+import myArray93 from './datafile/data9/9_outputs3.js'; 
+import myArray94 from './datafile/data9/9_outputs4.js'; 
+import myArray95 from './datafile/data9/9_outputs_allzero.js';
+import myArray96 from './datafile/data9/9_outputs_allone.js';
+
+import myArray100 from './datafile/data10/10_outputs0.js';
+import myArray101 from './datafile/data10/10_outputs1.js'; 
+import myArray102 from './datafile/data10/10_outputs2.js'; 
+import myArray103 from './datafile/data10/10_outputs3.js'; 
+import myArray104 from './datafile/data10/10_outputs4.js'; 
+import myArray105 from './datafile/data10/10_outputs_allzero.js';
+import myArray106 from './datafile/data10/10_outputs_allone.js';
+
+import myArray110 from './datafile/data11/11_outputs0.js';
+import myArray111 from './datafile/data11/11_outputs1.js'; 
+import myArray112 from './datafile/data11/11_outputs2.js'; 
+import myArray113 from './datafile/data11/11_outputs3.js'; 
+import myArray114 from './datafile/data11/11_outputs4.js'; 
+import myArray115 from './datafile/data11/11_outputs_allzero.js';
+import myArray116 from './datafile/data11/11_outputs_allone.js';
+
+import myArray120 from './datafile/data12/12_outputs0.js';
+import myArray121 from './datafile/data12/12_outputs1.js'; 
+import myArray122 from './datafile/data12/12_outputs2.js'; 
+import myArray123 from './datafile/data12/12_outputs3.js'; 
+import myArray124 from './datafile/data12/12_outputs4.js'; 
+import myArray125 from './datafile/data12/12_outputs_allzero.js';
+import myArray126 from './datafile/data12/12_outputs_allone.js';
+
+import myArray130 from './datafile/data13/13_outputs0.js';
+import myArray131 from './datafile/data13/13_outputs1.js'; 
+import myArray132 from './datafile/data13/13_outputs2.js'; 
+import myArray133 from './datafile/data13/13_outputs3.js'; 
+import myArray134 from './datafile/data13/13_outputs4.js'; 
+import myArray135 from './datafile/data13/13_outputs_allzero.js';
+import myArray136 from './datafile/data13/13_outputs_allone.js';
+
+import myArray140 from './datafile/data14/14_outputs0.js';
+import myArray141 from './datafile/data14/14_outputs1.js'; 
+import myArray142 from './datafile/data14/14_outputs2.js'; 
+import myArray143 from './datafile/data14/14_outputs3.js'; 
+import myArray144 from './datafile/data14/14_outputs4.js'; 
+import myArray145 from './datafile/data14/14_outputs_allzero.js';
+import myArray146 from './datafile/data14/14_outputs_allone.js';
+
+import myArray150 from './datafile/data15/15_outputs0.js';
+import myArray151 from './datafile/data15/15_outputs1.js'; 
+import myArray152 from './datafile/data15/15_outputs2.js'; 
+import myArray153 from './datafile/data15/15_outputs3.js'; 
+import myArray154 from './datafile/data15/15_outputs4.js'; 
+import myArray155 from './datafile/data15/15_outputs_allzero.js';
+import myArray156 from './datafile/data15/15_outputs_allone.js';
+
+import myArray160 from './datafile/data16/16_outputs0.js';
+import myArray161 from './datafile/data16/16_outputs1.js'; 
+import myArray162 from './datafile/data16/16_outputs2.js'; 
+import myArray163 from './datafile/data16/16_outputs3.js'; 
+import myArray164 from './datafile/data16/16_outputs4.js'; 
+import myArray165 from './datafile/data16/16_outputs_allzero.js';
+import myArray166 from './datafile/data16/16_outputs_allone.js';
+
+import myArray170 from './datafile/data17/17_outputs0.js';
+import myArray171 from './datafile/data17/17_outputs1.js'; 
+import myArray172 from './datafile/data17/17_outputs2.js'; 
+import myArray173 from './datafile/data17/17_outputs3.js'; 
+import myArray174 from './datafile/data17/17_outputs4.js'; 
+import myArray175 from './datafile/data17/17_outputs_allzero.js';
+import myArray176 from './datafile/data17/17_outputs_allone.js';
+
+import myArray180 from './datafile/data18/18_outputs0.js';
+import myArray181 from './datafile/data18/18_outputs1.js'; 
+import myArray182 from './datafile/data18/18_outputs2.js'; 
+import myArray183 from './datafile/data18/18_outputs3.js'; 
+import myArray184 from './datafile/data18/18_outputs4.js'; 
+import myArray185 from './datafile/data18/18_outputs_allzero.js';
+import myArray186 from './datafile/data18/18_outputs_allone.js';
+
+import myArray190 from './datafile/data19/19_outputs0.js';
+import myArray191 from './datafile/data19/19_outputs1.js'; 
+import myArray192 from './datafile/data19/19_outputs2.js'; 
+import myArray193 from './datafile/data19/19_outputs3.js'; 
+import myArray194 from './datafile/data19/19_outputs4.js'; 
+import myArray195 from './datafile/data19/19_outputs_allzero.js';
+import myArray196 from './datafile/data19/19_outputs_allone.js';
+
 
 //onXDataChange, onYDataChange, onCDataChange(graph➡home)
 const Chart = ({ onXDataChange, onYDataChange, onCDataChange, onZDataChange, onSDataChange, onMovieStop}) => {
@@ -18,7 +167,10 @@ const Chart = ({ onXDataChange, onYDataChange, onCDataChange, onZDataChange, onS
   const [x_second, setX_second] = useState(0);
   const [y_second, setY_second] = useState(0);
   const [z_second, setZ_second] = useState(0);
-
+  const [X, setX] = useState(0);
+  const [Y, setY] = useState(0);
+  const [Z, setZ] = useState(0);
+  const {ans} = useParams();
 
   useEffect(() => {
 
@@ -27,9 +179,41 @@ const Chart = ({ onXDataChange, onYDataChange, onCDataChange, onZDataChange, onS
     let start = 0;
     let end = 0;
     let animationActive = false;// アニメーションを制御するフラグ
-    let y = 0;
-    let z = 0;
+    let y = 0; //再生箇所(start)
+    let z = 0; //再生箇所(end)
+    let x_data = 0; //バーの位置を保存(start)
+    let y_data = 729.28125; //バーの位置を保存(end)
+
     let start1 = 0; //アニメーション時にstartを保存
+    
+    let combinedArrays = { myArray10, myArray20, myArray30, myArray40, myArray50, myArray60, myArray70, myArray80, myArray90,
+      myArray100, myArray110, myArray120, myArray130, myArray140, myArray150, myArray160, myArray170, myArray180, myArray190};
+  
+    let combinedArrays1 = { myArray11, myArray21, myArray31, myArray41, myArray51, myArray61, myArray71, myArray81, myArray91,
+      myArray101, myArray111, myArray121, myArray131, myArray141, myArray151, myArray161, myArray171, myArray181, myArray191};
+  
+    let combinedArrays2 = { myArray12, myArray22, myArray32, myArray42, myArray52, myArray62, myArray72, myArray82, myArray92,
+      myArray102, myArray112, myArray122, myArray132, myArray142, myArray152, myArray162, myArray172, myArray182, myArray192};
+  
+    let combinedArrays3 = { myArray13, myArray23, myArray33, myArray43, myArray53, myArray63, myArray73, myArray83, myArray93,
+      myArray103, myArray113, myArray123, myArray133, myArray143, myArray153, myArray163, myArray173, myArray183, myArray193};
+  
+    let combinedArrays4 = { myArray14, myArray24, myArray34, myArray44, myArray54, myArray64, myArray74, myArray84, myArray94,
+      myArray104, myArray114, myArray124, myArray134, myArray144, myArray154, myArray164, myArray174, myArray184, myArray194};  
+  
+    let combinedArrays5 = { myArray15, myArray25, myArray35, myArray45, myArray55, myArray65, myArray75, myArray85, myArray95,
+      myArray105, myArray115, myArray125, myArray135, myArray145, myArray155, myArray165, myArray175, myArray185, myArray195};
+  
+    let combinedArrays6 = { myArray16, myArray26, myArray36, myArray46, myArray56, myArray66, myArray76, myArray86, myArray96,
+      myArray106, myArray116, myArray126, myArray136, myArray146, myArray156, myArray166, myArray176, myArray186, myArray196};
+
+    let myArray0 = combinedArrays['myArray'+ ans + '0'];
+    let myArray1 = combinedArrays1['myArray'+ ans +'1'];
+    let myArray2 = combinedArrays2['myArray'+ ans +'2'];
+    let myArray3 = combinedArrays3['myArray'+ ans +'3'];
+    let myArray4 = combinedArrays4['myArray'+ ans +'4'];
+    let myArray5 = combinedArrays5['myArray'+ ans +'5'];
+    let myArray6 = combinedArrays6['myArray'+ ans +'6'];
 
     videoElement.onloadedmetadata = () => {
       console.log('動画の秒数:', videoElement.duration);
@@ -157,7 +341,7 @@ const Chart = ({ onXDataChange, onYDataChange, onCDataChange, onZDataChange, onS
     }));
     
     // myArrayからのall_one(start)データを代入している
-    const data = myArray.map((value, index) => ({
+    const data = myArray6.map((value, index) => ({
       date:  index * 8400 , //50フレーム50秒(1000)　//50フレーム420秒(8400)
       value: value,
       
@@ -186,7 +370,7 @@ const Chart = ({ onXDataChange, onYDataChange, onCDataChange, onZDataChange, onS
     }));
     
     // myArrayからのall_one(end)データを代入している
-    const data6 = myArray.map((value, index) => ({
+    const data6 = myArray6.map((value, index) => ({
       date:  index * 8400 , //50フレーム50秒(1000)　//50フレーム420秒(8400)
       value: value,
       
@@ -213,7 +397,7 @@ const Chart = ({ onXDataChange, onYDataChange, onCDataChange, onZDataChange, onS
     }));
     
     // myArrayからのall_one(end)データを代入している
-    const data7 = myArray.map((value, index) => ({
+    const data7 = myArray6.map((value, index) => ({
       date:  index * 8400 , //50フレーム50秒(1000)　//50フレーム420秒(8400)
       value: value,
       
@@ -429,27 +613,29 @@ const Chart = ({ onXDataChange, onYDataChange, onCDataChange, onZDataChange, onS
     //resizeButtonを定義する
     const resizeButton = am5.Button.new(root, {
       themeTags: ["resize", "horizontal"], //ボタンの外観や動作をカスタマイズ
-      icon: am5.Graphics.new(root, { //ボタンの機能や目的を示す
+      //fill: am5.color("red"), // フィル色を赤に変更
+    
+      icon: am5.Graphics.new(root, {
         themeTags: ["icon"],
         
-
+     
       })
+
     });
 
     const resizeButton2 = am5.Button.new(root, {
       themeTags: ["resize", "horizontal"],
       icon: am5.Graphics.new(root, {
         themeTags: ["icon"],
-        path: '../images/image.jpg'
+        
       })
+      
     });
 
     const resizeButton3 = am5.Button.new(root, {
       themeTags: ["resize", "horizontal"],
       width: 20,
       height: 20,
-      visible: true,
-      
     });
 
  
@@ -477,13 +663,13 @@ const Chart = ({ onXDataChange, onYDataChange, onCDataChange, onZDataChange, onS
     // タイムスクロールバーをx軸の範囲に固定
     resizeButton.adapters.add("x", function (x) {
 
-          
-      return Math.max(0, Math.min(chart.plotContainer.width(), x));
+      return Math.max(0, Math.min(y_data - 3, x));
     });
 
 
     //タイムスクロールバーをx軸の範囲に固定(バーを動かすとき実行される関数)
     resizeButton2.adapters.add("x", function (x) {
+
 
       //バーの初期位置を変更する
       if (!resizeButton.isFirstRun) {
@@ -491,7 +677,7 @@ const Chart = ({ onXDataChange, onYDataChange, onCDataChange, onZDataChange, onS
         range2.set("value", position1);
       }
 
-      return Math.max(0, Math.min(chart.plotContainer.width(), x));
+      return Math.max(0, Math.max(x_data + 3, x));
     });
 
     //タイムスクロールバーをx軸の範囲に固定(バーを動かすとき実行される関数)
@@ -510,42 +696,6 @@ const Chart = ({ onXDataChange, onYDataChange, onCDataChange, onZDataChange, onS
 
     resizeButton.isAnimation = true; // アニメーションを停止
 
-
-
-   
-   
-
-    // タイムスクロールバーを移動させるための関数
-    resizeButton.events.on("dragged", function () { //左のバー
-
-      //グラフのx座標
-      const x = resizeButton.x(); 
-      //console.log(x / 729.28125 * 7)//最大座標(729.28125)
-
-      setX_second(long * x / 729.28125);
-
-      //setX_data(x);
-      onXDataChange(x, long);
-      
-      
-
-      //[0~1]の座標
-      const position = xAxis.toAxisPosition(x / chart.plotContainer.width());
-
-      //console.log(position)
-      //[1696345200000~1700665200000]の座標
-      const newValue = xAxis.positionToValue(position);
-
-      
-      //バーの位置を変える
-      range.set("value", newValue);
-
-      //start
-      seriesRangeDataItem.set("value", newValue);
-      seriesRangeDataItem.set("endValue", xAxis.getPrivate("max"));
-      
-
-    });
 
   
     //まとめ
@@ -656,6 +806,40 @@ const Chart = ({ onXDataChange, onYDataChange, onCDataChange, onZDataChange, onS
     }
 
 
+    // タイムスクロールバーを移動させるための関数
+    resizeButton.events.on("dragged", function () { //左のバー
+
+      //グラフのx座標
+      const x = resizeButton.x(); 
+      //console.log(x / 729.28125 * 7)//最大座標(729.28125)
+
+      x_data = x;
+
+   
+
+      setX_second(long * x / 729.28125);
+
+      //setX_data(x);
+      onXDataChange(x, long);
+      
+      //[0~1]の座標
+      const position = xAxis.toAxisPosition(x / chart.plotContainer.width());
+
+      //console.log(position)
+      //[1696345200000~1700665200000]の座標
+      const newValue = xAxis.positionToValue(position);
+
+      console.log(X)
+      console.log(Y)
+
+      //バーの位置を変える
+        range.set("value", newValue);
+
+      //start
+      seriesRangeDataItem.set("value", newValue);
+      seriesRangeDataItem.set("endValue", xAxis.getPrivate("max"));
+      
+      });
 
 
     // タイムスクロールバーを移動させるための関数
@@ -667,6 +851,7 @@ const Chart = ({ onXDataChange, onYDataChange, onCDataChange, onZDataChange, onS
       //グラフのx座標
       const y = resizeButton2.x(); 
       
+      y_data = y;
       setY_second(long * y / 729.28125);
       
       //[0~1]の座標
@@ -706,6 +891,7 @@ const Chart = ({ onXDataChange, onYDataChange, onCDataChange, onZDataChange, onS
       //バーの位置を変える
       range3.set("value", newValue);
 
+      setZ(z);
       setZ_second(long * z / 729.28125);
 
       onSDataChange(z, long);
