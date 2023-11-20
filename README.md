@@ -1,17 +1,10 @@
-# InformationEngineeringSeminar2022
-手話学習用アプリケーション
-https://d154egukr4k0ry.cloudfront.net/
+# multiple_graph
 
-## Notion
-画面設計などの情報は[Notion](https://www.notion.so/junsei-tamaoki/c5b0974c09b74d19a45ce611cfbdd09b)にあります。
 ## 手動デプロイ
-Reactのビルド→CDK Deploy。.github/workflowにある内容と同じです。
-```
+
+```terminal
 cd app
-npm i
-npm run build
-cd ../
-cdk deploy
+npm start
 ```
 
 ## How to work
