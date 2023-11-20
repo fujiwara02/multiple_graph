@@ -2,8 +2,10 @@
 
 ## 手動デプロイ
 
+```terminal
 cd app
 npm start
+```
 
 ## How to work
 
