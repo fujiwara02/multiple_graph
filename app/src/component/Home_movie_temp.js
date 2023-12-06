@@ -1,7 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import BarComponent from './Home_graph.js';
-
+import BarComponent from './Home_graph_temp.js';
 
 import ReactPlayer from 'react-player';
 import Sam from './D13(1).mp4';
@@ -18,7 +17,6 @@ import myArray13 from './datafile/data1/1_outputs3.js';
 import myArray14 from './datafile/data1/1_outputs4.js'; 
 import myArray15 from './datafile/data1/1_targets_word'; 
 import myArray16 from './datafile/data1/A11.mp4';
-import myArray17 from './datafile/data1/A10.jpg';
 
 import myArray20 from './datafile/data2/2_outputs0.js';
 import myArray21 from './datafile/data2/2_outputs1.js'; 
@@ -27,7 +25,6 @@ import myArray23 from './datafile/data2/2_outputs3.js';
 import myArray24 from './datafile/data2/2_outputs4.js'; 
 import myArray25 from './datafile/data2/2_targets_word'; 
 import myArray26 from './datafile/data2/A21.mp4';
-import myArray27 from './datafile/data2/A20.jpg';
 
 import myArray30 from './datafile/data3/3_outputs0.js';
 import myArray31 from './datafile/data3/3_outputs1.js'; 
@@ -36,7 +33,6 @@ import myArray33 from './datafile/data3/3_outputs3.js';
 import myArray34 from './datafile/data3/3_outputs4.js'; 
 import myArray35 from './datafile/data3/3_targets_word'; 
 import myArray36 from './datafile/data3/A31.mp4';
-import myArray37 from './datafile/data3/A30.jpg';
 
 import myArray40 from './datafile/data4/4_outputs0.js';
 import myArray41 from './datafile/data4/4_outputs1.js'; 
@@ -45,7 +41,6 @@ import myArray43 from './datafile/data4/4_outputs3.js';
 import myArray44 from './datafile/data4/4_outputs4.js'; 
 import myArray45 from './datafile/data4/4_targets_word'; 
 import myArray46 from './datafile/data4/A41.mp4';
-import myArray47 from './datafile/data4/A40.jpg';
 
 import myArray50 from './datafile/data5/5_outputs0.js';
 import myArray51 from './datafile/data5/5_outputs1.js'; 
@@ -54,7 +49,6 @@ import myArray53 from './datafile/data5/5_outputs3.js';
 import myArray54 from './datafile/data5/5_outputs4.js'; 
 import myArray55 from './datafile/data5/5_targets_word'; 
 import myArray56 from './datafile/data5/A51.mp4';
-import myArray57 from './datafile/data5/A50.jpg';
 
 import myArray60 from './datafile/data6/6_outputs0.js';
 import myArray61 from './datafile/data6/6_outputs1.js'; 
@@ -63,7 +57,6 @@ import myArray63 from './datafile/data6/6_outputs3.js';
 import myArray64 from './datafile/data6/6_outputs4.js'; 
 import myArray65 from './datafile/data6/6_targets_word'; 
 import myArray66 from './datafile/data6/A61.mp4';
-import myArray67 from './datafile/data6/A60.jpg';
 
 import myArray70 from './datafile/data7/7_outputs0.js';
 import myArray71 from './datafile/data7/7_outputs1.js'; 
@@ -72,7 +65,6 @@ import myArray73 from './datafile/data7/7_outputs3.js';
 import myArray74 from './datafile/data7/7_outputs4.js';
 import myArray75 from './datafile/data7/7_targets_word';  
 import myArray76 from './datafile/data7/A71.mp4';
-import myArray77 from './datafile/data7/A70.jpg';
 
 import myArray80 from './datafile/data8/8_outputs0.js';
 import myArray81 from './datafile/data8/8_outputs1.js'; 
@@ -81,7 +73,6 @@ import myArray83 from './datafile/data8/8_outputs3.js';
 import myArray84 from './datafile/data8/8_outputs4.js'; 
 import myArray85 from './datafile/data8/8_targets_word'; 
 import myArray86 from './datafile/data8/A81.mp4';
-import myArray87 from './datafile/data8/A80.jpg';
 
 import myArray90 from './datafile/data9/9_outputs0.js';
 import myArray91 from './datafile/data9/9_outputs1.js'; 
@@ -90,7 +81,6 @@ import myArray93 from './datafile/data9/9_outputs3.js';
 import myArray94 from './datafile/data9/9_outputs4.js'; 
 import myArray95 from './datafile/data9/9_targets_word'; 
 import myArray96 from './datafile/data9/A91.mp4';
-import myArray97 from './datafile/data9/A90.jpg';
 
 import myArray100 from './datafile/data10/10_outputs0.js';
 import myArray101 from './datafile/data10/10_outputs1.js'; 
@@ -99,7 +89,6 @@ import myArray103 from './datafile/data10/10_outputs3.js';
 import myArray104 from './datafile/data10/10_outputs4.js'; 
 import myArray105 from './datafile/data10/10_targets_word'; 
 import myArray106 from './datafile/data10/A101.mp4';
-import myArray107 from './datafile/data10/A100.jpg';
 
 import myArray110 from './datafile/data11/11_outputs0.js';
 import myArray111 from './datafile/data11/11_outputs1.js'; 
@@ -108,7 +97,6 @@ import myArray113 from './datafile/data11/11_outputs3.js';
 import myArray114 from './datafile/data11/11_outputs4.js'; 
 import myArray115 from './datafile/data11/11_targets_word';
 import myArray116 from './datafile/data11/A111.mp4'; 
-import myArray117 from './datafile/data11/A110.jpg';
 
 import myArray120 from './datafile/data12/12_outputs0.js';
 import myArray121 from './datafile/data12/12_outputs1.js'; 
@@ -117,7 +105,6 @@ import myArray123 from './datafile/data12/12_outputs3.js';
 import myArray124 from './datafile/data12/12_outputs4.js'; 
 import myArray125 from './datafile/data12/12_targets_word'; 
 import myArray126 from './datafile/data12/A121.mp4';
-import myArray127 from './datafile/data12/A120.jpg';
 
 import myArray130 from './datafile/data13/13_outputs0.js';
 import myArray131 from './datafile/data13/13_outputs1.js'; 
@@ -126,7 +113,6 @@ import myArray133 from './datafile/data13/13_outputs3.js';
 import myArray134 from './datafile/data13/13_outputs4.js'; 
 import myArray135 from './datafile/data13/13_targets_word'; 
 import myArray136 from './datafile/data13/A131.mp4';
-import myArray137 from './datafile/data13/A130.jpg';
 
 import myArray140 from './datafile/data14/14_outputs0.js';
 import myArray141 from './datafile/data14/14_outputs1.js'; 
@@ -135,7 +121,6 @@ import myArray143 from './datafile/data14/14_outputs3.js';
 import myArray144 from './datafile/data14/14_outputs4.js'; 
 import myArray145 from './datafile/data14/14_targets_word'; 
 import myArray146 from './datafile/data14/A141.mp4';
-import myArray147 from './datafile/data14/A140.jpg';
 
 import myArray150 from './datafile/data15/15_outputs0.js';
 import myArray151 from './datafile/data15/15_outputs1.js'; 
@@ -144,7 +129,6 @@ import myArray153 from './datafile/data15/15_outputs3.js';
 import myArray154 from './datafile/data15/15_outputs4.js'; 
 import myArray155 from './datafile/data15/15_targets_word'; 
 import myArray156 from './datafile/data15/A151.mp4';
-import myArray157 from './datafile/data15/A150.jpg';
 
 import myArray160 from './datafile/data16/16_outputs0.js';
 import myArray161 from './datafile/data16/16_outputs1.js'; 
@@ -153,7 +137,6 @@ import myArray163 from './datafile/data16/16_outputs3.js';
 import myArray164 from './datafile/data16/16_outputs4.js'; 
 import myArray165 from './datafile/data16/16_targets_word'; 
 import myArray166 from './datafile/data16/A161.mp4';
-import myArray167 from './datafile/data16/A160.jpg';
 
 import myArray170 from './datafile/data17/17_outputs0.js';
 import myArray171 from './datafile/data17/17_outputs1.js'; 
@@ -162,7 +145,6 @@ import myArray173 from './datafile/data17/17_outputs3.js';
 import myArray174 from './datafile/data17/17_outputs4.js'; 
 import myArray175 from './datafile/data17/17_targets_word'; 
 import myArray176 from './datafile/data17/A171.mp4';
-import myArray177 from './datafile/data17/A170.jpg';
 
 import myArray180 from './datafile/data18/18_outputs0.js';
 import myArray181 from './datafile/data18/18_outputs1.js'; 
@@ -171,7 +153,6 @@ import myArray183 from './datafile/data18/18_outputs3.js';
 import myArray184 from './datafile/data18/18_outputs4.js'; 
 import myArray185 from './datafile/data18/18_targets_word'; 
 import myArray186 from './datafile/data18/A181.mp4';
-import myArray187 from './datafile/data18/A180.jpg';
 
 import myArray190 from './datafile/data19/19_outputs0.js';
 import myArray191 from './datafile/data19/19_outputs1.js'; 
@@ -180,7 +161,6 @@ import myArray193 from './datafile/data19/19_outputs3.js';
 import myArray194 from './datafile/data19/19_outputs4.js'; 
 import myArray195 from './datafile/data19/19_targets_word'; 
 import myArray196 from './datafile/data19/A191.mp4';
-import myArray197 from './datafile/data19/A190.jpg';
 
 
 
@@ -198,12 +178,6 @@ const App = () => {
   const [currentTime, setCurrentTime] = useState(0);
   const {ans} = useParams();
 
-  const navigate = useNavigate();
-
-  const goToLink = (path) => {//リンク先で再ロードし、グラフを更新する
-    navigate(path);
-    window.location.reload();
-  };
 
   let combinedArrays = { myArray10, myArray20, myArray30, myArray40, myArray50, myArray60, myArray70, myArray80, myArray90,
     myArray100, myArray110, myArray120, myArray130, myArray140, myArray150, myArray160, myArray170, myArray180, myArray190};
@@ -225,6 +199,7 @@ const App = () => {
 
   let combinedArrays6 = { myArray16, myArray26, myArray36, myArray46, myArray56, myArray66, myArray76, myArray86, myArray96,
     myArray106, myArray116, myArray126, myArray136, myArray146, myArray156, myArray166, myArray176, myArray186, myArray196}; 
+
       
   let myArray0 = combinedArrays['myArray'+ ans + '0'];
   let myArray1 = combinedArrays1['myArray'+ ans +'1'];
@@ -317,82 +292,82 @@ const App = () => {
 
 
 
-  
+  let navigate = useNavigate();
 
   const logoClick1 = useCallback((e) => {
-    goToLink("/Home_movie/1")
+    navigate("/Home_movie/1");
   });
 
   const logoClick2 = useCallback((e) => {
-    goToLink("/Home_movie/2")
+    navigate("/Home_movie/2");
   });
 
   const logoClick3 = useCallback((e) => {
-    goToLink("/Home_movie/3")
+    navigate("/Home_movie/3");
   });
 
   const logoClick4 = useCallback((e) => {
-    goToLink("/Home_movie/4")
+    navigate("/Home_movie/4");
   });
 
   const logoClick5 = useCallback((e) => {
-    goToLink("/Home_movie/5")
+    navigate("/Home_movie/5");
   });
 
   const logoClick6 = useCallback((e) => {
-    goToLink("/Home_movie/6")
+    navigate("/Home_movie/6");
   });
 
   const logoClick7 = useCallback((e) => {
-    goToLink("/Home_movie/7")
+    navigate("/Home_movie/7");
   });
 
   const logoClick8 = useCallback((e) => {
-    goToLink("/Home_movie/8")
+    navigate("/Home_movie/8");
   });
 
   const logoClick9 = useCallback((e) => {
-    goToLink("/Home_movie/9")
+    navigate("/Home_movie/9");
   });
 
   const logoClick10 = useCallback((e) => {
-    goToLink("/Home_movie/10")
+    navigate("/Home_movie/10");
   });
 
   const logoClick11 = useCallback((e) => {
-    goToLink("/Home_movie/11")
+    navigate("/Home_movie/11");
   });
 
   const logoClick12 = useCallback((e) => {
-    goToLink("/Home_movie/12")
+    navigate("/Home_movie/12");
   });
 
   const logoClick13 = useCallback((e) => {
-    goToLink("/Home_movie/13")
+    navigate("/Home_movie/13");
   });
 
   const logoClick14 = useCallback((e) => {
-    goToLink("/Home_movie/14")
+    navigate("/Home_movie/14");
   });
 
   const logoClick15 = useCallback((e) => {
-    goToLink("/Home_movie/15")
+    navigate("/Home_movie/15");
   });
 
   const logoClick16 = useCallback((e) => {
-    goToLink("/Home_movie/16")
+    navigate("/Home_movie/16");
   });
 
   const logoClick17 = useCallback((e) => {
-    goToLink("/Home_movie/17")
+    navigate("/Home_movie/17");
   });
 
   const logoClick18 = useCallback((e) => {
-    goToLink("/Home_movie/18")
+    navigate("/Home_movie/18");
   });
 
   const logoClick19 = useCallback((e) => {
-    goToLink("/Home_movie/19")
+    navigate("/Home_movie/19");
   });
   
 
@@ -435,97 +410,97 @@ const App = () => {
          <div className="scrollable-list">
 
          <a onClick= {logoClick1} >
-            <img src={myArray17}  width={120} height={88} alt="Logo" />
+            <img src={image}  width={140} height={80} alt="Logo" />
          </a>
          <a  onClick= {logoClick1} className="white-title22">『私』『父』『車』『買う』『しました』</a> <br></br>
 
          <a onClick= {logoClick2} >
-            <img src={myArray27}  width={120} height={88} alt="Logo" />
+            <img src={image}  width={140} height={80} alt="Logo" />
          </a>
          <a onClick= {logoClick2} className="white-title22">『私』『あなた』『好き』</a><br></br>
 
         <a onClick= {logoClick3} >
-            <img src={myArray37}  width={120} height={88} alt="Logo" />
+            <img src={image}  width={140} height={80} alt="Logo" />
         </a>
         <a onClick= {logoClick3} className="white-title22">『私』『兄』『仕事』『行く』</a> <br></br>
 
         <a onClick= {logoClick4} >
-            <img src={myArray47}  width={120} height={88} alt="Logo" />
+            <img src={image}  width={140} height={80} alt="Logo" />
         </a>
         <a onClick= {logoClick4} className="white-title22">『父』『映画』『見る』『好き』</a><br></br>
 
         <a onClick= {logoClick5} >
-            <img src={myArray57}  width={120} height={88} alt="Logo" />
+            <img src={image}  width={140} height={80} alt="Logo" />
         </a>
         <a onClick= {logoClick5} className="white-title22">『弟』『海』『遊ぶ』『行く』</a><br></br>
 
         <a onClick= {logoClick6} >
-            <img src={myArray67}  width={120} height={88} alt="Logo" />
+            <img src={image}  width={140} height={80} alt="Logo" />
         </a>
         <a onClick= {logoClick6} className="white-title22">『兄』『趣味』『サッカー』</a><br></br>
 
         <a onClick= {logoClick7} >
-            <img src={myArray77}  width={120} height={88} alt="Logo" />
+            <img src={image}  width={140} height={80} alt="Logo" />
         </a>
         <a onClick= {logoClick7} className="white-title22">『母』『仕事』『行く』</a><br></br>
 
         <a onClick= {logoClick8} >
-            <img src={myArray87}  width={120} height={88} alt="Logo" />
+            <img src={image}  width={140} height={80} alt="Logo" />
         </a>
         <a onClick= {logoClick8} className="white-title22">『私』『山』『行く』</a><br></br>
 
         <a onClick= {logoClick9} >
-            <img src={myArray97}  width={120} height={88} alt="Logo" />
+            <img src={image}  width={140} height={80} alt="Logo" />
         </a>
         <a onClick= {logoClick9} className="white-title22">『あなた』『サッカー』『見る』</a><br></br>
 
         <a onClick= {logoClick10} >
-            <img src={myArray107}  width={120} height={88} alt="Logo" />
+            <img src={image}  width={140} height={80} alt="Logo" />
         </a>
         <a onClick= {logoClick10} className="white-title22">『あなた』『山』『遊ぶ』『しました』</a><br></br>
 
         <a onClick= {logoClick11} >
-            <img src={myArray117}  width={120} height={88} alt="Logo" />
+            <img src={image}  width={140} height={80} alt="Logo" />
          </a>
          <a onClick= {logoClick11} className="white-title22">『私』『兄』『車』『買う』『しました』</a> <br></br>
 
          <a onClick= {logoClick12} >
-            <img src={myArray127}  width={120} height={88} alt="Logo" />
+            <img src={image}  width={140} height={80} alt="Logo" />
          </a>
          <a onClick= {logoClick12} className="white-title22">『私』『兄』『好き』</a><br></br>
 
         <a onClick= {logoClick13} >
-            <img src={myArray137}  width={120} height={88} alt="Logo" />
+            <img src={image}  width={140} height={80} alt="Logo" />
         </a>
         <a onClick= {logoClick13} className="white-title22">『私』『父』『仕事』『行く』</a> <br></br>
 
         <a onClick= {logoClick14} >
-            <img src={myArray147}  width={120} height={88} alt="Logo" />
+            <img src={image}  width={140} height={80} alt="Logo" />
         </a>
         <a onClick= {logoClick14} className="white-title22">『母』『山』『遊ぶ』『行く』</a><br></br>
 
         <a onClick= {logoClick15} >
-            <img src={myArray157}  width={120} height={88} alt="Logo" />
+            <img src={image}  width={140} height={80} alt="Logo" />
         </a>
         <a onClick= {logoClick15} className="white-title22">『父』『趣味』『サッカー』</a><br></br>
 
         <a onClick= {logoClick16} >
-            <img src={myArray167}  width={120} height={88} alt="Logo" />
+            <img src={image}  width={140} height={80} alt="Logo" />
         </a>
         <a onClick= {logoClick16} className="white-title22">『兄』『仕事』『行く』</a><br></br>
 
         <a onClick= {logoClick17} >
-            <img src={myArray177}  width={120} height={88} alt="Logo" />
+            <img src={image}  width={140} height={80} alt="Logo" />
         </a>
         <a onClick= {logoClick17} className="white-title22">『父』『海』『行く』『しました』</a><br></br>
 
         <a onClick= {logoClick18} >
-            <img src={myArray187}  width={120} height={88} alt="Logo" />
+            <img src={image}  width={140} height={80} alt="Logo" />
         </a>
         <a onClick= {logoClick18} className="white-title22">『弟』『サッカー』『見る』</a><br></br>
 
         <a onClick= {logoClick19} >
-            <img src={myArray197}  width={120} height={88} alt="Logo" />
+            <img src={image}  width={140} height={80} alt="Logo" />
         </a>
         <a onClick= {logoClick19} className="white-title22">『私』『山』『遊ぶ』『しました』</a><br></br>
 
@@ -565,6 +540,7 @@ const App = () => {
       </div> 
 
       </div>
+      
     </>
   );
 };

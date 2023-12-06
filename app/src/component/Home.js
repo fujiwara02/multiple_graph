@@ -10,6 +10,7 @@ import myArray12 from './datafile/data1/1_outputs2.js';
 import myArray13 from './datafile/data1/1_outputs3.js'; 
 import myArray14 from './datafile/data1/1_outputs4.js'; 
 import myArray15 from './datafile/data1/1_outputs_allzero.js';
+import myArray17 from './datafile/data1/A10.jpg';
 
 import myArray20 from './datafile/data2/2_outputs0.js';
 import myArray21 from './datafile/data2/2_outputs1.js'; 
@@ -17,6 +18,7 @@ import myArray22 from './datafile/data2/2_outputs2.js';
 import myArray23 from './datafile/data2/2_outputs3.js'; 
 import myArray24 from './datafile/data2/2_outputs4.js'; 
 import myArray25 from './datafile/data2/2_outputs_allzero.js';
+import myArray27 from './datafile/data2/A20.jpg';
 
 import myArray30 from './datafile/data3/3_outputs0.js';
 import myArray31 from './datafile/data3/3_outputs1.js'; 
@@ -24,6 +26,7 @@ import myArray32 from './datafile/data3/3_outputs2.js';
 import myArray33 from './datafile/data3/3_outputs3.js'; 
 import myArray34 from './datafile/data3/3_outputs4.js'; 
 import myArray35 from './datafile/data3/3_outputs_allzero.js';
+import myArray37 from './datafile/data3/A30.jpg';
 
 import myArray40 from './datafile/data4/4_outputs0.js';
 import myArray41 from './datafile/data4/4_outputs1.js'; 
@@ -31,6 +34,7 @@ import myArray42 from './datafile/data4/4_outputs2.js';
 import myArray43 from './datafile/data4/4_outputs3.js'; 
 import myArray44 from './datafile/data4/4_outputs4.js'; 
 import myArray45 from './datafile/data4/4_outputs_allzero.js';
+import myArray47 from './datafile/data4/A40.jpg';
 
 import myArray50 from './datafile/data5/5_outputs0.js';
 import myArray51 from './datafile/data5/5_outputs1.js'; 
@@ -38,6 +42,7 @@ import myArray52 from './datafile/data5/5_outputs2.js';
 import myArray53 from './datafile/data5/5_outputs3.js'; 
 import myArray54 from './datafile/data5/5_outputs4.js'; 
 import myArray55 from './datafile/data5/5_outputs_allzero.js';
+import myArray57 from './datafile/data5/A50.jpg';
 
 import myArray60 from './datafile/data6/6_outputs0.js';
 import myArray61 from './datafile/data6/6_outputs1.js'; 
@@ -45,6 +50,7 @@ import myArray62 from './datafile/data6/6_outputs2.js';
 import myArray63 from './datafile/data6/6_outputs3.js'; 
 import myArray64 from './datafile/data6/6_outputs4.js'; 
 import myArray65 from './datafile/data6/6_outputs_allzero.js';
+import myArray67 from './datafile/data6/A60.jpg';
 
 import myArray70 from './datafile/data7/7_outputs0.js';
 import myArray71 from './datafile/data7/7_outputs1.js'; 
@@ -52,6 +58,7 @@ import myArray72 from './datafile/data7/7_outputs2.js';
 import myArray73 from './datafile/data7/7_outputs3.js'; 
 import myArray74 from './datafile/data7/7_outputs4.js'; 
 import myArray75 from './datafile/data7/7_outputs_allzero.js';
+import myArray77 from './datafile/data7/A70.jpg';
 
 import myArray80 from './datafile/data8/8_outputs0.js';
 import myArray81 from './datafile/data8/8_outputs1.js'; 
@@ -59,6 +66,7 @@ import myArray82 from './datafile/data8/8_outputs2.js';
 import myArray83 from './datafile/data8/8_outputs3.js'; 
 import myArray84 from './datafile/data8/8_outputs4.js'; 
 import myArray85 from './datafile/data8/8_outputs_allzero.js';
+import myArray87 from './datafile/data8/A80.jpg';
 
 import myArray90 from './datafile/data9/9_outputs0.js';
 import myArray91 from './datafile/data9/9_outputs1.js'; 
@@ -66,6 +74,7 @@ import myArray92 from './datafile/data9/9_outputs2.js';
 import myArray93 from './datafile/data9/9_outputs3.js'; 
 import myArray94 from './datafile/data9/9_outputs4.js'; 
 import myArray95 from './datafile/data9/9_outputs_allzero.js';
+import myArray97 from './datafile/data9/A90.jpg';
 
 import myArray100 from './datafile/data10/10_outputs0.js';
 import myArray101 from './datafile/data10/10_outputs1.js'; 
@@ -73,6 +82,7 @@ import myArray102 from './datafile/data10/10_outputs2.js';
 import myArray103 from './datafile/data10/10_outputs3.js'; 
 import myArray104 from './datafile/data10/10_outputs4.js'; 
 import myArray105 from './datafile/data10/10_outputs_allzero.js';
+import myArray107 from './datafile/data10/A100.jpg';
 
 import myArray110 from './datafile/data11/11_outputs0.js';
 import myArray111 from './datafile/data11/11_outputs1.js'; 
@@ -80,6 +90,7 @@ import myArray112 from './datafile/data11/11_outputs2.js';
 import myArray113 from './datafile/data11/11_outputs3.js'; 
 import myArray114 from './datafile/data11/11_outputs4.js'; 
 import myArray115 from './datafile/data11/11_outputs_allzero.js';
+import myArray117 from './datafile/data11/A110.jpg';
 
 import myArray120 from './datafile/data12/12_outputs0.js';
 import myArray121 from './datafile/data12/12_outputs1.js'; 
@@ -87,6 +98,7 @@ import myArray122 from './datafile/data12/12_outputs2.js';
 import myArray123 from './datafile/data12/12_outputs3.js'; 
 import myArray124 from './datafile/data12/12_outputs4.js'; 
 import myArray125 from './datafile/data12/12_outputs_allzero.js';
+import myArray127 from './datafile/data12/A120.jpg';
 
 import myArray130 from './datafile/data13/13_outputs0.js';
 import myArray131 from './datafile/data13/13_outputs1.js'; 
@@ -94,6 +106,7 @@ import myArray132 from './datafile/data13/13_outputs2.js';
 import myArray133 from './datafile/data13/13_outputs3.js'; 
 import myArray134 from './datafile/data13/13_outputs4.js'; 
 import myArray135 from './datafile/data13/13_outputs_allzero.js';
+import myArray137 from './datafile/data13/A130.jpg';
 
 import myArray140 from './datafile/data14/14_outputs0.js';
 import myArray141 from './datafile/data14/14_outputs1.js'; 
@@ -101,6 +114,7 @@ import myArray142 from './datafile/data14/14_outputs2.js';
 import myArray143 from './datafile/data14/14_outputs3.js'; 
 import myArray144 from './datafile/data14/14_outputs4.js'; 
 import myArray145 from './datafile/data14/14_outputs_allzero.js';
+import myArray147 from './datafile/data14/A140.jpg';
 
 import myArray150 from './datafile/data15/15_outputs0.js';
 import myArray151 from './datafile/data15/15_outputs1.js'; 
@@ -108,6 +122,7 @@ import myArray152 from './datafile/data15/15_outputs2.js';
 import myArray153 from './datafile/data15/15_outputs3.js'; 
 import myArray154 from './datafile/data15/15_outputs4.js'; 
 import myArray155 from './datafile/data15/15_outputs_allzero.js';
+import myArray157 from './datafile/data15/A150.jpg';
 
 import myArray160 from './datafile/data16/16_outputs0.js';
 import myArray161 from './datafile/data16/16_outputs1.js'; 
@@ -115,6 +130,7 @@ import myArray162 from './datafile/data16/16_outputs2.js';
 import myArray163 from './datafile/data16/16_outputs3.js'; 
 import myArray164 from './datafile/data16/16_outputs4.js'; 
 import myArray165 from './datafile/data16/16_outputs_allzero.js';
+import myArray167 from './datafile/data16/A160.jpg';
 
 import myArray170 from './datafile/data17/17_outputs0.js';
 import myArray171 from './datafile/data17/17_outputs1.js'; 
@@ -122,6 +138,7 @@ import myArray172 from './datafile/data17/17_outputs2.js';
 import myArray173 from './datafile/data17/17_outputs3.js'; 
 import myArray174 from './datafile/data17/17_outputs4.js'; 
 import myArray175 from './datafile/data17/17_outputs_allzero.js';
+import myArray177 from './datafile/data17/A170.jpg';
 
 import myArray180 from './datafile/data18/18_outputs0.js';
 import myArray181 from './datafile/data18/18_outputs1.js'; 
@@ -129,6 +146,7 @@ import myArray182 from './datafile/data18/18_outputs2.js';
 import myArray183 from './datafile/data18/18_outputs3.js'; 
 import myArray184 from './datafile/data18/18_outputs4.js'; 
 import myArray185 from './datafile/data18/18_outputs_allzero.js';
+import myArray187 from './datafile/data18/A180.jpg';
 
 import myArray190 from './datafile/data19/19_outputs0.js';
 import myArray191 from './datafile/data19/19_outputs1.js'; 
@@ -136,6 +154,7 @@ import myArray192 from './datafile/data19/19_outputs2.js';
 import myArray193 from './datafile/data19/19_outputs3.js'; 
 import myArray194 from './datafile/data19/19_outputs4.js'; 
 import myArray195 from './datafile/data19/19_outputs_allzero.js';
+import myArray197 from './datafile/data19/A190.jpg';
 
 
 const StockCharts = () => {
@@ -185,6 +204,9 @@ const StockCharts = () => {
   let combinedArrays5 = { myArray15, myArray25, myArray35, myArray45, myArray55, myArray65, myArray75, myArray85, myArray95,
     myArray105, myArray115, myArray125, myArray135, myArray145, myArray155, myArray165, myArray175, myArray185, myArray195};
 
+  let combinedArrays7 = { myArray17, myArray27, myArray37, myArray47, myArray57, myArray67, myArray77, myArray87, myArray97,
+    myArray107, myArray117, myArray127, myArray137, myArray147, myArray157, myArray167, myArray177, myArray187, myArray197};
+  
 
   // Generate random data
   const generateData = (n) => {
@@ -227,10 +249,10 @@ const StockCharts = () => {
 
     // 画像の要素を作成してスタイルを設定
     const col = document.createElement("img");
-    col.src = image1; // 画像のパスを指定
-    col.style.width = "100px"; // 画像の幅
+    col.src = combinedArrays7['myArray'+ n +'7']; // 画像のパスを指定
+    col.style.width = "81.4px"; // 画像の幅
     col.style.height = "60px"; // 画像の高さを自動調整
-    col.style.padding = "0.27em 1.8em 0em 0.7em"; //上、右、下、左
+    col.style.padding = "0.27em 1.2em 0em 0.7em"; //上、右、下、左
     col.style.float = "left";
     row.appendChild(col); // col3 内に画像を追加
 
