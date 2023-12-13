@@ -270,7 +270,7 @@ const App = () => {
 
   const handleYDataChange = (newValue, long) => { //右のバー
     setY_second(long * newValue / 729.28125)
-    console.log(long * newValue / 729.28125);
+    
 
   };
 
@@ -283,7 +283,7 @@ const App = () => {
   const handleCDataChange = (newValue, long) => {//最初から再生  
 
     setPlaybackRate(newValue);
-    const randomNumber = Math.random();// 0以上1未満の乱数を生成(useEffect)
+    //const randomNumber = Math.random();// 0以上1未満の乱数を生成(useEffect)
     playerRef.current.seekTo(0, 'seconds');//最初から再生
     //setStopTime(long + randomNumber/10000);//8.022秒後に自動再生をfalseに
     setIsPlaying(true);// 自動再生を開始
@@ -294,7 +294,7 @@ const App = () => {
   const handleZDataChange = (newValue, y, z, long) => {//最初から再生  
 
     setPlaybackRate(newValue);
-    const randomNumber = Math.random();// 0以上1未満の乱数を生成(useEffect)
+    //const randomNumber = Math.random();// 0以上1未満の乱数を生成(useEffect)
     
     playerRef.current.seekTo(long * y / 729.28125 , 'seconds');//開始地点
     //setStopTime((long * (z - y) / 729.28125) + (randomNumber / 10000));//何秒後に自動再生をfalseに

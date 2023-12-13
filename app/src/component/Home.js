@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import * as am5 from '@amcharts/amcharts5';
 import * as am5xy from '@amcharts/amcharts5/xy';
 import am5themes_Micro from '@amcharts/amcharts5/themes/Micro';
-import image1 from '../images/image.jpg';
+
 
 import myArray10 from './datafile/data1/1_outputs0.js';
 import myArray11 from './datafile/data1/1_outputs1.js'; 

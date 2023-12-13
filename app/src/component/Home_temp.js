@@ -1,216 +1,190 @@
-import React, { useState, useRef, useEffect } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
-import BarComponent from './Home_graph.js';
-
-import ReactPlayer from 'react-player';
-import Sam from './D13(1).mp4';
-import './Home.css';
-import {useCallback} from  'react'
-import targets_word from './targets_word.js';
-
-import image from '../images/image.jpg'
+import React, { useEffect } from 'react';
+import * as am5 from '@amcharts/amcharts5';
+import * as am5xy from '@amcharts/amcharts5/xy';
+import am5themes_Micro from '@amcharts/amcharts5/themes/Micro';
+import image1 from '../images/image.jpg';
 
 import myArray10 from './datafile/data1/1_outputs0.js';
 import myArray11 from './datafile/data1/1_outputs1.js'; 
 import myArray12 from './datafile/data1/1_outputs2.js'; 
 import myArray13 from './datafile/data1/1_outputs3.js'; 
 import myArray14 from './datafile/data1/1_outputs4.js'; 
-import myArray15 from './datafile/data1/1_targets_word'; 
-import myArray16 from './datafile/data1/A11.mp4';
+import myArray15 from './datafile/data1/1_outputs_allzero.js';
+import myArray17 from './datafile/data1/A10.jpg';
 
 import myArray20 from './datafile/data2/2_outputs0.js';
 import myArray21 from './datafile/data2/2_outputs1.js'; 
 import myArray22 from './datafile/data2/2_outputs2.js'; 
 import myArray23 from './datafile/data2/2_outputs3.js'; 
 import myArray24 from './datafile/data2/2_outputs4.js'; 
-import myArray25 from './datafile/data2/2_targets_word'; 
-import myArray26 from './datafile/data2/A21.mp4';
+import myArray25 from './datafile/data2/2_outputs_allzero.js';
+import myArray27 from './datafile/data2/A20.jpg';
 
 import myArray30 from './datafile/data3/3_outputs0.js';
 import myArray31 from './datafile/data3/3_outputs1.js'; 
 import myArray32 from './datafile/data3/3_outputs2.js'; 
 import myArray33 from './datafile/data3/3_outputs3.js'; 
 import myArray34 from './datafile/data3/3_outputs4.js'; 
-import myArray35 from './datafile/data3/3_targets_word'; 
-import myArray36 from './datafile/data3/A31.mp4';
+import myArray35 from './datafile/data3/3_outputs_allzero.js';
+import myArray37 from './datafile/data3/A30.jpg';
 
 import myArray40 from './datafile/data4/4_outputs0.js';
 import myArray41 from './datafile/data4/4_outputs1.js'; 
 import myArray42 from './datafile/data4/4_outputs2.js'; 
 import myArray43 from './datafile/data4/4_outputs3.js'; 
 import myArray44 from './datafile/data4/4_outputs4.js'; 
-import myArray45 from './datafile/data4/4_targets_word'; 
-import myArray46 from './datafile/data4/A41.mp4';
+import myArray45 from './datafile/data4/4_outputs_allzero.js';
+import myArray47 from './datafile/data4/A40.jpg';
 
 import myArray50 from './datafile/data5/5_outputs0.js';
 import myArray51 from './datafile/data5/5_outputs1.js'; 
 import myArray52 from './datafile/data5/5_outputs2.js'; 
 import myArray53 from './datafile/data5/5_outputs3.js'; 
 import myArray54 from './datafile/data5/5_outputs4.js'; 
-import myArray55 from './datafile/data5/5_targets_word'; 
-import myArray56 from './datafile/data5/A51.mp4';
+import myArray55 from './datafile/data5/5_outputs_allzero.js';
+import myArray57 from './datafile/data5/A50.jpg';
 
 import myArray60 from './datafile/data6/6_outputs0.js';
 import myArray61 from './datafile/data6/6_outputs1.js'; 
 import myArray62 from './datafile/data6/6_outputs2.js'; 
 import myArray63 from './datafile/data6/6_outputs3.js'; 
 import myArray64 from './datafile/data6/6_outputs4.js'; 
-import myArray65 from './datafile/data6/6_targets_word'; 
-import myArray66 from './datafile/data6/A61.mp4';
+import myArray65 from './datafile/data6/6_outputs_allzero.js';
+import myArray67 from './datafile/data6/A60.jpg';
 
 import myArray70 from './datafile/data7/7_outputs0.js';
 import myArray71 from './datafile/data7/7_outputs1.js'; 
 import myArray72 from './datafile/data7/7_outputs2.js'; 
 import myArray73 from './datafile/data7/7_outputs3.js'; 
-import myArray74 from './datafile/data7/7_outputs4.js';
-import myArray75 from './datafile/data7/7_targets_word';  
-import myArray76 from './datafile/data7/A71.mp4';
+import myArray74 from './datafile/data7/7_outputs4.js'; 
+import myArray75 from './datafile/data7/7_outputs_allzero.js';
+import myArray77 from './datafile/data7/A70.jpg';
 
 import myArray80 from './datafile/data8/8_outputs0.js';
 import myArray81 from './datafile/data8/8_outputs1.js'; 
 import myArray82 from './datafile/data8/8_outputs2.js'; 
 import myArray83 from './datafile/data8/8_outputs3.js'; 
 import myArray84 from './datafile/data8/8_outputs4.js'; 
-import myArray85 from './datafile/data8/8_targets_word'; 
-import myArray86 from './datafile/data8/A81.mp4';
+import myArray85 from './datafile/data8/8_outputs_allzero.js';
+import myArray87 from './datafile/data8/A80.jpg';
 
 import myArray90 from './datafile/data9/9_outputs0.js';
 import myArray91 from './datafile/data9/9_outputs1.js'; 
 import myArray92 from './datafile/data9/9_outputs2.js'; 
 import myArray93 from './datafile/data9/9_outputs3.js'; 
 import myArray94 from './datafile/data9/9_outputs4.js'; 
-import myArray95 from './datafile/data9/9_targets_word'; 
-import myArray96 from './datafile/data9/A91.mp4';
+import myArray95 from './datafile/data9/9_outputs_allzero.js';
+import myArray97 from './datafile/data9/A90.jpg';
 
 import myArray100 from './datafile/data10/10_outputs0.js';
 import myArray101 from './datafile/data10/10_outputs1.js'; 
 import myArray102 from './datafile/data10/10_outputs2.js'; 
 import myArray103 from './datafile/data10/10_outputs3.js'; 
 import myArray104 from './datafile/data10/10_outputs4.js'; 
-import myArray105 from './datafile/data10/10_targets_word'; 
-import myArray106 from './datafile/data10/A101.mp4';
+import myArray105 from './datafile/data10/10_outputs_allzero.js';
+import myArray107 from './datafile/data10/A100.jpg';
 
 import myArray110 from './datafile/data11/11_outputs0.js';
 import myArray111 from './datafile/data11/11_outputs1.js'; 
 import myArray112 from './datafile/data11/11_outputs2.js'; 
 import myArray113 from './datafile/data11/11_outputs3.js'; 
 import myArray114 from './datafile/data11/11_outputs4.js'; 
-import myArray115 from './datafile/data11/11_targets_word';
-import myArray116 from './datafile/data11/A111.mp4'; 
+import myArray115 from './datafile/data11/11_outputs_allzero.js';
+import myArray117 from './datafile/data11/A110.jpg';
 
 import myArray120 from './datafile/data12/12_outputs0.js';
 import myArray121 from './datafile/data12/12_outputs1.js'; 
 import myArray122 from './datafile/data12/12_outputs2.js'; 
 import myArray123 from './datafile/data12/12_outputs3.js'; 
 import myArray124 from './datafile/data12/12_outputs4.js'; 
-import myArray125 from './datafile/data12/12_targets_word'; 
-import myArray126 from './datafile/data12/A121.mp4';
+import myArray125 from './datafile/data12/12_outputs_allzero.js';
+import myArray127 from './datafile/data12/A120.jpg';
 
 import myArray130 from './datafile/data13/13_outputs0.js';
 import myArray131 from './datafile/data13/13_outputs1.js'; 
 import myArray132 from './datafile/data13/13_outputs2.js'; 
 import myArray133 from './datafile/data13/13_outputs3.js'; 
 import myArray134 from './datafile/data13/13_outputs4.js'; 
-import myArray135 from './datafile/data13/13_targets_word'; 
-import myArray136 from './datafile/data13/A131.mp4';
+import myArray135 from './datafile/data13/13_outputs_allzero.js';
+import myArray137 from './datafile/data13/A130.jpg';
 
 import myArray140 from './datafile/data14/14_outputs0.js';
 import myArray141 from './datafile/data14/14_outputs1.js'; 
 import myArray142 from './datafile/data14/14_outputs2.js'; 
 import myArray143 from './datafile/data14/14_outputs3.js'; 
 import myArray144 from './datafile/data14/14_outputs4.js'; 
-import myArray145 from './datafile/data14/14_targets_word'; 
-import myArray146 from './datafile/data14/A141.mp4';
+import myArray145 from './datafile/data14/14_outputs_allzero.js';
+import myArray147 from './datafile/data14/A140.jpg';
 
 import myArray150 from './datafile/data15/15_outputs0.js';
 import myArray151 from './datafile/data15/15_outputs1.js'; 
 import myArray152 from './datafile/data15/15_outputs2.js'; 
 import myArray153 from './datafile/data15/15_outputs3.js'; 
 import myArray154 from './datafile/data15/15_outputs4.js'; 
-import myArray155 from './datafile/data15/15_targets_word'; 
-import myArray156 from './datafile/data15/A151.mp4';
+import myArray155 from './datafile/data15/15_outputs_allzero.js';
+import myArray157 from './datafile/data15/A150.jpg';
 
 import myArray160 from './datafile/data16/16_outputs0.js';
 import myArray161 from './datafile/data16/16_outputs1.js'; 
 import myArray162 from './datafile/data16/16_outputs2.js'; 
 import myArray163 from './datafile/data16/16_outputs3.js'; 
 import myArray164 from './datafile/data16/16_outputs4.js'; 
-import myArray165 from './datafile/data16/16_targets_word'; 
-import myArray166 from './datafile/data16/A161.mp4';
+import myArray165 from './datafile/data16/16_outputs_allzero.js';
+import myArray167 from './datafile/data16/A160.jpg';
 
 import myArray170 from './datafile/data17/17_outputs0.js';
 import myArray171 from './datafile/data17/17_outputs1.js'; 
 import myArray172 from './datafile/data17/17_outputs2.js'; 
 import myArray173 from './datafile/data17/17_outputs3.js'; 
 import myArray174 from './datafile/data17/17_outputs4.js'; 
-import myArray175 from './datafile/data17/17_targets_word'; 
-import myArray176 from './datafile/data17/A171.mp4';
+import myArray175 from './datafile/data17/17_outputs_allzero.js';
+import myArray177 from './datafile/data17/A170.jpg';
 
 import myArray180 from './datafile/data18/18_outputs0.js';
 import myArray181 from './datafile/data18/18_outputs1.js'; 
 import myArray182 from './datafile/data18/18_outputs2.js'; 
 import myArray183 from './datafile/data18/18_outputs3.js'; 
 import myArray184 from './datafile/data18/18_outputs4.js'; 
-import myArray185 from './datafile/data18/18_targets_word'; 
-import myArray186 from './datafile/data18/A181.mp4';
+import myArray185 from './datafile/data18/18_outputs_allzero.js';
+import myArray187 from './datafile/data18/A180.jpg';
 
 import myArray190 from './datafile/data19/19_outputs0.js';
 import myArray191 from './datafile/data19/19_outputs1.js'; 
 import myArray192 from './datafile/data19/19_outputs2.js'; 
 import myArray193 from './datafile/data19/19_outputs3.js'; 
 import myArray194 from './datafile/data19/19_outputs4.js'; 
-import myArray195 from './datafile/data19/19_targets_word'; 
-import myArray196 from './datafile/data19/A191.mp4';
-
-import myArray201 from './datafile/data19/1.mp4';
-import myArray202 from './datafile/data19/2.mp4';
-import myArray203 from './datafile/data19/3.mp4';
-import myArray204 from './datafile/data19/4.mp4';
-import myArray205 from './datafile/data19/5.mp4';
-import myArray206 from './datafile/data19/6.mp4';
-import myArray207 from './datafile/data19/7.mp4';
-import myArray208 from './datafile/data19/8.mp4';
-import myArray209 from './datafile/data19/9.mp4';
-import myArray210 from './datafile/data19/10.mp4';
-import myArray211 from './datafile/data19/11.mp4';
-import myArray212 from './datafile/data19/12.mp4';
-import myArray213 from './datafile/data19/13.mp4';
-import myArray214 from './datafile/data19/14.mp4';
-import myArray215 from './datafile/data19/15.mp4';
-import myArray216 from './datafile/data19/16.mp4';
+import myArray195 from './datafile/data19/19_outputs_allzero.js';
+import myArray197 from './datafile/data19/A190.jpg';
 
 
-const App = () => {
- 
-  const [videoDuration, setVideoDuration] = useState(0);
-  const [videoDuration1, setVideoDuration1] = useState(0);
-  const [videoDuration2, setVideoDuration2] = useState(0);
-  const [videoDuration3, setVideoDuration3] = useState(0);
-  const [videoDuration4, setVideoDuration4] = useState(0);
-  const [videoDuration5, setVideoDuration5] = useState(0);
-  const [videoDuration6, setVideoDuration6] = useState(0);
-  const [videoDuration7, setVideoDuration7] = useState(0);
-  const [videoDuration8, setVideoDuration8] = useState(0);
-  const [videoDuration9, setVideoDuration9] = useState(0);
-  const [videoDuration10, setVideoDuration10] = useState(0);
-  const [videoDuration11, setVideoDuration11] = useState(0);
-  const [videoDuration12, setVideoDuration12] = useState(0);
-  const [videoDuration13, setVideoDuration13] = useState(0);
-  const [videoDuration14, setVideoDuration14] = useState(0);
-  const [videoDuration15, setVideoDuration15] = useState(0);
-  const [videoDuration16, setVideoDuration16] = useState(0);
+const StockCharts = () => {
 
-  const [playground, setPlayground] = useState(Sam);
-  const playerRef = useRef(null);
-  const [playbackRate, setPlaybackRate] = useState(1);
-  const [isPlaying, setIsPlaying] = useState(false); // ビデオの再生状態を制御
-  const [stopTime, setStopTime] = useState(0);
-  const [x_second, setX_second] = useState(0);
-  const [y_second, setY_second] = useState(0);
-  const [s_second, setS_second] = useState(0);
-  const [currentTime, setCurrentTime] = useState(0);
-  const {ans} = useParams();
+  useEffect(() => {
+    const tickers = [ //要素の名前
+      "001-私の父は車を買いました", "002-私はあなたが好き", "003-私の兄は仕事に行く", "004-父は映画を見るのが好き",
+      "005-弟は海に遊びに行く","006-兄の趣味はサッカー","007-母は仕事に行く","008-私は山に行きます",
+      "009-あなたはサッカーを見る","010-あなたは山で遊びました","011-私の兄は車を買いました",
+      "012-私は兄が好き","013-私の父は仕事に行く","014-母は山に遊びに行く",
+      "015-父の趣味はサッカー","016-兄は仕事に行く","017-父は海に行きました","018-弟はサッカーを見る",
+      "019-私は山で遊びました"
+    ];
 
+    let n = 0;
+    tickers.forEach(ticker => {
+
+      n = n + 1;
+      const data = generateData(n); //20個の点
+
+      const chartContainer = document.createElement('div');//行の要素
+      chartContainer.style.width = '100%'; //各要素の横幅
+      chartContainer.style.height = '50px'; //各要素の縦幅
+      
+      document.getElementById('chartdiv').appendChild(chartContainer); //chartに描画
+      renderChartRow(ticker, chartContainer, data, n); //要素を指定
+
+    });
+
+  }, []);
 
   let combinedArrays = { myArray10, myArray20, myArray30, myArray40, myArray50, myArray60, myArray70, myArray80, myArray90,
     myArray100, myArray110, myArray120, myArray130, myArray140, myArray150, myArray160, myArray170, myArray180, myArray190};
@@ -228,512 +202,229 @@ const App = () => {
     myArray104, myArray114, myArray124, myArray134, myArray144, myArray154, myArray164, myArray174, myArray184, myArray194};  
 
   let combinedArrays5 = { myArray15, myArray25, myArray35, myArray45, myArray55, myArray65, myArray75, myArray85, myArray95,
-    myArray105, myArray115, myArray125, myArray135, myArray145, myArray155, myArray165, myArray175, myArray185, myArray195}; 
+    myArray105, myArray115, myArray125, myArray135, myArray145, myArray155, myArray165, myArray175, myArray185, myArray195};
 
-  let combinedArrays6 = { myArray16, myArray26, myArray36, myArray46, myArray56, myArray66, myArray76, myArray86, myArray96,
-    myArray106, myArray116, myArray126, myArray136, myArray146, myArray156, myArray166, myArray176, myArray186, myArray196}; 
-
-      
-  let myArray0 = combinedArrays['myArray'+ ans + '0'];
-  let myArray1 = combinedArrays1['myArray'+ ans +'1'];
-  let myArray2 = combinedArrays2['myArray'+ ans +'2'];
-  let myArray3 = combinedArrays3['myArray'+ ans +'3'];
-  let myArray4 = combinedArrays4['myArray'+ ans +'4'];
-  let myArray5 = combinedArrays5['myArray'+ ans +'5'];
-
-  const num = Math.floor(((myArray0.length-1) *  s_second / videoDuration) + 0.5);//切り捨てなので、0.5加える
-  const convertedNum = parseFloat(myArray0[num]); // 指数表記の数値を通常の数値に変換
-  const roundedNum = convertedNum.toFixed(3); // 3桁で四捨五入
-
-  const num1 = Math.floor(((myArray1.length-1) *  s_second / videoDuration) + 0.5);
-  const convertedNum1 = parseFloat(myArray1[num1]); // 指数表記の数値を通常の数値に変換
-  const roundedNum1 = convertedNum1.toFixed(3); // 3桁で四捨五入
-
-  const num2 = Math.floor(((myArray2.length-1) *  s_second / videoDuration) + 0.5);
-  const convertedNum2 = parseFloat(myArray2[num2]); // 指数表記の数値を通常の数値に変換
-  const roundedNum2 = convertedNum2.toFixed(3); // 3桁で四捨五入
-
-  const num3 = Math.floor(((myArray3.length-1) *  s_second / videoDuration) + 0.5);
-  const convertedNum3 = parseFloat(myArray3[num3]); // 指数表記の数値を通常の数値に変換
-  const roundedNum3 = convertedNum3.toFixed(3); // 3桁で四捨五入
-
-  const num4 = Math.floor(((myArray4.length-1) *  s_second / videoDuration) + 0.5);
-  const convertedNum4 = parseFloat(myArray4[num4]); // 指数表記の数値を通常の数値に変換
-  const roundedNum4 = convertedNum4.toFixed(3); // 3桁で四捨五入
-
-
+  let combinedArrays7 = { myArray17, myArray27, myArray37, myArray47, myArray57, myArray67, myArray77, myArray87, myArray97,
+    myArray107, myArray117, myArray127, myArray137, myArray147, myArray157, myArray167, myArray177, myArray187, myArray197};
   
 
-  //const roundedNumber = myArray0[num].toFixed(0);
-  const handleDuration = (duration) => {
-    // durationが動画の総時間（秒単位）です
-    setVideoDuration(duration);
-  };
-  const handleDuration1 = (duration) => {
-    // durationが動画の総時間（秒単位）です
-    setVideoDuration1(duration);
-  };
-  const handleDuration2 = (duration) => {
-    // durationが動画の総時間（秒単位）です
-    setVideoDuration2(duration);
-  };
-  const handleDuration3 = (duration) => {
-    // durationが動画の総時間（秒単位）です
-    setVideoDuration3(duration);
-  };
-  const handleDuration4 = (duration) => {
-    // durationが動画の総時間（秒単位）です
-    setVideoDuration4(duration);
-  };
-  const handleDuration5 = (duration) => {
-    // durationが動画の総時間（秒単位）です
-    setVideoDuration5(duration);
-  };
-  const handleDuration6 = (duration) => {
-    // durationが動画の総時間（秒単位）です
-    setVideoDuration6(duration);
-  };
-  const handleDuration7 = (duration) => {
-    // durationが動画の総時間（秒単位）です
-    setVideoDuration7(duration);
-  };
-  const handleDuration8 = (duration) => {
-    // durationが動画の総時間（秒単位）です
-    setVideoDuration8(duration);
-  };
-  const handleDuration9 = (duration) => {
-    // durationが動画の総時間（秒単位）です
-    setVideoDuration9(duration);
-  };
-  const handleDuration10 = (duration) => {
-    // durationが動画の総時間（秒単位）です
-    setVideoDuration10(duration);
-  };
-  const handleDuration11 = (duration) => {
-    // durationが動画の総時間（秒単位）です
-    setVideoDuration11(duration);
-  };
-  const handleDuration12 = (duration) => {
-    // durationが動画の総時間（秒単位）です
-    setVideoDuration12(duration);
-  };
-  const handleDuration13 = (duration) => {
-    // durationが動画の総時間（秒単位）です
-    setVideoDuration13(duration);
-  };
-  const handleDuration14 = (duration) => {
-    // durationが動画の総時間（秒単位）です
-    setVideoDuration14(duration);
-  };
-  const handleDuration15 = (duration) => {
-    // durationが動画の総時間（秒単位）です
-    setVideoDuration15(duration);
-  };
-  const handleDuration16 = (duration) => {
-    // durationが動画の総時間（秒単位）です
-    setVideoDuration16(duration);
-  };
+  // Generate random data
+  const generateData = (n) => {
+    let date = new Date();
+    date.setHours(0, 0, 0, 0);
 
-
-  const handleXDataChange = (newValue, long) => { //左のバー
-    setX_second(long * newValue / 729.28125)
     
-  };
+    const data = [];
+    for (let i = 0; i < combinedArrays['myArray'+ n + '0'].length; ++i) {
+   
+      
+      let value = combinedArrays['myArray'+ n + '0'][i];
+      let value1 = combinedArrays1['myArray'+ n +'1'][i];
+      let value2 = combinedArrays2['myArray'+ n +'2'][i];
+      let value3 = combinedArrays3['myArray'+ n +'3'][i];
+      let value4 = combinedArrays4['myArray'+ n +'4'][i];
+      let value5 = combinedArrays5['myArray'+ n +'5'][i]; //all_zero
+     
+      
+      am5.time.add(date, "day", 1);
+      data.push({
+        date: date.getTime(),
+        value: value,
+        value1: value1,
+        value2: value2,
+        value3: value3,
+        value4: value4,
+        value5: value5,
+       
+      });
+    }
+    return data;
+  }
 
-  const handleYDataChange = (newValue, long) => { //右のバー
-    setY_second(long * newValue / 729.28125)
+  const renderChartRow = (ticker, container, data, n) => {
+    const row = document.createElement("div"); //1行のコンテナ
+    row.style.borderBottom = "1px solid #eee"; //1pxのボーダーを作成
+    row.style.clear = "left"; //改行
+    container.appendChild(row); //親要素にこの行を追加
 
-  };
+    // 画像の要素を作成してスタイルを設定
+    const col = document.createElement("img");
+    col.src = combinedArrays7['myArray'+ n +'7']; // 画像のパスを指定
+    col.style.width = "81.4px"; // 画像の幅
+    col.style.height = "60px"; // 画像の高さを自動調整
+    col.style.padding = "0.27em 1.2em 0em 0.7em"; //上、右、下、左
+    col.style.float = "left";
+    row.appendChild(col); // col3 内に画像を追加
 
-  const handleSDataChange = (newValue, long) => { //真ん中のバー
-    setS_second(long * newValue / 729.28125)
-    playerRef.current.seekTo(long * newValue / 729.28125, 'seconds');//バーと動画を対応させている
+    const col3 = document.createElement("div");
+    col3.style.fontSize = "2em";
+    col3.style.width = "30%";
+    col3.style.height = "35px";
+    col3.style.padding = "0.3em 1em 0.3em 0em";
+    col3.style.float = "left";
+    row.appendChild(col3);
+    createValueChart(col3, data); //グラフ
+
+    const col1 = document.createElement("div");
+    col1.innerHTML = ticker;
+    col1.style.fontSize = "1.8em";
+    col1.style.width = "30%";
+    col1.style.padding = "0.55em 0em 0.2em 1em";
+    col1.style.float = "left";
+    row.appendChild(col1); //タイトル
+
+    
+
+
+    // リンクを作成
+    const link = document.createElement("a");
+    link.href = "/Home_movie/" + n; // リンク先URLを指定
+    link.textContent = ticker + "を見る"; // リンクの表示テキスト
+
+    // スタイルを設定
+    link.style.textDecoration = "none"; // 下線をなくす（リンクスタイルを変更する場合）
+    link.style.color = "blue"; // リンクの色を変更するなど、必要なスタイルを追加
+
+    link.style.fontSize = "1em";
+    link.style.width = "20%";
+    link.style.height = "35px";
+    link.style.padding = "2em 0em 0em 0em";
+    link.style.float = "left";
+
+    row.appendChild(link); // col3 内にリンクを追加b
+ 
 
   }
 
-  const handleCDataChange = (newValue, long) => {//最初から再生  
+  const createValueChart = (container, data) => {
+    const root = am5.Root.new(container);
 
-    setPlaybackRate(newValue);
-    const randomNumber = Math.random();// 0以上1未満の乱数を生成(useEffect)
-    playerRef.current.seekTo(0, 'seconds');//最初から再生
-    //setStopTime(long + randomNumber/10000);//8.022秒後に自動再生をfalseに
-    setIsPlaying(true);// 自動再生を開始
-    //setPlaybackRate(1);
+    root.setThemes([
+      am5themes_Micro.new(root)
+    ]);
 
-  };
+    const chart = root.container.children.push(am5xy.XYChart.new(root, {
+      panX: false,
+      panY: false,
+      wheelX: "none",
+      wheelY: "none"
+    }));
 
-  const handleZDataChange = (newValue, y, z, long) => {//最初から再生  
+    chart.plotContainer.set("wheelable", false);
+    chart.zoomOutButton.set("forceHidden", true);
 
-    setPlaybackRate(newValue);
-    const randomNumber = Math.random();// 0以上1未満の乱数を生成(useEffect)
-    playerRef.current.seekTo(long * y / 729.28125 , 'seconds');//開始地点
-    //setStopTime((long * (z - y) / 729.28125) + (randomNumber / 10000));//何秒後に自動再生をfalseに
-    setIsPlaying(true);// 自動再生を開始
-    //setPlaybackRate(1);
-    //console.log(y);
-    //console.log(z);
-
-  };
-
-  const onMovieStop = () => {//動画を停止させる  
-    setIsPlaying(false);// 自動再生を開始
-    //console.log(isPlaying);
-
-  };
-
-  const handleProgress = (progress) => {
-    setCurrentTime(progress.playedSeconds);
-  };
-
-
-
-  let navigate = useNavigate();
-
-  const logoClick = useCallback((e) => {
-    navigate('/');
-  });
+    
+    const xAxis = chart.xAxes.push(am5xy.DateAxis.new(root, {
+    maxDeviation: 0,
+    baseInterval: { timeUnit: "day", count: 1 },
+    renderer: am5xy.AxisRendererX.new(root, {})
+  }));
 
   
 
+    const yAxis = chart.yAxes.push(am5xy.ValueAxis.new(root, {
+      strictMinMax: true,
+      extraMax: 0.02,
+      extraMin: 0.02,
+      renderer: am5xy.AxisRendererY.new(root, {})
+    }));
 
-  useEffect(() => {//stopTimeが変化したときに呼び出される
-    // X秒後に動画を停止
-    if (stopTime !== null) {
-      const timer = setTimeout(() => {//X秒後に実行するタイマーを設定
-        
-        setIsPlaying(false);
-        //playerRef.current.pause();
-        
-      }, stopTime * 1000 / playbackRate); // 秒をミリ秒に変換
+    const series = chart.series.push(am5xy.LineSeries.new(root, {
+      xAxis: xAxis,
+      yAxis: yAxis,
+      valueYField: "value",
+      valueXField: "date",
+      stroke: am5.color(0x00b300)
+    }));
 
-      return () => clearTimeout(timer);
-    }
-  }, [stopTime]);
- 
+    series.strokes.template.setAll({
+      strokeWidth: 2
+    });
+
+    series.data.setAll(data);
+
+
+    const series1 = chart.series.push(am5xy.LineSeries.new(root, {
+      xAxis: xAxis,
+      yAxis: yAxis,
+      valueYField: "value1",
+      valueXField: "date",
+      stroke: am5.color(0x0000b3) //青
+    }));
+
+    series1.strokes.template.setAll({
+      strokeWidth: 2
+    });
+
+    series1.data.setAll(data);
+
+
+    const series2 = chart.series.push(am5xy.LineSeries.new(root, {
+      xAxis: xAxis,
+      yAxis: yAxis,
+      valueYField: "value2",
+      valueXField: "date",
+      stroke: am5.color(0xFFFF00) //黄
+    }));
+
+    series2.strokes.template.setAll({
+      strokeWidth: 2
+    });
+
+    series2.data.setAll(data);
+
+
+    const series3 = chart.series.push(am5xy.LineSeries.new(root, {
+      xAxis: xAxis,
+      yAxis: yAxis,
+      valueYField: "value3",
+      valueXField: "date",
+      stroke: am5.color(0xFFA500) //オレンジ
+    }));
+
+    series3.strokes.template.setAll({
+      strokeWidth: 2
+    });
+
+    series3.data.setAll(data);
+
+
+    const series4 = chart.series.push(am5xy.LineSeries.new(root, {
+      xAxis: xAxis,
+      yAxis: yAxis,
+      valueYField: "value4",
+      valueXField: "date",
+      stroke: am5.color(0xFF0000) //赤
+    }));
+
+    series4.strokes.template.setAll({
+      strokeWidth: 2
+    });
+
+    series4.data.setAll(data);
+
+
+    const series5 = chart.series.push(am5xy.LineSeries.new(root, {
+      xAxis: xAxis,
+      yAxis: yAxis,
+      valueYField: "value5",
+      valueXField: "date",
+      stroke: am5.color(0x000000) //黒
+    }));
+
+    series5.strokes.template.setAll({
+      strokeWidth: 2
+    });
+
+    series5.data.setAll(data);
+  }
+
   
+
 
   return (
-    <>
-
-      <div className="title30">
-        <ReactPlayer
-          ref={playerRef}
-          url={combinedArrays6['myArray'+ ans +'6']}
-          playing={isPlaying} // isPlayingを使用してビデオの再生を制御
-          controls={true}
-          width="780px"
-          height="575px"
-          playsinline
-          playbackRate={playbackRate}
-          onDuration={handleDuration}
-          onProgress={handleProgress} // 現在の秒数
-  />
-
-
-  <ReactPlayer
-          ref={playerRef}
-          url={myArray201}
-          playing={isPlaying} // isPlayingを使用してビデオの再生を制御
-          controls={true}
-          width="780px"
-          height="575px"
-          playsinline
-          playbackRate={playbackRate}
-          onDuration={handleDuration1}
-          onProgress={handleProgress} // 現在の秒数
-  />
-  <ReactPlayer
-          ref={playerRef}
-          url={myArray202}
-          playing={isPlaying} // isPlayingを使用してビデオの再生を制御
-          controls={true}
-          width="780px"
-          height="575px"
-          playsinline
-          playbackRate={playbackRate}
-          onDuration={handleDuration2}
-          onProgress={handleProgress} // 現在の秒数
-  />
-  <ReactPlayer
-          ref={playerRef}
-          url={myArray203}
-          playing={isPlaying} // isPlayingを使用してビデオの再生を制御
-          controls={true}
-          width="780px"
-          height="575px"
-          playsinline
-          playbackRate={playbackRate}
-          onDuration={handleDuration3}
-          onProgress={handleProgress} // 現在の秒数
-  />
-  <ReactPlayer
-          ref={playerRef}
-          url={myArray204}
-          playing={isPlaying} // isPlayingを使用してビデオの再生を制御
-          controls={true}
-          width="780px"
-          height="575px"
-          playsinline
-          playbackRate={playbackRate}
-          onDuration={handleDuration4}
-          onProgress={handleProgress} // 現在の秒数
-  />
-  <ReactPlayer
-          ref={playerRef}
-          url={myArray205}
-          playing={isPlaying} // isPlayingを使用してビデオの再生を制御
-          controls={true}
-          width="780px"
-          height="575px"
-          playsinline
-          playbackRate={playbackRate}
-          onDuration={handleDuration5}
-          onProgress={handleProgress} // 現在の秒数
-  />
-  <ReactPlayer
-          ref={playerRef}
-          url={myArray206}
-          playing={isPlaying} // isPlayingを使用してビデオの再生を制御
-          controls={true}
-          width="780px"
-          height="575px"
-          playsinline
-          playbackRate={playbackRate}
-          onDuration={handleDuration6}
-          onProgress={handleProgress} // 現在の秒数
-  />
-  <ReactPlayer
-          ref={playerRef}
-          url={myArray207}
-          playing={isPlaying} // isPlayingを使用してビデオの再生を制御
-          controls={true}
-          width="780px"
-          height="575px"
-          playsinline
-          playbackRate={playbackRate}
-          onDuration={handleDuration7}
-          onProgress={handleProgress} // 現在の秒数
-  />
-  <ReactPlayer
-          ref={playerRef}
-          url={myArray208}
-          playing={isPlaying} // isPlayingを使用してビデオの再生を制御
-          controls={true}
-          width="780px"
-          height="575px"
-          playsinline
-          playbackRate={playbackRate}
-          onDuration={handleDuration8}
-          onProgress={handleProgress} // 現在の秒数
-  />
-  <ReactPlayer
-          ref={playerRef}
-          url={myArray209}
-          playing={isPlaying} // isPlayingを使用してビデオの再生を制御
-          controls={true}
-          width="780px"
-          height="575px"
-          playsinline
-          playbackRate={playbackRate}
-          onDuration={handleDuration9}
-          onProgress={handleProgress} // 現在の秒数
-  />
-  <ReactPlayer
-          ref={playerRef}
-          url={myArray210}
-          playing={isPlaying} // isPlayingを使用してビデオの再生を制御
-          controls={true}
-          width="780px"
-          height="575px"
-          playsinline
-          playbackRate={playbackRate}
-          onDuration={handleDuration10}
-          onProgress={handleProgress} // 現在の秒数
-  />
-  <ReactPlayer
-          ref={playerRef}
-          url={myArray211}
-          playing={isPlaying} // isPlayingを使用してビデオの再生を制御
-          controls={true}
-          width="780px"
-          height="575px"
-          playsinline
-          playbackRate={playbackRate}
-          onDuration={handleDuration11}
-          onProgress={handleProgress} // 現在の秒数
-  />
-  <ReactPlayer
-          ref={playerRef}
-          url={myArray212}
-          playing={isPlaying} // isPlayingを使用してビデオの再生を制御
-          controls={true}
-          width="780px"
-          height="575px"
-          playsinline
-          playbackRate={playbackRate}
-          onDuration={handleDuration12}
-          onProgress={handleProgress} // 現在の秒数
-  />
-  <ReactPlayer
-          ref={playerRef}
-          url={myArray213}
-          playing={isPlaying} // isPlayingを使用してビデオの再生を制御
-          controls={true}
-          width="780px"
-          height="575px"
-          playsinline
-          playbackRate={playbackRate}
-          onDuration={handleDuration13}
-          onProgress={handleProgress} // 現在の秒数
-  />
-  <ReactPlayer
-          ref={playerRef}
-          url={myArray214}
-          playing={isPlaying} // isPlayingを使用してビデオの再生を制御
-          controls={true}
-          width="780px"
-          height="575px"
-          playsinline
-          playbackRate={playbackRate}
-          onDuration={handleDuration14}
-          onProgress={handleProgress} // 現在の秒数
-  />
-  <ReactPlayer
-          ref={playerRef}
-          url={myArray215}
-          playing={isPlaying} // isPlayingを使用してビデオの再生を制御
-          controls={true}
-          width="780px"
-          height="575px"
-          playsinline
-          playbackRate={playbackRate}
-          onDuration={handleDuration15}
-          onProgress={handleProgress} // 現在の秒数
-  />
-  <ReactPlayer
-          ref={playerRef}
-          url={myArray216}
-          playing={isPlaying} // isPlayingを使用してビデオの再生を制御
-          controls={true}
-          width="780px"
-          height="575px"
-          playsinline
-          playbackRate={playbackRate}
-          onDuration={handleDuration16}
-          onProgress={handleProgress} // 現在の秒数
-  />
-  
-        
-         <div className="scrollable-list">
-
-         <a onClick= {logoClick} >
-            <img src={image}  width={140} height={80} alt="Logo" />
-         </a>
-         <a className="white-title22">『私』『父』『車』『買う』『しました』</a> <br></br>
-
-         <a onClick= {logoClick} >
-            <img src={image}  width={140} height={80} alt="Logo" />
-         </a>
-         <a className="white-title22">『私』『あなた』『好き』</a><br></br>
-
-        <a onClick= {logoClick} >
-            <img src={image}  width={140} height={80} alt="Logo" />
-        </a>
-        <a className="white-title22">『私』『兄』『仕事』『行く』</a> <br></br>
-
-        <a onClick= {logoClick} >
-            <img src={image}  width={140} height={80} alt="Logo" />
-        </a>
-        <a className="white-title22">『父』『映画』『見る』『好き』</a><br></br>
-
-        <a onClick= {logoClick} >
-            <img src={image}  width={140} height={80} alt="Logo" />
-        </a>
-        <a className="white-title22">『弟』『海』『遊ぶ』『行く』</a><br></br>
-
-        <a onClick= {logoClick} >
-            <img src={image}  width={140} height={80} alt="Logo" />
-        </a>
-        <a className="white-title22">『兄』『趣味』『サッカー』</a><br></br>
-
-        <a onClick= {logoClick} >
-            <img src={image}  width={140} height={80} alt="Logo" />
-        </a>
-        <a className="white-title22">『母』『仕事』『行く』</a><br></br>
-
-        <a onClick= {logoClick} >
-            <img src={image}  width={140} height={80} alt="Logo" />
-        </a>
-        <a className="white-title22">『私』『山』『行く』</a><br></br>
-
-        <a onClick= {logoClick} >
-            <img src={image}  width={140} height={80} alt="Logo" />
-        </a>
-        <a className="white-title22">『あなた』『サッカー』『見る』</a><br></br>
-
-        <a onClick= {logoClick} >
-            <img src={image}  width={140} height={80} alt="Logo" />
-        </a>
-        <a className="white-title22">『あなた』『山』『遊ぶ』『しました』</a>
-  
-      </div> 
-      </div>
-
-      <div className="title31">
-
-     
-      <BarComponent
-        onXDataChange={handleXDataChange} // 新しい引数を渡す
-        onYDataChange={handleYDataChange}
-        onCDataChange={handleCDataChange}
-        onZDataChange={handleZDataChange}
-        onSDataChange={handleSDataChange}
-        onMovieStop = {onMovieStop}
-        
-        //scrollValue={scrollValue} // 再生位置
-        //playbackRate={playbackRate} // 動画の再生速度
-        ///onXChange={handleXChange} // クリックイベントを処理するコールバックを渡す
-      />
-
-      <div >
-  
-      <a className="title33">バー間秒数: {y_second ? 
-            (y_second - x_second).toFixed(3) + ' 秒' 
-            : (videoDuration - x_second).toFixed(3) + ' 秒'}</a>
-
-     <a className="title22">現在の時間: {currentTime.toFixed(3)} seconds</a><br></br>
-     <div>
-          <p>動画の総時間1: {videoDuration1} 秒</p>
-          <p>動画の総時間2: {videoDuration2} 秒</p>
-          <p>動画の総時間3: {videoDuration3} 秒</p>
-          <p>動画の総時間4: {videoDuration4} 秒</p>
-          <p>動画の総時間5: {videoDuration5} 秒</p>
-          <p>動画の総時間6: {videoDuration6} 秒</p>
-          <p>動画の総時間7: {videoDuration7} 秒</p>
-          <p>動画の総時間8: {videoDuration8} 秒</p>
-          <p>動画の総時間9: {videoDuration9} 秒</p>
-          <p>動画の総時間10: {videoDuration10} 秒</p>
-          <p>動画の総時間11: {videoDuration11} 秒</p>
-          <p>動画の総時間12: {videoDuration12} 秒</p>
-          <p>動画の総時間13: {videoDuration13} 秒</p>
-          <p>動画の総時間14: {videoDuration14} 秒</p>
-          <p>動画の総時間15: {videoDuration15} 秒</p>
-          <p>動画の総時間16: {videoDuration16} 秒</p>
-         
-        </div>
-      
-      <a className="green-square"></a><a className="white-title21">{myArray5[0]} : {roundedNum}</a>
-      <a className="blue-square"></a><a className="white-title21">{myArray5[1]} : {roundedNum1}</a><br></br>
-      <a className="yellow-square"></a><a className="white-title21">{myArray5[2]} : {roundedNum2}</a>
-      <a className="orange-square"></a><a className="white-title21">{myArray5[3]} : {roundedNum3}</a><br></br>
-      <a className="red-square"></a><a className="white-title21">{myArray5[4]} : {roundedNum4}</a>
-      
-      </div> 
-
-      </div>
-      
-    </>
+    <div id="chartdiv" style={{ width: '100%', height: '500px' }}></div>
   );
 };
 
-export default App;
+export default StockCharts;

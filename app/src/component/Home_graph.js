@@ -1,10 +1,9 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect} from 'react';
 import * as am5 from '@amcharts/amcharts5';
 import './Home.css';
 import * as am5xy from '@amcharts/amcharts5/xy';
 import {useParams } from 'react-router-dom';
-import { Button, Root, Rectangle, color, Circle,Ellipse,Polygon } from '@amcharts/amcharts5';
-
+import axios from 'axios';
 
 import myArray10 from './datafile/data1/1_outputs0.js';
 import myArray11 from './datafile/data1/1_outputs1.js'; 
@@ -162,21 +161,14 @@ import myArray196 from './datafile/data19/19_outputs_allone.js';
 //onXDataChange, onYDataChange, onCDataChange(graph➡home)
 const Chart = ({ onXDataChange, onYDataChange, onCDataChange, onZDataChange, onSDataChange, onMovieStop}) => {
   
-  const [videoDuration, setVideoDuration] = useState(0);
-  const [x_second, setX_second] = useState(0);
-  const [y_second, setY_second] = useState(0);
-  const [z_second, setZ_second] = useState(0);
-  const [X, setX] = useState(0);
-  const [Y, setY] = useState(0);
-  const [Z, setZ] = useState(0);
-  const {ans} = useParams();
+  const {ans} = useParams(); //何番目の動画か
 
   useEffect(() => {
 
     const videoElement = document.createElement('video');
-    let long = 10;
-    let start = 0;
-    let end = 0;
+    let long = 10; //動画の長さ
+    let start = 0; //startバー(0-1)
+    let end = 0; //endバー(0-1)
     let animationActive = false;// アニメーションを制御するフラグ
     let y = 0; //再生箇所(start)
     let z = 0; //再生箇所(end)
@@ -215,10 +207,7 @@ const Chart = ({ onXDataChange, onYDataChange, onCDataChange, onZDataChange, onS
     let myArray6 = combinedArrays6['myArray'+ ans +'6'];
     
     videoElement.onloadedmetadata = () => {
-      console.log('動画の秒数:', videoElement.duration);
-      // ここでduration（秒数）を利用して何かしらの処理を行うことができます
-      long = videoElement.duration;
-      setVideoDuration(videoElement.duration);
+      long = videoElement.duration; //動画の長さ
     };
 
     videoElement.src = require('./datafile/data'+ans+'/A'+ans+'1.mp4'); 
@@ -249,15 +238,33 @@ const Chart = ({ onXDataChange, onYDataChange, onCDataChange, onZDataChange, onS
       return button;
     };
 
+    const createButton3 = () => {
+      const button = document.createElement('button');
+      button.innerText = '動画保存';
+
+      const inputContainer = document.getElementById('input-container');
+      const existingInput = inputContainer.querySelector('input');
+      
+      if (!existingInput) {createInput();}
+      button.addEventListener('click', () => handleButtonClick3());
+      document.getElementById('button-container3').appendChild(button);
+      return button;
+    };
+
+    const createInput = () => {
+      const input = document.createElement('input');
+      input.setAttribute('type', 'text');
+      input.setAttribute('placeholder', 'Enter Name');
+      document.getElementById('input-container').appendChild(input);
+      return input;
+    };
+
     let scrollValue = 100;
 
    
     const handleScrollChange = (event) => {
       scrollValue = event.target.value;
       
-  // スクロールバーの値に基づいてグラフの表示範囲を更新
-  // 例: グラフが表示するデータを変更するロジック
-  console.log(event.target.value);
     };
     
     // スクロールバーの初期化
@@ -605,10 +612,6 @@ const Chart = ({ onXDataChange, onYDataChange, onCDataChange, onZDataChange, onS
 
 
     
-    
-
-
-
     //resizeButtonを定義する
     const resizeButton = am5.Button.new(root, {
       themeTags: ["resize", "horizontal"], //ボタンの外観や動作をカスタマイズ
@@ -617,9 +620,7 @@ const Chart = ({ onXDataChange, onYDataChange, onCDataChange, onZDataChange, onS
       icon: am5.Graphics.new(root, {
         themeTags: ["icon"],
         
-     
       })
-
     });
 
     const resizeButton2 = am5.Button.new(root, {
@@ -636,10 +637,6 @@ const Chart = ({ onXDataChange, onYDataChange, onCDataChange, onZDataChange, onS
       width: 20,
       height: 20,
     });
-
- 
-    
-
 
 
     //タイムスクロールバーをy軸の範囲に固定
@@ -709,8 +706,6 @@ const Chart = ({ onXDataChange, onYDataChange, onCDataChange, onZDataChange, onS
       let rangeValue = 0;
       let animationStart; 
       let animationDuration = ((long * 1000) * (z - y)) / (729.28125 * (scrollValue / 100)); // 動画時間 * スライド間計算 / 倍速
-      console.log(long)
-      console.log("animationDuration",animationDuration)
 
       function animateRangeExpansion(timestamp) {
         if (!animationStart) {
@@ -786,7 +781,6 @@ const Chart = ({ onXDataChange, onYDataChange, onCDataChange, onZDataChange, onS
         resizeButton.isAnimation = false;//状態の切り替え(この関数のみ)
         animationActive = false; //カウントを終了するためのフラグ
         onMovieStop();
-        console.log("clear");
       }
       else if(!resizeButton.isAnimation && !animationActive){//再生
         //button.innerText = '一時停止';
@@ -796,13 +790,33 @@ const Chart = ({ onXDataChange, onYDataChange, onCDataChange, onZDataChange, onS
         start1 = start;
 
         handleButtonClick4();
-        console.log("clear1");
 
       }
-      else{
-        console.log("clear2");
+    }
 
-      }
+    //動画保存
+    function handleButtonClick3() {
+
+      // input要素の値を取得
+      const inputValue = document.getElementById('input-container').querySelector('input').value;
+
+      // コマンドをプログラムで設定
+      let command1 = `C:/Users/mno41/multiple_graph/app/node_modules/ffmpeg-static/ffmpeg.exe -ss `; //使うツール
+      let command2 =` -i "C:/Users/mno41/multiple_graph/app/src/component/datafile/data` + ans + `/A` + ans + `1.mp4" -t `; //コピー元動画
+      let command3 = ` -c:v copy -c:a copy "C:/Users/mno41/multiple_graph/app/src/component/datafile/record_movie/` + inputValue + `.mp4"`; //コピー先動画
+
+      let start_second = (x_data / 729.28125) * long; //始まる時刻
+      let end_second = ((y_data / 729.28125) * long) - ((x_data / 729.28125) * long); //録画時間
+
+      let command = command1 + start_second + (command2) + end_second + (command3);
+
+      const executeCommand = async () => {
+        try {
+          await axios.post('http://localhost:3001/execute-command', { command })
+        } catch (err) {}};
+        executeCommand();
+
+        console.log(command);
     }
 
 
@@ -811,26 +825,16 @@ const Chart = ({ onXDataChange, onYDataChange, onCDataChange, onZDataChange, onS
 
       //グラフのx座標
       const x = resizeButton.x(); 
-      //console.log(x / 729.28125 * 7)//最大座標(729.28125)
 
       x_data = x;
 
-   
-
-      setX_second(long * x / 729.28125);
-
-      //setX_data(x);
       onXDataChange(x, long);
       
       //[0~1]の座標
       const position = xAxis.toAxisPosition(x / chart.plotContainer.width());
 
-      //console.log(position)
       //[1696345200000~1700665200000]の座標
       const newValue = xAxis.positionToValue(position);
-
-      console.log(X)
-      console.log(Y)
 
       //バーの位置を変える
         range.set("value", newValue);
@@ -852,7 +856,6 @@ const Chart = ({ onXDataChange, onYDataChange, onCDataChange, onZDataChange, onS
       const y = resizeButton2.x(); 
       
       y_data = y;
-      setY_second(long * y / 729.28125);
       
       //[0~1]の座標
       const position = xAxis.toAxisPosition(y / chart.plotContainer.width());
@@ -891,9 +894,6 @@ const Chart = ({ onXDataChange, onYDataChange, onCDataChange, onZDataChange, onS
       //バーの位置を変える
       range3.set("value", newValue);
 
-      setZ(z);
-      setZ_second(long * z / 729.28125);
-
       onSDataChange(z, long);
 
       //onYDataChange(y, long);
@@ -924,6 +924,7 @@ const Chart = ({ onXDataChange, onYDataChange, onCDataChange, onZDataChange, onS
     const button = createButton();
     const button1 = createButton1();
     const button2 = createButton2();
+    const button3 = createButton3();
 
     // Clean up when the component unmounts
     return () => {
@@ -937,8 +938,12 @@ const Chart = ({ onXDataChange, onYDataChange, onCDataChange, onZDataChange, onS
       button1.removeEventListener('click', () => {});
       document.getElementById('button-container1').removeChild(button1);
 
-      button1.removeEventListener('click', () => {});
+      button2.removeEventListener('click', () => {});
       document.getElementById('button-container2').removeChild(button2);
+
+      button3.removeEventListener('click', () => {});
+      document.getElementById('button-container3').removeChild(button3);
+
 
       videoElement.onloadedmetadata = null;
     };
@@ -961,6 +966,11 @@ const Chart = ({ onXDataChange, onYDataChange, onCDataChange, onZDataChange, onS
       <a className="title36">
       0.25倍 <a id="scrollbar-container"></a> 1.00倍</a>
 
+      <a className="title37">
+      <a id="input-container"></a></a>
+
+      <a className="title38">
+      <a id="button-container3"></a></a>
 
     <div className="title31">
 
