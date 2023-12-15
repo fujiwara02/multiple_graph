@@ -4,6 +4,10 @@ import torch
 from sklearn.preprocessing import StandardScaler, LabelEncoder
 import codecs
 import numpy as np
+import sys
+import cv2
+import os
+
 
 
 class StaticType(TypedDict):
@@ -17,12 +21,11 @@ OUTPUT_FILE = "C:/Users/mno41/multiple_graph/app/src/component/outputs.pickle"
 
 out: dict[Literal["outputs", "output_lengths", "targets", "target_lengths"], torch.Tensor] = pickle.load(open(OUTPUT_FILE, "rb"))
 
-
-
 static: StaticType = pickle.load(open("C:/Users/mno41/multiple_graph/app/src/component/KSLD1.9.static.pkl", "rb"))
 #C:\Users\mno41\scrollbar_graph\app\src\component
 
-def data_get(idx, number1):
+
+def data_get(idx, number1):#データ番号、ファイル番号
 
   #idx=335の使われている単語の組み合わせ(1次元)
   target = out["targets"][idx, :out["target_lengths"][idx]]
@@ -37,37 +40,35 @@ def data_get(idx, number1):
   #tensorから1要素づつ抜き出す
   target_label_2 = "','" .join(map(str, target_label))   
   
-  #単語ファイル
-  with codecs.open(str(number1) + '_targets_word.js', 'w', encoding='utf-8') as fout:
-    fout.write("const myArray = ['")
-    fout.write(target_label_2)
-    fout.write("']; export default myArray;")
-
-
-  #すべての要素が1のファイルを作成する  
-  with codecs.open(str(number1) + '_outputs_allone.js', 'w', encoding='utf-8') as fout:
-    fout.write("const myArray = [")
-    for cls in range(len(output)-1):
-      fout.write("1,")
-    fout.write("1]; export default myArray;")
-
-
+  
   #すべての要素が0のファイルを作成する
-  with codecs.open(str(number1) + '_outputs_allzero.js', 'w', encoding='utf-8') as fout:
-    fout.write("const myArray = [")
+  with codecs.open(str(number1) + '_outputs.js', 'w', encoding='utf-8') as fout:
+    fout.write("export const myArray")
+    fout.write(str(number1))
+    fout.write("0 = [")
     for cls in range(len(output)-1):
       fout.write("0, ")
-    fout.write("0]; export default myArray;")
+    fout.write("0];")
 
-  #0に初期化する
-  with open(str(number1) + '_outputs0.js', 'w') as fout:  fout.write("const myArray = [0]; export default myArray;")
-  with open(str(number1) + '_outputs1.js', 'w') as fout:  fout.write("const myArray = [0]; export default myArray;")
-  with open(str(number1) + '_outputs2.js', 'w') as fout:  fout.write("const myArray = [0]; export default myArray;")
-  with open(str(number1) + '_outputs3.js', 'w') as fout:  fout.write("const myArray = [0]; export default myArray;")
-  with open(str(number1) + '_outputs4.js', 'w') as fout:  fout.write("const myArray = [0]; export default myArray;")
+  #すべての要素が1のファイルを作成する  
+  with codecs.open(str(number1) + '_outputs.js', 'a', encoding='utf-8') as fout:
+    fout.write("export const myArray")
+    fout.write(str(number1))
+    fout.write("1 = [")
+    for cls in range(len(output)-1):
+      fout.write("1, ")
+    fout.write("1];")
+
+  #単語ファイル
+  with codecs.open(str(number1) + '_outputs.js', 'a', encoding='utf-8') as fout:
+    fout.write("export const myArray")
+    fout.write(str(number1))
+    fout.write("2 = ['")
+    fout.write(target_label_2)
+    fout.write("'];")
 
 
-  for cls in range(target.shape[-1]): #使われている単語の数だけループ
+  for cls in range(target.shape[-1]): #必要な分だけ追加
 
     #使われている単語の番号
     number = target[cls]
@@ -75,60 +76,76 @@ def data_get(idx, number1):
     #2次元目の値がclsだけの1次元目の値のリストを作る
     y = output[..., number] 
 
+    outputs0 = [l.item() for l in y]
 
-    if(cls == 0):
-      #合計を1にするために調節する関数(使わない)
-      outputs = [l.item() for l in output[..., 0] ]
-      #with open(str(number1) + '_outputs.js', 'w') as fout:
-        #fout.write("const myArray = ")
-        #fout.write(str(outputs))
-        #fout.write("; export default myArray;")
-
-
-    if(cls == 0):
-      outputs0 = [l.item() for l in y]
-      with open(str(number1) + '_outputs0.js', 'w') as fout:
-        fout.write("const myArray = ")
-        fout.write(str(outputs0))
-        fout.write("; export default myArray;")
+    with open(str(number1) + '_outputs.js', 'a') as fout:
+      fout.write("export const myArray")
+      fout.write(str(number1))
+      fout.write(str(cls+3))
+      fout.write(" = ")
+      fout.write(str(outputs0))
+      fout.write(";")
       
+  
 
-    if(cls == 1):
-      outputs1 = [l.item() for l in y]
-      with open(str(number1) + '_outputs1.js', 'w') as fout:
-        fout.write("const myArray = ")
-        fout.write(str(outputs1))
-        fout.write("; export default myArray;")
+def data_notget(number1):
+
+  #単語ファイル
+  with codecs.open(str(number1) + '_outputs.js', 'w', encoding='utf-8') as fout:
+    fout.write("export const myArray")
+    fout.write(str(number1))
+    fout.write("7 = [''];")
+
+  for cls in range(7): #0-6
+    with open(str(number1) + '_outputs.js', 'a') as fout:
+      fout.write("export const myArray")
+      fout.write(str(number1))
+      fout.write(str(cls))
+      fout.write(" = ")
+      fout.write("[0]")
+      fout.write(";")
+
+    
+def movie_make(number):
+  # 1. 動画フレームを生成する
+  width, height = 640, 480
+  num_frames = 100
+
+  frames = [np.ones((height, width, 3), dtype=np.uint8) * i for i in range(num_frames)]
+
+  # 2. フレームを連結して動画にする
+  fourcc = cv2.VideoWriter_fourcc(*'mp4v')
+  output_dir = './movie/'
+  os.makedirs(output_dir, exist_ok=True)
+  
+  output_filename = os.path.join(output_dir, f'{number}.mp4')
+  video_writer = cv2.VideoWriter(output_filename, fourcc, 20.0, (width, height))
+
+  for frame in frames:
+    video_writer.write(frame)
+
+  video_writer.release()
+
     
 
-    if(cls == 2):
-      outputs2 = [l.item() for l in y]
-      with open(str(number1) + '_outputs2.js', 'w') as fout:
-        fout.write("const myArray = ")
-        fout.write(str(outputs2))
-        fout.write("; export default myArray;")
-     
+# Main コマンドライン引数を取得
+if len(sys.argv) > 1:
+  number = int(sys.argv[1]) #numberの数だけデータを生成する
 
-    if(cls == 3):
-      outputs3 = [l.item() for l in y]
-      with open(str(number1) + '_outputs3.js', 'w') as fout:
-        fout.write("const myArray = ")
-        fout.write(str(outputs3))
-        fout.write("; export default myArray;")
+  for count in range(19):
+    if(count + 1 <= number):
+      data_get(count,count + 1) #データ番号、ファイル番号
+    else:
+      data_notget(count + 1) #ファイル番号
+      movie_make(count + 1)
     
+else:
+  print("数値を引数として指定してください。")
 
-    if(cls == 4):
-      outputs4 = [l.item() for l in y]
-      with open(str(number1) + '_outputs4.js', 'w') as fout:
-        fout.write("const myArray = ")
-        fout.write(str(outputs4))
-        fout.write("; export default myArray;")
-      
-    
-    
+
+
 #ファイル番号、数値データ
 #data_get(1,1)
-#data_get(20,2)
 #data_get(35,3)
 #data_get(50,4)
 #data_get(65,5)
@@ -147,4 +164,4 @@ def data_get(idx, number1):
 #data_get(260,16)
 #data_get(275,17)
 #data_get(290,18)
-data_get(305,19)
+#data_get(305,19)

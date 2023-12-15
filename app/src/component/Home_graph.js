@@ -5,161 +5,27 @@ import * as am5xy from '@amcharts/amcharts5/xy';
 import {useParams } from 'react-router-dom';
 import axios from 'axios';
 
-import myArray10 from './datafile/data1/1_outputs0.js';
-import myArray11 from './datafile/data1/1_outputs1.js'; 
-import myArray12 from './datafile/data1/1_outputs2.js'; 
-import myArray13 from './datafile/data1/1_outputs3.js'; 
-import myArray14 from './datafile/data1/1_outputs4.js'; 
-import myArray15 from './datafile/data1/1_outputs_allzero.js';
-import myArray16 from './datafile/data1/1_outputs_allone.js';
+import * as dynamicModule1 from './1_outputs.js';
+import * as dynamicModule2 from './2_outputs.js';
+import * as dynamicModule3 from './3_outputs.js';
+import * as dynamicModule4 from './4_outputs.js';
+import * as dynamicModule5 from './5_outputs.js';
+import * as dynamicModule6 from './6_outputs.js';
+import * as dynamicModule7 from './7_outputs.js';
+import * as dynamicModule8 from './8_outputs.js';
+import * as dynamicModule9 from './9_outputs.js';
+import * as dynamicModule10 from './10_outputs.js';
+import * as dynamicModule11 from './11_outputs.js';
+import * as dynamicModule12 from './12_outputs.js';
+import * as dynamicModule13 from './13_outputs.js';
+import * as dynamicModule14 from './14_outputs.js';
+import * as dynamicModule15 from './15_outputs.js';
+import * as dynamicModule16 from './16_outputs.js';
+import * as dynamicModule17 from './17_outputs.js';
+import * as dynamicModule18 from './18_outputs.js';
+import * as dynamicModule19 from './19_outputs.js';
 
-import myArray20 from './datafile/data2/2_outputs0.js';
-import myArray21 from './datafile/data2/2_outputs1.js'; 
-import myArray22 from './datafile/data2/2_outputs2.js'; 
-import myArray23 from './datafile/data2/2_outputs3.js'; 
-import myArray24 from './datafile/data2/2_outputs4.js'; 
-import myArray25 from './datafile/data2/2_outputs_allzero.js';
-import myArray26 from './datafile/data2/2_outputs_allone.js';
-
-import myArray30 from './datafile/data3/3_outputs0.js';
-import myArray31 from './datafile/data3/3_outputs1.js'; 
-import myArray32 from './datafile/data3/3_outputs2.js'; 
-import myArray33 from './datafile/data3/3_outputs3.js'; 
-import myArray34 from './datafile/data3/3_outputs4.js'; 
-import myArray35 from './datafile/data3/3_outputs_allzero.js';
-import myArray36 from './datafile/data3/3_outputs_allone.js';
-
-import myArray40 from './datafile/data4/4_outputs0.js';
-import myArray41 from './datafile/data4/4_outputs1.js'; 
-import myArray42 from './datafile/data4/4_outputs2.js'; 
-import myArray43 from './datafile/data4/4_outputs3.js'; 
-import myArray44 from './datafile/data4/4_outputs4.js'; 
-import myArray45 from './datafile/data4/4_outputs_allzero.js';
-import myArray46 from './datafile/data4/4_outputs_allone.js';
-
-import myArray50 from './datafile/data5/5_outputs0.js';
-import myArray51 from './datafile/data5/5_outputs1.js'; 
-import myArray52 from './datafile/data5/5_outputs2.js'; 
-import myArray53 from './datafile/data5/5_outputs3.js'; 
-import myArray54 from './datafile/data5/5_outputs4.js'; 
-import myArray55 from './datafile/data5/5_outputs_allzero.js';
-import myArray56 from './datafile/data5/5_outputs_allone.js';
-
-import myArray60 from './datafile/data6/6_outputs0.js';
-import myArray61 from './datafile/data6/6_outputs1.js'; 
-import myArray62 from './datafile/data6/6_outputs2.js'; 
-import myArray63 from './datafile/data6/6_outputs3.js'; 
-import myArray64 from './datafile/data6/6_outputs4.js'; 
-import myArray65 from './datafile/data6/6_outputs_allzero.js';
-import myArray66 from './datafile/data6/6_outputs_allone.js';
-
-import myArray70 from './datafile/data7/7_outputs0.js';
-import myArray71 from './datafile/data7/7_outputs1.js'; 
-import myArray72 from './datafile/data7/7_outputs2.js'; 
-import myArray73 from './datafile/data7/7_outputs3.js'; 
-import myArray74 from './datafile/data7/7_outputs4.js'; 
-import myArray75 from './datafile/data7/7_outputs_allzero.js';
-import myArray76 from './datafile/data7/7_outputs_allone.js';
-
-import myArray80 from './datafile/data8/8_outputs0.js';
-import myArray81 from './datafile/data8/8_outputs1.js'; 
-import myArray82 from './datafile/data8/8_outputs2.js'; 
-import myArray83 from './datafile/data8/8_outputs3.js'; 
-import myArray84 from './datafile/data8/8_outputs4.js'; 
-import myArray85 from './datafile/data8/8_outputs_allzero.js';
-import myArray86 from './datafile/data8/8_outputs_allone.js';
-
-import myArray90 from './datafile/data9/9_outputs0.js';
-import myArray91 from './datafile/data9/9_outputs1.js'; 
-import myArray92 from './datafile/data9/9_outputs2.js'; 
-import myArray93 from './datafile/data9/9_outputs3.js'; 
-import myArray94 from './datafile/data9/9_outputs4.js'; 
-import myArray95 from './datafile/data9/9_outputs_allzero.js';
-import myArray96 from './datafile/data9/9_outputs_allone.js';
-
-import myArray100 from './datafile/data10/10_outputs0.js';
-import myArray101 from './datafile/data10/10_outputs1.js'; 
-import myArray102 from './datafile/data10/10_outputs2.js'; 
-import myArray103 from './datafile/data10/10_outputs3.js'; 
-import myArray104 from './datafile/data10/10_outputs4.js'; 
-import myArray105 from './datafile/data10/10_outputs_allzero.js';
-import myArray106 from './datafile/data10/10_outputs_allone.js';
-
-import myArray110 from './datafile/data11/11_outputs0.js';
-import myArray111 from './datafile/data11/11_outputs1.js'; 
-import myArray112 from './datafile/data11/11_outputs2.js'; 
-import myArray113 from './datafile/data11/11_outputs3.js'; 
-import myArray114 from './datafile/data11/11_outputs4.js'; 
-import myArray115 from './datafile/data11/11_outputs_allzero.js';
-import myArray116 from './datafile/data11/11_outputs_allone.js';
-
-import myArray120 from './datafile/data12/12_outputs0.js';
-import myArray121 from './datafile/data12/12_outputs1.js'; 
-import myArray122 from './datafile/data12/12_outputs2.js'; 
-import myArray123 from './datafile/data12/12_outputs3.js'; 
-import myArray124 from './datafile/data12/12_outputs4.js'; 
-import myArray125 from './datafile/data12/12_outputs_allzero.js';
-import myArray126 from './datafile/data12/12_outputs_allone.js';
-
-import myArray130 from './datafile/data13/13_outputs0.js';
-import myArray131 from './datafile/data13/13_outputs1.js'; 
-import myArray132 from './datafile/data13/13_outputs2.js'; 
-import myArray133 from './datafile/data13/13_outputs3.js'; 
-import myArray134 from './datafile/data13/13_outputs4.js'; 
-import myArray135 from './datafile/data13/13_outputs_allzero.js';
-import myArray136 from './datafile/data13/13_outputs_allone.js';
-
-import myArray140 from './datafile/data14/14_outputs0.js';
-import myArray141 from './datafile/data14/14_outputs1.js'; 
-import myArray142 from './datafile/data14/14_outputs2.js'; 
-import myArray143 from './datafile/data14/14_outputs3.js'; 
-import myArray144 from './datafile/data14/14_outputs4.js'; 
-import myArray145 from './datafile/data14/14_outputs_allzero.js';
-import myArray146 from './datafile/data14/14_outputs_allone.js';
-
-import myArray150 from './datafile/data15/15_outputs0.js';
-import myArray151 from './datafile/data15/15_outputs1.js'; 
-import myArray152 from './datafile/data15/15_outputs2.js'; 
-import myArray153 from './datafile/data15/15_outputs3.js'; 
-import myArray154 from './datafile/data15/15_outputs4.js'; 
-import myArray155 from './datafile/data15/15_outputs_allzero.js';
-import myArray156 from './datafile/data15/15_outputs_allone.js';
-
-import myArray160 from './datafile/data16/16_outputs0.js';
-import myArray161 from './datafile/data16/16_outputs1.js'; 
-import myArray162 from './datafile/data16/16_outputs2.js'; 
-import myArray163 from './datafile/data16/16_outputs3.js'; 
-import myArray164 from './datafile/data16/16_outputs4.js'; 
-import myArray165 from './datafile/data16/16_outputs_allzero.js';
-import myArray166 from './datafile/data16/16_outputs_allone.js';
-
-import myArray170 from './datafile/data17/17_outputs0.js';
-import myArray171 from './datafile/data17/17_outputs1.js'; 
-import myArray172 from './datafile/data17/17_outputs2.js'; 
-import myArray173 from './datafile/data17/17_outputs3.js'; 
-import myArray174 from './datafile/data17/17_outputs4.js'; 
-import myArray175 from './datafile/data17/17_outputs_allzero.js';
-import myArray176 from './datafile/data17/17_outputs_allone.js';
-
-import myArray180 from './datafile/data18/18_outputs0.js';
-import myArray181 from './datafile/data18/18_outputs1.js'; 
-import myArray182 from './datafile/data18/18_outputs2.js'; 
-import myArray183 from './datafile/data18/18_outputs3.js'; 
-import myArray184 from './datafile/data18/18_outputs4.js'; 
-import myArray185 from './datafile/data18/18_outputs_allzero.js';
-import myArray186 from './datafile/data18/18_outputs_allone.js';
-
-import myArray190 from './datafile/data19/19_outputs0.js';
-import myArray191 from './datafile/data19/19_outputs1.js'; 
-import myArray192 from './datafile/data19/19_outputs2.js'; 
-import myArray193 from './datafile/data19/19_outputs3.js'; 
-import myArray194 from './datafile/data19/19_outputs4.js'; 
-import myArray195 from './datafile/data19/19_outputs_allzero.js';
-import myArray196 from './datafile/data19/19_outputs_allone.js';
-
-
-//onXDataChange, onYDataChange, onCDataChange(graph➡home)
-const Chart = ({ onXDataChange, onYDataChange, onCDataChange, onZDataChange, onSDataChange, onMovieStop}) => {
+const Chart = ({ onXDataChange, onYDataChange, onZDataChange, onSDataChange, onMovieStop}) => {
   
   const {ans} = useParams(); //何番目の動画か
 
@@ -169,51 +35,29 @@ const Chart = ({ onXDataChange, onYDataChange, onCDataChange, onZDataChange, onS
     let long = 10; //動画の長さ
     let start = 0; //startバー(0-1)
     let end = 0; //endバー(0-1)
-    let animationActive = false;// アニメーションを制御するフラグ
     let y = 0; //再生箇所(start)
     let z = 0; //再生箇所(end)
     let x_data = 0; //バーの位置を保存(start)
     let y_data = 729.28125; //バーの位置を保存(end)
 
+    let animationActive = false;// アニメーションを制御するフラグ
     let start1 = 0; //アニメーション時にstartを保存
     
-    let combinedArrays = { myArray10, myArray20, myArray30, myArray40, myArray50, myArray60, myArray70, myArray80, myArray90,
-      myArray100, myArray110, myArray120, myArray130, myArray140, myArray150, myArray160, myArray170, myArray180, myArray190};
-  
-    let combinedArrays1 = { myArray11, myArray21, myArray31, myArray41, myArray51, myArray61, myArray71, myArray81, myArray91,
-      myArray101, myArray111, myArray121, myArray131, myArray141, myArray151, myArray161, myArray171, myArray181, myArray191};
-  
-    let combinedArrays2 = { myArray12, myArray22, myArray32, myArray42, myArray52, myArray62, myArray72, myArray82, myArray92,
-      myArray102, myArray112, myArray122, myArray132, myArray142, myArray152, myArray162, myArray172, myArray182, myArray192};
-  
-    let combinedArrays3 = { myArray13, myArray23, myArray33, myArray43, myArray53, myArray63, myArray73, myArray83, myArray93,
-      myArray103, myArray113, myArray123, myArray133, myArray143, myArray153, myArray163, myArray173, myArray183, myArray193};
-  
-    let combinedArrays4 = { myArray14, myArray24, myArray34, myArray44, myArray54, myArray64, myArray74, myArray84, myArray94,
-      myArray104, myArray114, myArray124, myArray134, myArray144, myArray154, myArray164, myArray174, myArray184, myArray194};  
-  
-    let combinedArrays5 = { myArray15, myArray25, myArray35, myArray45, myArray55, myArray65, myArray75, myArray85, myArray95,
-      myArray105, myArray115, myArray125, myArray135, myArray145, myArray155, myArray165, myArray175, myArray185, myArray195};
-  
-    let combinedArrays6 = { myArray16, myArray26, myArray36, myArray46, myArray56, myArray66, myArray76, myArray86, myArray96,
-      myArray106, myArray116, myArray126, myArray136, myArray146, myArray156, myArray166, myArray176, myArray186, myArray196};
+    let combinedArrays = { dynamicModule1, dynamicModule2, dynamicModule3, dynamicModule4, dynamicModule5, dynamicModule6, 
+      dynamicModule7, dynamicModule8, dynamicModule9, dynamicModule10, dynamicModule11, dynamicModule12, dynamicModule13, 
+      dynamicModule14, dynamicModule15, dynamicModule16, dynamicModule17, dynamicModule18, dynamicModule19};
 
-    let myArray0 = combinedArrays['myArray'+ ans + '0'];
-    let myArray1 = combinedArrays1['myArray'+ ans +'1'];
-    let myArray2 = combinedArrays2['myArray'+ ans +'2'];
-    let myArray3 = combinedArrays3['myArray'+ ans +'3'];
-    let myArray4 = combinedArrays4['myArray'+ ans +'4'];
-    let myArray5 = combinedArrays5['myArray'+ ans +'5'];
-    let myArray6 = combinedArrays6['myArray'+ ans +'6'];
+    const values1 = Object.values(combinedArrays['dynamicModule' + ans]);
+    let myArray5 = values1[0]; //all_zero
+    let myArray6 = values1[1]; //all_one
     
     videoElement.onloadedmetadata = () => {
       long = videoElement.duration; //動画の長さ
     };
 
-    videoElement.src = require('./datafile/data'+ans+'/A'+ans+'1.mp4'); 
+    videoElement.src = require('./movie/'+ans+'.mp4'); 
 
     
-
     const createButton = () => {
       const button = document.createElement('button');
       button.innerText = '最初から再生';
@@ -261,10 +105,8 @@ const Chart = ({ onXDataChange, onYDataChange, onCDataChange, onZDataChange, onS
 
     let scrollValue = 100;
 
-   
     const handleScrollChange = (event) => {
       scrollValue = event.target.value;
-      
     };
     
     // スクロールバーの初期化
@@ -279,8 +121,6 @@ const Chart = ({ onXDataChange, onYDataChange, onCDataChange, onZDataChange, onS
     // スクロールバーをDOMに追加
     document.getElementById('scrollbar-container').appendChild(scrollbar);
 
-
-
     //　グラフの描画領域を指定
     const root = am5.Root.new("chartdiv");
 
@@ -294,7 +134,6 @@ const Chart = ({ onXDataChange, onYDataChange, onCDataChange, onZDataChange, onS
       
     }));
 
- 
     // 凡例を生成
     const legend = chart.children.push(am5.Legend.new(root, {
       // ここに凡例の設定を追加
@@ -311,7 +150,6 @@ const Chart = ({ onXDataChange, onYDataChange, onCDataChange, onZDataChange, onS
       color: am5.color(0xff621f)
     }]);
 
-
     //x軸をグラフに追加している
     const xAxis = chart.xAxes.push(am5xy.DateAxis.new(root, {
       baseInterval: {
@@ -320,9 +158,6 @@ const Chart = ({ onXDataChange, onYDataChange, onCDataChange, onZDataChange, onS
       },
       renderer: am5xy.AxisRendererX.new(root, {})
     }));
-    
-
-    
 
     //y軸をグラフに追加している
     const yAxis = chart.yAxes.push(am5xy.ValueAxis.new(root, {
@@ -333,218 +168,116 @@ const Chart = ({ onXDataChange, onYDataChange, onCDataChange, onZDataChange, onS
     }));
     
 
-
-    // all_one(start)データを追加
-    const series = chart.series.push(am5xy.LineSeries.new(root, {
+    // all_one(start)スクロールバー用のデータを追加
+    const series_start = chart.series.push(am5xy.LineSeries.new(root, {
       name: "Series", //名前指定
       xAxis: xAxis, //使用するX軸を指定（日付軸）
       yAxis: yAxis, //使用するy軸を指定(値軸)
       valueYField: "value", //valueのデータをx軸にplot
       valueXField: "date", //dataのデータをy軸にplot
       stroke: "",
-      fill: am5.color(0x000000) // 赤色に塗りつぶすための設定
+      fill: am5.color(0x000000) // 黒色に塗りつぶすための設定
 
     }));
     
     // myArrayからのall_one(start)データを代入している
-    const data = myArray6.map((value, index) => ({
+    const data_start = myArray6.map((value, index) => ({
       date:  index * 8400 , //50フレーム50秒(1000)　//50フレーム420秒(8400)
       value: value,
       
     }));
-    series.data.setAll(data);
+    series_start.data.setAll(data_start);
 
     //塗りつぶすのに必要
-    series.fills.template.setAll({
+    series_start.fills.template.setAll({
       fillOpacity: 0.2,
       visible: true,
       
     });
 
 
-
-
-    // all_one(end)データを追加
-    const series6 = chart.series.push(am5xy.LineSeries.new(root, {
+    // all_one(end)スクロールバー用のデータを追加
+    const series_end = chart.series.push(am5xy.LineSeries.new(root, {
       name: "Series", //名前指定
       xAxis: xAxis, //使用するX軸を指定（日付軸）
       yAxis: yAxis, //使用するy軸を指定(値軸)
       valueYField: "value", //valueのデータをx軸にplot
       valueXField: "date", //dataのデータをy軸にplot
       stroke: "",
-      fill: am5.color(0x000000) // 赤色に塗りつぶすための設定
+      fill: am5.color(0x000000) // 黒色に塗りつぶすための設定
     }));
     
     // myArrayからのall_one(end)データを代入している
-    const data6 = myArray6.map((value, index) => ({
+    const data_end = myArray6.map((value, index) => ({
       date:  index * 8400 , //50フレーム50秒(1000)　//50フレーム420秒(8400)
       value: value,
       
     }));
-    series6.data.setAll(data6);
+    series_end.data.setAll(data_end);
 
     //塗りつぶすのに必要
-    series6.fills.template.setAll({
+    series_end.fills.template.setAll({
       fillOpacity: 0.2,
       visible: true
     });
 
 
+    const seriesConfigs = [];
 
-    // all_one(end)データを追加
-    const series7 = chart.series.push(am5xy.LineSeries.new(root, {
-      name: "Series", //名前指定
-      xAxis: xAxis, //使用するX軸を指定（日付軸）
-      yAxis: yAxis, //使用するy軸を指定(値軸)
-      valueYField: "value", //valueのデータをx軸にplot
-      valueXField: "date", //dataのデータをy軸にplot
-      stroke: "",
-      fill: am5.color(0x000000) // 赤色に塗りつぶすための設定
-    }));
-    
-    // myArrayからのall_one(end)データを代入している
-    const data7 = myArray6.map((value, index) => ({
-      date:  index * 8400 , //50フレーム50秒(1000)　//50フレーム420秒(8400)
-      value: value,
-      
-    }));
-    series7.data.setAll(data7);
+for (let i = 3; i < values1.length; i++) {
+  const series = chart.series.push(am5xy.LineSeries.new(root, {
+    name: `Series ${i}`,
+    xAxis: xAxis,
+    yAxis: yAxis,
+    valueYField: `value${i}`,
+    valueXField: "date",
+    stroke: `rgba(${Math.random() * 255},${Math.random() * 255},${Math.random() * 255}, 1)`
+  }));
 
-    //塗りつぶすのに必要
-    series7.fills.template.setAll({
-      fillOpacity: 0.2,
-      visible: false
-    });
+  const data = values1[i].map((value, dataIndex) => ({
+    date: dataIndex * 8400,
+    [`value${i}`]: value
+  }));
 
+  series.data.setAll(data);
 
+  seriesConfigs.push(series);
+  
+}
 
     
 
 
-    // データ0を追加
-    const series0 = chart.series.push(am5xy.LineSeries.new(root, {
-      name: "Series 0", // 新しいデータシリーズの名前
-      xAxis: xAxis,     // 使用するX軸を指定（日付軸）
-      yAxis: yAxis,     // 使用するY軸を指定（値軸）
-      valueYField: "value0", // 新しいデータシリーズのY軸データフィールド
-      valueXField: "date",   // X軸に対応するデータフィールド
-      stroke: "rgba(0,128,0, 1)"// 線の色を緑色に設定
-      
-    }));
-    
-    // 新しいデータ0を代入（myArray2は新しいデータ配列）
-    const data0 = myArray0.map((value, index) => ({
-      date:  index * 8400 , //50フレーム50秒(1000)　//50フレーム420秒(8400)
-      value0: value // 新しいデータシリーズのY軸データ
-    }));
-    series0.data.setAll(data0);
-    
-
-
-    // データ1を追加
-    const series1 = chart.series.push(am5xy.LineSeries.new(root, {
-      name: "Series 1", // 新しいデータシリーズの名前
-      xAxis: xAxis,     // 使用するX軸を指定（日付軸）
-      yAxis: yAxis,     // 使用するY軸を指定（値軸）
-      valueYField: "value1", // 新しいデータシリーズのY軸データフィールド
-      valueXField: "date",   // X軸に対応するデータフィールド
-      stroke: "rgba(0, 0, 128, 1)" // 線の色を青色に設定
-    }));
-    
-    // 新しいデータ1を代入（myArray2は新しいデータ配列）
-    const data1 = myArray1.map((value, index) => ({
-      date:  index * 8400 , //50フレーム50秒(1000)　//50フレーム420秒(8400)
-      value1: value // 新しいデータシリーズのY軸データ
-    }));
-    series1.data.setAll(data1);
-
-
-    // データ2を追加
-    const series2 = chart.series.push(am5xy.LineSeries.new(root, {
-      name: "Series 2", // 新しいデータシリーズの名前
-      xAxis: xAxis,     // 使用するX軸を指定（日付軸）
-      yAxis: yAxis,     // 使用するY軸を指定（値軸）
-      valueYField: "value2", // 新しいデータシリーズのY軸データフィールド
-      valueXField: "date",   // X軸に対応するデータフィールド
-      stroke: "rgba(180, 180, 0, 1)" // 線の色を黄色に設定
-    }));
-    
-    // 新しいデータ2を代入（myArray2は新しいデータ配列）
-    const data2 = myArray2.map((value, index) => ({
-      date:  index * 8400 , //50フレーム50秒(1000)　//50フレーム420秒(8400)
-      value2: value // 新しいデータシリーズのY軸データ
-    }));
-    series2.data.setAll(data2);
-
-
-    // データ3を追加
-    const series3 = chart.series.push(am5xy.LineSeries.new(root, {
-      name: "Series 3", // 新しいデータシリーズの名前
-      xAxis: xAxis,     // 使用するX軸を指定（日付軸）
-      yAxis: yAxis,     // 使用するY軸を指定（値軸）
-      valueYField: "value3", // 新しいデータシリーズのY軸データフィールド
-      valueXField: "date",   // X軸に対応するデータフィールド
-      stroke: "rgba(200, 105, 0, 1)" // 線の色をオレンジ色に設定
-    }));
-    
-    // 新しいデータ3を代入（myArray2は新しいデータ配列）
-    const data3 = myArray3.map((value, index) => ({
-      date:  index * 8400 , //50フレーム50秒(1000)　//50フレーム420秒(8400)
-      value3: value // 新しいデータシリーズのY軸データ
-    }));
-    series3.data.setAll(data3);
-
-
-
-    // データ4を追加
-    const series4 = chart.series.push(am5xy.LineSeries.new(root, {
-      name: "Series 4", // 新しいデータシリーズの名前
-      xAxis: xAxis,     // 使用するX軸を指定（日付軸）
-      yAxis: yAxis,     // 使用するY軸を指定（値軸）
-      valueYField: "value4", // 新しいデータシリーズのY軸データフィールド
-      valueXField: "date",   // X軸に対応するデータフィールド
-      stroke: "rgba(180, 0, 0, 1)" // 線の色を赤色に設定
-    }));
-    
-    // 新しいデータ4を代入（myArray2は新しいデータ配列）
-    const data4 = myArray4.map((value, index) => ({
-      date:  index * 8400 , //50フレーム50秒(1000)　//50フレーム420秒(8400)
-      value4: value // 新しいデータシリーズのY軸データ
-    }));
-    series4.data.setAll(data4);
-
-
-
-     // chart.jsに仕様を合わせるため、緑で上書き
-     const series5 = chart.series.push(am5xy.LineSeries.new(root, {
+     // 黒で上書き
+     const series_black = chart.series.push(am5xy.LineSeries.new(root, {
       name: "Series 5", // 新しいデータシリーズの名前
       xAxis: xAxis,     // 使用するX軸を指定（日付軸）
       yAxis: yAxis,     // 使用するY軸を指定（値軸）
       valueYField: "value5", // 新しいデータシリーズのY軸データフィールド
       valueXField: "date",   // X軸に対応するデータフィールド
-      stroke: "rgba(0, 0, 0, 0.5)", // 線の色を黄色に設定
+      stroke: "rgba(0, 0, 0, 0.5)", // 線の色を黒色に設定
       
     }));
     
     
-    // 新しいデータ4を代入（myArray2は新しいデータ配列）
-    const data5 = myArray5.map((value, index) => ({
+    // 新しいデータを代入（myArray5は新しいデータ配列）
+    const data_black = myArray5.map((value, index) => ({
       date:  index * 8400 , //50フレーム50秒(1000)　//50フレーム420秒(8400)
       value5: value // 新しいデータシリーズのY軸データ
     }));
-    series5.data.setAll(data5);
+    series_black.data.setAll(data_black);
 
 
 
     let rangeDate = new Date();
-    am5.time.add(rangeDate, "day", Math.round(series.dataItems.length / 2));
+    am5.time.add(rangeDate, "day", Math.round(series_start.dataItems.length / 2));
     let rangeTime = rangeDate.getTime();
 
 
 
     //定義(start)
     const seriesRangeDataItem = xAxis.makeDataItem({});
-    const seriesRange = series.createAxisRange(seriesRangeDataItem);
+    const seriesRange = series_start.createAxisRange(seriesRangeDataItem);
 
     //片方だけ塗られている状態にする
     seriesRange.fills.template.setAll({
@@ -552,10 +285,9 @@ const Chart = ({ onXDataChange, onYDataChange, onCDataChange, onZDataChange, onS
       opacity: 0.35
     });
 
-
     //定義(end)
     const seriesRangeDataItem2 = xAxis.makeDataItem({});
-    const seriesRange2 = series6.createAxisRange(seriesRangeDataItem2);
+    const seriesRange2 = series_end.createAxisRange(seriesRangeDataItem2);
 
     //片方だけ塗られている状態にする
     seriesRange2.fills.template.setAll({
@@ -563,29 +295,9 @@ const Chart = ({ onXDataChange, onYDataChange, onCDataChange, onZDataChange, onS
       opacity: 0.35
     });
 
-
-    //定義(start)
+    //定義(middle)
     const seriesRangeDataItem3 = xAxis.makeDataItem({});
-    const seriesRange3 = series7.createAxisRange(seriesRangeDataItem3);
-
-    //片方だけ塗られている状態にする
-    seriesRange3.fills.template.setAll({
-      visible: false,
-      opacity: 0.35
-    });
-
-
-    //最初から塗られている状態にする
-    //xAxis.onPrivate("max", function (value) {
-    //  seriesRangeDataItem.set("endValue", value);
-    //  seriesRangeDataItem.set("value", rangeTime);
-    //});
-
-
-
-    
-    
-
+   
     //タイムスクロールバーを追加
     const range = xAxis.createAxisRange(xAxis.makeDataItem({}));
     const range2 = xAxis.createAxisRange(xAxis.makeDataItem({}));
@@ -689,9 +401,7 @@ const Chart = ({ onXDataChange, onYDataChange, onCDataChange, onZDataChange, onS
     });
 
     resizeButton.isFirstRun = false; // 右バーの初期位置
-
     resizeButton.isAnimation = true; // アニメーションを停止
-
 
   
     //まとめ
@@ -708,7 +418,7 @@ const Chart = ({ onXDataChange, onYDataChange, onCDataChange, onZDataChange, onS
       let animationDuration = ((long * 1000) * (z - y)) / (729.28125 * (scrollValue / 100)); // 動画時間 * スライド間計算 / 倍速
 
       function animateRangeExpansion(timestamp) {
-        if (!animationStart) {
+        if (!animationStart) { //アニメーション動作中は作動しない
           animationStart = timestamp;
         }
 
@@ -717,7 +427,6 @@ const Chart = ({ onXDataChange, onYDataChange, onCDataChange, onZDataChange, onS
 
         rangeValue = Math.min(progressPercentage, 1);
        
-        
         const newValue = xAxis.positionToValue( y / 729.28125 + rangeValue * (z - y) / 729.28125);//加算(start位置)、掛け算(長さ)
         range3.set("value", newValue);
           
@@ -726,16 +435,14 @@ const Chart = ({ onXDataChange, onYDataChange, onCDataChange, onZDataChange, onS
         if(rangeValue == 1){
           onMovieStop();
           animationActive = false;
-
         }
-          
 
         if (progressPercentage < 1 && animationActive) {
           requestAnimationFrame(animateRangeExpansion);
         }
       }
 
-      onZDataChange(scrollValue / 100, y, z, long); //再生速度、start、end、動画の長さ
+      onZDataChange(scrollValue / 100, y, long); //再生速度、start、end、動画の長さ
 
       // アニメーション(スクロールバー)を開始
       requestAnimationFrame(animateRangeExpansion);
@@ -744,13 +451,13 @@ const Chart = ({ onXDataChange, onYDataChange, onCDataChange, onZDataChange, onS
     //最初から再生
     function handleButtonClick() {
 
-      if(!animationActive){
+      if(!animationActive){ //アニメーション動作中は作動しない
         y = 0;
         z = 729.28125;
 
         start = 0;
         end = 1;
-        start1 = start; //アニメーション
+        start1 = start; 
       
         handleButtonClick4();
       }
@@ -777,20 +484,15 @@ const Chart = ({ onXDataChange, onYDataChange, onCDataChange, onZDataChange, onS
     function handleButtonClick2() {
 
       if(resizeButton.isAnimation && animationActive){//一時停止
-        //button.innerText = '再開';
         resizeButton.isAnimation = false;//状態の切り替え(この関数のみ)
         animationActive = false; //カウントを終了するためのフラグ
         onMovieStop();
       }
       else if(!resizeButton.isAnimation && !animationActive){//再生
-        //button.innerText = '一時停止';
-
         y = start * 729.28125;
         z = end * 729.28125;
         start1 = start;
-
         handleButtonClick4();
-
       }
     }
 
@@ -816,7 +518,6 @@ const Chart = ({ onXDataChange, onYDataChange, onCDataChange, onZDataChange, onS
         } catch (err) {}};
         executeCommand();
 
-        console.log(command);
     }
 
 
@@ -837,7 +538,7 @@ const Chart = ({ onXDataChange, onYDataChange, onCDataChange, onZDataChange, onS
       const newValue = xAxis.positionToValue(position);
 
       //バーの位置を変える
-        range.set("value", newValue);
+      range.set("value", newValue);
 
       //start
       seriesRangeDataItem.set("value", newValue);
