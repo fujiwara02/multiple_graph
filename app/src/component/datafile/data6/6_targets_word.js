@@ -1,1 +1,0 @@
-const myArray = ['兄','趣味','サッカー']; export default myArray;
