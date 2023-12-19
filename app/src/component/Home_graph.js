@@ -25,7 +25,9 @@ import * as dynamicModule17 from './17_outputs.js';
 import * as dynamicModule18 from './18_outputs.js';
 import * as dynamicModule19 from './19_outputs.js';
 
-const Chart = ({ onXDataChange, onYDataChange, onZDataChange, onSDataChange, onMovieStop}) => {
+import * as colorModule from './color_file.js';
+
+const Chart = ({randomIndex, onXDataChange, onYDataChange, onZDataChange, onSDataChange, onMovieStop}) => {
   
   const {ans} = useParams(); //何番目の動画か
 
@@ -224,14 +226,18 @@ const Chart = ({ onXDataChange, onYDataChange, onZDataChange, onSDataChange, onM
 
     const seriesConfigs = [];
 
+//let randomIndex = Math.floor(Math.random() * colorModule.colors.length);
 for (let i = 3; i < values1.length; i++) {
+  let inf1 = colorModule.colors[randomIndex % colorModule.colors.length];
+  randomIndex = randomIndex + 1;
+
   const series = chart.series.push(am5xy.LineSeries.new(root, {
     name: `Series ${i}`,
     xAxis: xAxis,
     yAxis: yAxis,
     valueYField: `value${i}`,
     valueXField: "date",
-    stroke: `rgba(${Math.random() * 255},${Math.random() * 255},${Math.random() * 255}, 1)`
+    stroke: `rgba(${inf1[0]},${inf1[1]},${inf1[2]}, 1)`
   }));
 
   const data = values1[i].map((value, dataIndex) => ({

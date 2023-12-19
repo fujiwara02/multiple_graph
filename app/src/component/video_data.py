@@ -133,11 +133,12 @@ if len(sys.argv) > 1:
   number = int(sys.argv[1]) #numberの数だけデータを生成する
 
   for count in range(19):
-    if(count + 1 <= number):
-      data_get(count,count + 1) #データ番号、ファイル番号
-    else:
-      data_notget(count + 1) #ファイル番号
-      movie_make(count + 1)
+    if(count + 1 <= number): #データ番号、ファイル番号
+      data_get(count,count + 1) #データ作成
+
+    else: #ファイル番号
+      data_notget(count + 1) #空データ作成
+      movie_make(count + 1) #空動画作成
     
 else:
   print("数値を引数として指定してください。")

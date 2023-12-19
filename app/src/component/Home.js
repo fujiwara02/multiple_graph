@@ -53,24 +53,23 @@ const StockCharts = () => {
       "009-あなたはサッカーを見る","010-あなたは山で遊びました","011-私の兄は車を買いました",
       "012-私は兄が好き","013-私の父は仕事に行く","014-母は山に遊びに行く",
       "015-父の趣味はサッカー","016-兄は仕事に行く","017-父は海に行きました","018-弟はサッカーを見る",
-      "019-私は山で遊びました"
+      
     ];
 
 
-    let n = 0;
-    tickers.forEach(ticker => {
+    const numberOfIterations = 18; // Replace with the desired number of iterations
 
-      n = n + 1;
-      const data = generateData(n); //20個の点
+for (let n = 1; n <= numberOfIterations; n++) {
+  const data = generateData(n);
 
-      const chartContainer = document.createElement('div');//行の要素
-      chartContainer.style.width = '100%'; //各要素の横幅
-      chartContainer.style.height = '50px'; //各要素の縦幅
-      
-      document.getElementById('chartdiv').appendChild(chartContainer); //chartに描画
-      renderChartRow(ticker, chartContainer, data, n); //要素を指定
+  const chartContainer = document.createElement('div'); // 行の要素
+  chartContainer.style.width = '100%'; // 各要素の横幅
+  chartContainer.style.height = '50px'; // 各要素の縦幅
 
-    });
+  document.getElementById('chartdiv').appendChild(chartContainer); // chartに描画
+  renderChartRow(tickers[n-1], chartContainer, data, n); // 要素を指定
+}
+
 
   }, []);
 
@@ -90,15 +89,14 @@ const StockCharts = () => {
     
     const data = [];
     const values1 = Object.values(combinedArrays['dynamicModule' + n]);
-    console.log(values1)
     for (let i = 0; i < values1[0].length; ++i) {
 
       
       let value = values1[3][i];
       let value1 = values1[4][i];
       let value2 = values1[5][i];
-      let value3 = values1[6][i];
-      let value4 = values1[7][i];
+      let value3 = values1[5][i];
+      let value4 = values1[5][i];
       let value5 = values1[0][i]; //all_zero
      
       
