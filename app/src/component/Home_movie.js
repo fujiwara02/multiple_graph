@@ -5,9 +5,8 @@ import BarComponent from './Home_graph.js';
 import ReactPlayer from 'react-player';
 import './Home.css';
 import * as colorModule from './color_file.js';
-import * as importFiles from './import.js';
-
-
+import {video_number} from './number_outputs.js';
+import movieList from './MovieList';
 
 
 const App = () => {
@@ -20,7 +19,6 @@ const App = () => {
   const [y_second, setY_second] = useState(0);
   const [s_second, setS_second] = useState(0);
   const {ans} = useParams();
-  const [animation, setAnimation] = useState(true); 
   let [randomIndex, setRandomIndex] = useState(
     Math.floor(Math.random() * colorModule.colors.length)
   );
@@ -33,20 +31,21 @@ const App = () => {
   };
 
   const dynamicModules = {};
+  const image = {};
+  const video = {};
 
-for (let i = 1; i <= 19; i++) {
+
+
+for (let i = 1; i <= video_number; i++) {
   dynamicModules[`dynamicModule${i}`] = require(`./${i}_outputs.js`);
+  image[`image${i}`] = require(`./image/${i}.jpg`);
+  video[`video${i}`] = require(`./movie/${movieList[i]}.mp4`);
 }
-
-// Now you can access the modules using dynamicModules.dynamicModule1, dynamicModules.dynamicModule2, etc.
-
-
-
 
   const myArrayList = [];
 
-  for (let ans = 1; ans <= 19; ans++) {
-    const values1 = Object.values(dynamicModules['dynamicModule' + ans]);
+  for (let count = 1; count <= video_number; count++) {
+    const values1 = Object.values(dynamicModules['dynamicModule' + count]);
     let myArray = values1[2];
     myArrayList.push(myArray);
   }
@@ -125,11 +124,8 @@ for (let i = 1; i <= 19; i++) {
     return <>{squares}</>;
   };
 
-  const data = [
-    {},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{}];
+  const data = [{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{}];
   
-  // Specify the number of items to display
-  const numberOfItemsToShow = 17;
 
   const generateLogoClickHandler = (ans) => {
     return () => {
@@ -144,7 +140,7 @@ for (let i = 1; i <= 19; i++) {
       <div className="title30">
         <ReactPlayer
           ref={playerRef}
-          url={importFiles['myArray' + ans + '6']}
+          url={video['video' + ans]}
           playing={isPlaying} // isPlayingを使用してビデオの再生を制御
           controls={true}
           width="780px"
@@ -156,17 +152,19 @@ for (let i = 1; i <= 19; i++) {
 
          <div className="scrollable-list">
 
-         {data.slice(0, numberOfItemsToShow).map((item,index) => (
-        <div key={index}>
-          <a onClick={generateLogoClickHandler(index + 1)}>
-            <img src={importFiles['myArray'+ (index + 1) +'8']} width={120} height={88} alt="Logo" />
-          </a>
-          <a onClick={generateLogoClickHandler(index + 1)} className="white-title22">
-            {myArrayList[index]}
-          </a>
-          <br />
-        </div>
-      ))}
+         {/* Assuming video_number is defined */}
+{Array.from({ length: video_number }, (_, index) => (
+  <div key={index}>
+    <a onClick={generateLogoClickHandler(index + 1)}>
+      <img src={image[`image${index + 1}`]} width={120} height={88} alt="Logo" />
+    </a>
+    <a onClick={generateLogoClickHandler(index + 1)} className="white-title22">
+      {myArrayList[index]}
+    </a>
+    <br />
+  </div>
+))}
+
 
       </div> 
       </div>

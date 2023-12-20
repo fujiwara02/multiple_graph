@@ -7,14 +7,12 @@ import numpy as np
 import sys
 import cv2
 import os
-
-
+from movieList import movie_index
 
 class StaticType(TypedDict):
   terms: LabelEncoder #数値に変える
   scaler: StandardScaler #比率を統一する
   seq_len: int
-
 
 #outputs[338][86][231]　index, time, kind
 OUTPUT_FILE = "C:/Users/mno41/multiple_graph/app/src/component/outputs.pickle" 
@@ -40,11 +38,9 @@ def data_get(idx, number1):#データ番号、ファイル番号
   #tensorから1要素づつ抜き出す
   target_label_2 = "','" .join(map(str, target_label))   
   
-  
   #すべての要素が0のファイルを作成する
   with codecs.open(str(number1) + '_outputs.js', 'w', encoding='utf-8') as fout:
     fout.write("export const myArray")
-    fout.write(str(number1))
     fout.write("0 = [")
     for cls in range(len(output)-1):
       fout.write("0, ")
@@ -53,7 +49,6 @@ def data_get(idx, number1):#データ番号、ファイル番号
   #すべての要素が1のファイルを作成する  
   with codecs.open(str(number1) + '_outputs.js', 'a', encoding='utf-8') as fout:
     fout.write("export const myArray")
-    fout.write(str(number1))
     fout.write("1 = [")
     for cls in range(len(output)-1):
       fout.write("1, ")
@@ -62,11 +57,9 @@ def data_get(idx, number1):#データ番号、ファイル番号
   #単語ファイル
   with codecs.open(str(number1) + '_outputs.js', 'a', encoding='utf-8') as fout:
     fout.write("export const myArray")
-    fout.write(str(number1))
     fout.write("2 = ['")
     fout.write(target_label_2)
     fout.write("'];")
-
 
   for cls in range(target.shape[-1]): #必要な分だけ追加
 
@@ -80,89 +73,59 @@ def data_get(idx, number1):#データ番号、ファイル番号
 
     with open(str(number1) + '_outputs.js', 'a') as fout:
       fout.write("export const myArray")
-      fout.write(str(number1))
       fout.write(str(cls+3))
       fout.write(" = ")
       fout.write(str(outputs0))
       fout.write(";")
       
-  
 
-def data_notget(number1):
-
+def number_get(number1):
   #単語ファイル
-  with codecs.open(str(number1) + '_outputs.js', 'w', encoding='utf-8') as fout:
-    fout.write("export const myArray")
+  with codecs.open('number_outputs.js', 'w', encoding='utf-8') as fout:
+    fout.write("export const video_number = ")
+    fout.write("[")
     fout.write(str(number1))
-    fout.write("7 = [''];")
+    fout.write("];")
 
-  for cls in range(7): #0-6
-    with open(str(number1) + '_outputs.js', 'a') as fout:
-      fout.write("export const myArray")
-      fout.write(str(number1))
-      fout.write(str(cls))
-      fout.write(" = ")
-      fout.write("[0]")
-      fout.write(";")
 
-    
-def movie_make(number):
-  # 1. 動画フレームを生成する
-  width, height = 640, 480
-  num_frames = 100
+def MovieList_get():
+  #単語ファイル
+  with codecs.open('MovieList.js', 'w', encoding='utf-8') as fout:
+    fout.write("const movie_index = {")
 
-  frames = [np.ones((height, width, 3), dtype=np.uint8) * i for i in range(num_frames)]
+    for count in range(len(movie_index)):
+      fout.write(str(count + 1))
+      fout.write(": '")
+      fout.write(movie_index[count + 1])
+      fout.write("',")
 
-  # 2. フレームを連結して動画にする
-  fourcc = cv2.VideoWriter_fourcc(*'mp4v')
-  output_dir = './movie/'
-  os.makedirs(output_dir, exist_ok=True)
+    fout.write("}; module.exports = movie_index;")
+
+
+def capture_single_frame(video_path, output_path):
+
+    cap = cv2.VideoCapture(video_path)
+    if not cap.isOpened():
+        print("Error: Could not open video file.")
+        return
+
+    ret, frame = cap.read()
+    if not ret:
+        print("Error: Could not read frame.")
+        return
+
+    cv2.imwrite(output_path, frame)
+    cap.release()
+
+
+number_get(len(movie_index)) #ファイル数の入手
+MovieList_get() #動画のリスト
   
-  output_filename = os.path.join(output_dir, f'{number}.mp4')
-  video_writer = cv2.VideoWriter(output_filename, fourcc, 20.0, (width, height))
+for count in range(len(movie_index)):
+  data_get(count,count + 1) #データ番号、ファイル番号
 
-  for frame in frames:
-    video_writer.write(frame)
+  video_path = f"./movie/{movie_index[count + 1]}.mp4"
+  output_path = f"./image/{count + 1}.jpg"
 
-  video_writer.release()
+  capture_single_frame(video_path, output_path)
 
-    
-
-# Main コマンドライン引数を取得
-if len(sys.argv) > 1:
-  number = int(sys.argv[1]) #numberの数だけデータを生成する
-
-  for count in range(19):
-    if(count + 1 <= number): #データ番号、ファイル番号
-      data_get(count,count + 1) #データ作成
-
-    else: #ファイル番号
-      data_notget(count + 1) #空データ作成
-      movie_make(count + 1) #空動画作成
-    
-else:
-  print("数値を引数として指定してください。")
-
-
-
-#ファイル番号、数値データ
-#data_get(1,1)
-#data_get(35,3)
-#data_get(50,4)
-#data_get(65,5)
-#data_get(80,6)
-#data_get(95,7)
-#data_get(110,8)
-#data_get(125,9)
-#data_get(140,10)
-
-#data_get(170,11)
-#data_get(185,12)
-#data_get(200,13)
-
-#data_get(230,14)
-#data_get(245,15)
-#data_get(260,16)
-#data_get(275,17)
-#data_get(290,18)
-#data_get(305,19)

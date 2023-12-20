@@ -4,28 +4,9 @@ import './Home.css';
 import * as am5xy from '@amcharts/amcharts5/xy';
 import {useParams } from 'react-router-dom';
 import axios from 'axios';
-
-import * as dynamicModule1 from './1_outputs.js';
-import * as dynamicModule2 from './2_outputs.js';
-import * as dynamicModule3 from './3_outputs.js';
-import * as dynamicModule4 from './4_outputs.js';
-import * as dynamicModule5 from './5_outputs.js';
-import * as dynamicModule6 from './6_outputs.js';
-import * as dynamicModule7 from './7_outputs.js';
-import * as dynamicModule8 from './8_outputs.js';
-import * as dynamicModule9 from './9_outputs.js';
-import * as dynamicModule10 from './10_outputs.js';
-import * as dynamicModule11 from './11_outputs.js';
-import * as dynamicModule12 from './12_outputs.js';
-import * as dynamicModule13 from './13_outputs.js';
-import * as dynamicModule14 from './14_outputs.js';
-import * as dynamicModule15 from './15_outputs.js';
-import * as dynamicModule16 from './16_outputs.js';
-import * as dynamicModule17 from './17_outputs.js';
-import * as dynamicModule18 from './18_outputs.js';
-import * as dynamicModule19 from './19_outputs.js';
-
 import * as colorModule from './color_file.js';
+import {video_number} from './number_outputs.js';
+import movieList from './MovieList';
 
 const Chart = ({randomIndex, onXDataChange, onYDataChange, onZDataChange, onSDataChange, onMovieStop}) => {
   
@@ -45,21 +26,20 @@ const Chart = ({randomIndex, onXDataChange, onYDataChange, onZDataChange, onSDat
     let animationActive = false;// アニメーションを制御するフラグ
     let start1 = 0; //アニメーション時にstartを保存
     
-    let combinedArrays = { dynamicModule1, dynamicModule2, dynamicModule3, dynamicModule4, dynamicModule5, dynamicModule6, 
-      dynamicModule7, dynamicModule8, dynamicModule9, dynamicModule10, dynamicModule11, dynamicModule12, dynamicModule13, 
-      dynamicModule14, dynamicModule15, dynamicModule16, dynamicModule17, dynamicModule18, dynamicModule19};
+    const dynamicModules = {};
+    for (let i = 1; i <= video_number; i++) {
+      dynamicModules[`dynamicModule${i}`] = require(`./${i}_outputs.js`);
+    }
 
-    const values1 = Object.values(combinedArrays['dynamicModule' + ans]);
+    const values1 = Object.values(dynamicModules[`dynamicModule` + ans]);
     let myArray5 = values1[0]; //all_zero
     let myArray6 = values1[1]; //all_one
     
     videoElement.onloadedmetadata = () => {
       long = videoElement.duration; //動画の長さ
     };
+    videoElement.src = require('./movie/'+movieList[ans]+'.mp4'); 
 
-    videoElement.src = require('./movie/'+ans+'.mp4'); 
-
-    
     const createButton = () => {
       const button = document.createElement('button');
       button.innerText = '最初から再生';
@@ -106,7 +86,6 @@ const Chart = ({randomIndex, onXDataChange, onYDataChange, onZDataChange, onSDat
     };
 
     let scrollValue = 100;
-
     const handleScrollChange = (event) => {
       scrollValue = event.target.value;
     };
@@ -133,7 +112,6 @@ const Chart = ({randomIndex, onXDataChange, onYDataChange, onZDataChange, onSDat
       wheelX: "none",    // マウスホイールによる拡大縮小を無効に
       wheelY: "none",    // マウスホイールによる拡大縮小を無効に
       pinchZoomX: false , // ピンチジェスチャーによる拡大縮小を無効に
-      
     }));
 
     // 凡例を生成
@@ -166,9 +144,7 @@ const Chart = ({randomIndex, onXDataChange, onYDataChange, onZDataChange, onSDat
       renderer: am5xy.AxisRendererY.new(root, {}),
       min: 0, // Set the minimum value for the Y-axis
       max: 1.0, // Set the maximum value for the Y-axis
-      
     }));
-    
 
     // all_one(start)スクロールバー用のデータを追加
     const series_start = chart.series.push(am5xy.LineSeries.new(root, {
@@ -179,24 +155,20 @@ const Chart = ({randomIndex, onXDataChange, onYDataChange, onZDataChange, onSDat
       valueXField: "date", //dataのデータをy軸にplot
       stroke: "",
       fill: am5.color(0x000000) // 黒色に塗りつぶすための設定
-
     }));
     
     // myArrayからのall_one(start)データを代入している
     const data_start = myArray6.map((value, index) => ({
       date:  index * 8400 , //50フレーム50秒(1000)　//50フレーム420秒(8400)
       value: value,
-      
     }));
     series_start.data.setAll(data_start);
 
     //塗りつぶすのに必要
     series_start.fills.template.setAll({
       fillOpacity: 0.2,
-      visible: true,
-      
+      visible: true,      
     });
-
 
     // all_one(end)スクロールバー用のデータを追加
     const series_end = chart.series.push(am5xy.LineSeries.new(root, {
@@ -213,7 +185,6 @@ const Chart = ({randomIndex, onXDataChange, onYDataChange, onZDataChange, onSDat
     const data_end = myArray6.map((value, index) => ({
       date:  index * 8400 , //50フレーム50秒(1000)　//50フレーム420秒(8400)
       value: value,
-      
     }));
     series_end.data.setAll(data_end);
 
@@ -222,8 +193,6 @@ const Chart = ({randomIndex, onXDataChange, onYDataChange, onZDataChange, onSDat
       fillOpacity: 0.2,
       visible: true
     });
-
-
     const seriesConfigs = [];
 
 //let randomIndex = Math.floor(Math.random() * colorModule.colors.length);
@@ -244,15 +213,9 @@ for (let i = 3; i < values1.length; i++) {
     date: dataIndex * 8400,
     [`value${i}`]: value
   }));
-
   series.data.setAll(data);
-
-  seriesConfigs.push(series);
-  
+  seriesConfigs.push(series); 
 }
-
-    
-
 
      // 黒で上書き
      const series_black = chart.series.push(am5xy.LineSeries.new(root, {
@@ -262,9 +225,7 @@ for (let i = 3; i < values1.length; i++) {
       valueYField: "value5", // 新しいデータシリーズのY軸データフィールド
       valueXField: "date",   // X軸に対応するデータフィールド
       stroke: "rgba(0, 0, 0, 0.5)", // 線の色を黒色に設定
-      
     }));
-    
     
     // 新しいデータを代入（myArray5は新しいデータ配列）
     const data_black = myArray5.map((value, index) => ({
@@ -273,13 +234,9 @@ for (let i = 3; i < values1.length; i++) {
     }));
     series_black.data.setAll(data_black);
 
-
-
     let rangeDate = new Date();
     am5.time.add(rangeDate, "day", Math.round(series_start.dataItems.length / 2));
     let rangeTime = rangeDate.getTime();
-
-
 
     //定義(start)
     const seriesRangeDataItem = xAxis.makeDataItem({});
@@ -300,16 +257,12 @@ for (let i = 3; i < values1.length; i++) {
       visible: false,
       opacity: 0.35
     });
-
-    //定義(middle)
-    const seriesRangeDataItem3 = xAxis.makeDataItem({});
-   
-    //タイムスクロールバーを追加
-    const range = xAxis.createAxisRange(xAxis.makeDataItem({}));
+    
+    const seriesRangeDataItem3 = xAxis.makeDataItem({});//定義(middle)
+    const range = xAxis.createAxisRange(xAxis.makeDataItem({}));//タイムスクロールバーを追加
     const range2 = xAxis.createAxisRange(xAxis.makeDataItem({}));
     const range3 = xAxis.createAxisRange(xAxis.makeDataItem({}));
   
-    //range.set("value", 1700005200000);
     range.get("grid").setAll({
       strokeOpacity: 1, //線の不透明度
       stroke: "rgba(255, 255, 255, 1)", //タイムスクロールバーの色を指定
@@ -328,16 +281,10 @@ for (let i = 3; i < values1.length; i++) {
       strokeWidth:1.4
     });
 
-
-    
-    //resizeButtonを定義する
     const resizeButton = am5.Button.new(root, {
       themeTags: ["resize", "horizontal"], //ボタンの外観や動作をカスタマイズ
-      //fill: am5.color("red"), // フィル色を赤に変更
-    
       icon: am5.Graphics.new(root, {
         themeTags: ["icon"],
-        
       })
     });
 
@@ -345,9 +292,7 @@ for (let i = 3; i < values1.length; i++) {
       themeTags: ["resize", "horizontal"],
       icon: am5.Graphics.new(root, {
         themeTags: ["icon"],
-        
       })
-      
     });
 
     const resizeButton3 = am5.Button.new(root, {
@@ -356,7 +301,6 @@ for (let i = 3; i < values1.length; i++) {
       height: 20,
     });
 
-
     //タイムスクロールバーをy軸の範囲に固定
     resizeButton.adapters.add("y", function () {
       return 0;
@@ -364,33 +308,27 @@ for (let i = 3; i < values1.length; i++) {
 
     //タイムスクロールバーをy軸の範囲に固定
     resizeButton2.adapters.add("y", function () {
-
       return 0;
     });
 
     //タイムスクロールバーをy軸の範囲に固定
     resizeButton3.adapters.add("y", function () {
-
       return 0;
     });
 
     // タイムスクロールバーをx軸の範囲に固定
     resizeButton.adapters.add("x", function (x) {
-
       return Math.max(0, Math.min(y_data - 3, x));
     });
 
-
     //タイムスクロールバーをx軸の範囲に固定(バーを動かすとき実行される関数)
     resizeButton2.adapters.add("x", function (x) {
-
 
       //バーの初期位置を変更する
       if (!resizeButton.isFirstRun) {
         const position1 = xAxis.positionToValue(1);
         range2.set("value", position1);
       }
-
       return Math.max(0, Math.max(x_data + 3, x));
     });
 
@@ -402,14 +340,12 @@ for (let i = 3; i < values1.length; i++) {
         const position = xAxis.positionToValue(0.5);
         range3.set("value", position);
       }
-
       return Math.max(0, Math.min(chart.plotContainer.width(), x));
     });
 
     resizeButton.isFirstRun = false; // 右バーの初期位置
     resizeButton.isAnimation = true; // アニメーションを停止
 
-  
     //まとめ
     function handleButtonClick4() {
 
@@ -456,18 +392,14 @@ for (let i = 3; i < values1.length; i++) {
 
     //最初から再生
     function handleButtonClick() {
-
       if(!animationActive){ //アニメーション動作中は作動しない
         y = 0;
         z = 729.28125;
-
         start = 0;
         end = 1;
         start1 = start; 
-      
         handleButtonClick4();
-      }
-      
+      } 
     }
 
     //部分再生
@@ -484,7 +416,6 @@ for (let i = 3; i < values1.length; i++) {
       handleButtonClick4();   
       }
     }
-    
 
     //一時停止
     function handleButtonClick2() {
@@ -523,18 +454,14 @@ for (let i = 3; i < values1.length; i++) {
           await axios.post('http://localhost:3001/execute-command', { command })
         } catch (err) {}};
         executeCommand();
-
     }
-
 
     // タイムスクロールバーを移動させるための関数
     resizeButton.events.on("dragged", function () { //左のバー
 
       //グラフのx座標
       const x = resizeButton.x(); 
-
       x_data = x;
-
       onXDataChange(x, long);
       
       //[0~1]の座標
@@ -549,7 +476,6 @@ for (let i = 3; i < values1.length; i++) {
       //start
       seriesRangeDataItem.set("value", newValue);
       seriesRangeDataItem.set("endValue", xAxis.getPrivate("max"));
-      
       });
 
 
@@ -579,9 +505,7 @@ for (let i = 3; i < values1.length; i++) {
       //end
       seriesRangeDataItem2.set("value", newValue);
       seriesRangeDataItem2.set("endValue", xAxis.getPrivate("min"));
-
     });
-
 
     // タイムスクロールバーを移動させるための関数 
     resizeButton3.events.on("dragged", function () { //真ん中のバー
@@ -597,20 +521,14 @@ for (let i = 3; i < values1.length; i++) {
 
       //[1696345200000~1700665200000]の座標
       const newValue = xAxis.positionToValue(position);
-      //console.log(newValue)
-      //バーの位置を変える
-      range3.set("value", newValue);
-
+      
+      range3.set("value", newValue);//バーの位置を変える
       onSDataChange(z, long);
 
-      //onYDataChange(y, long);
-
-      //end
       seriesRangeDataItem3.set("value", newValue);
       seriesRangeDataItem3.set("endValue", xAxis.getPrivate("min"));
 
     });
-  
 
     // タイムスクロールバーを動かすマークを表示
     range.set("bullet", am5xy.AxisBullet.new(root, {
@@ -626,14 +544,12 @@ for (let i = 3; i < values1.length; i++) {
     range3.set("bullet", am5xy.AxisBullet.new(root, {
       sprite: resizeButton3
     }));
-
    
     const button = createButton();
     const button1 = createButton1();
     const button2 = createButton2();
     const button3 = createButton3();
 
-    // Clean up when the component unmounts
     return () => {
       chart.dispose();
       scrollbar.removeEventListener('input', () => {});
@@ -651,16 +567,12 @@ for (let i = 3; i < values1.length; i++) {
       button3.removeEventListener('click', () => {});
       document.getElementById('button-container3').removeChild(button3);
 
-
       videoElement.onloadedmetadata = null;
     };
   }, []);
 
-//<button onClick={() => handleButtonClick(x_data)}>ボタン1</button>
-  return (
-    
+  return (    
   <div>
-
       <a className="title32">
       <a id="button-container"></a></a>
 
@@ -683,11 +595,8 @@ for (let i = 3; i < values1.length; i++) {
 
       {/* AmChartsのグラフ */}
       <div id="chartdiv" style={{ width: '800px', height: '160px' }}></div>
-    
     </div>
   </div>
   );
-  
 };
-
 export default Chart;
