@@ -7,6 +7,8 @@ import axios from 'axios';
 import * as colorModule from './color_file.js';
 import {video_number} from './number_outputs.js';
 import movieList from './MovieList';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const Chart = ({randomIndex, onXDataChange, onYDataChange, onZDataChange, onSDataChange, onMovieStop}) => {
   
@@ -64,6 +66,18 @@ const Chart = ({randomIndex, onXDataChange, onYDataChange, onZDataChange, onSDat
       return button;
     };
 
+    const showToast = () => {
+      toast.success('ダウンロードに保存しました', {
+        position: 'top-right', // トーストの表示位置
+        autoClose: 3000, // ミリ秒単位で表示時間を指定
+        hideProgressBar: false, // プログレスバーの表示・非表示
+        closeOnClick: true, // トーストをクリックしたときに閉じるかどうか
+        pauseOnHover: true, // マウスオーバー時に一時停止するかどうか
+        draggable: true, // トーストをドラッグできるかどうか
+        progress: undefined, // プログレスバーの設定
+      });
+    };
+
     const createButton3 = () => {
       const button = document.createElement('button');
       button.innerText = '動画保存';
@@ -74,6 +88,7 @@ const Chart = ({randomIndex, onXDataChange, onYDataChange, onZDataChange, onSDat
       if (!existingInput) {createInput();}
       button.addEventListener('click', () => handleButtonClick3());
       document.getElementById('button-container3').appendChild(button);
+      
       return button;
     };
 
@@ -206,7 +221,7 @@ for (let i = 3; i < values1.length; i++) {
     yAxis: yAxis,
     valueYField: `value${i}`,
     valueXField: "date",
-    stroke: `rgba(${inf1[0]},${inf1[1]},${inf1[2]}, 1)`
+    stroke: `rgba(${inf1[0]},${inf1[1]},${inf1[2]}, 1)`,
   }));
 
   const data = values1[i].map((value, dataIndex) => ({
@@ -436,13 +451,15 @@ for (let i = 3; i < values1.length; i++) {
     //動画保存
     function handleButtonClick3() {
 
+     
+
       // input要素の値を取得
       const inputValue = document.getElementById('input-container').querySelector('input').value;
 
       // コマンドをプログラムで設定
-      let command1 = `C:/Users/mno41/multiple_graph/app/node_modules/ffmpeg-static/ffmpeg.exe -ss `; //使うツール
-      let command2 =` -i "C:/Users/mno41/multiple_graph/app/src/component/datafile/data` + ans + `/A` + ans + `1.mp4" -t `; //コピー元動画
-      let command3 = ` -c:v copy -c:a copy "C:/Users/mno41/multiple_graph/app/src/component/datafile/record_movie/` + inputValue + `.mp4"`; //コピー先動画
+      let command1 = `"./node_modules/ffmpeg-static/ffmpeg.exe" -ss `; //使うツール
+      let command2 =` -i "./src/component/movie/`+ movieList[ans] + `.mp4" -t `; //コピー元動画
+      let command3 = ` -c:v copy -c:a copy "../../Downloads/` + inputValue + `.mp4"`; //コピー先動画
 
       let start_second = (x_data / 729.28125) * long; //始まる時刻
       let end_second = ((y_data / 729.28125) * long) - ((x_data / 729.28125) * long); //録画時間
@@ -453,8 +470,12 @@ for (let i = 3; i < values1.length; i++) {
         try {
           await axios.post('http://localhost:3001/execute-command', { command })
         } catch (err) {}};
+
         executeCommand();
+        showToast(); //保存成功
+
     }
+    
 
     // タイムスクロールバーを移動させるための関数
     resizeButton.events.on("dragged", function () { //左のバー
@@ -590,6 +611,7 @@ for (let i = 3; i < values1.length; i++) {
 
       <a className="title38">
       <a id="button-container3"></a></a>
+      <ToastContainer />
 
     <div className="title31">
 

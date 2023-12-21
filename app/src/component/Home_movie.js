@@ -45,9 +45,6 @@ for (let i = 1; i <= video_number; i++) {
     const concatenatedString = myArray.join(', '); // Use ',' as the separator
     myArrayList.push(concatenatedString);
   }
-  
-  
-  
 
   const values1 = Object.values(dynamicModules['dynamicModule' + ans]);
   let myArray7 = values1[2]; //単語
@@ -133,7 +130,7 @@ for (let i = 1; i <= video_number; i++) {
       goToLink(`/`);
     };
   };
-  
+
   return (
     <>
       <div className="title30">
@@ -178,6 +175,7 @@ for (let i = 1; i <= video_number; i++) {
 
       <a className="title39" onClick={MovieLink()}>動画一覧へ</a><br></br>
       <RenderWordSquares />
+      
       </div></div>
     </>
   );
