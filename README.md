@@ -8,7 +8,7 @@ git clone git@github.com:fujiwara02/multiple_graph.git
 
 # 手動デプロイ
 ```terminal
-cd app
+cd multiple_graph\app
 npm install react-scripts //初回のみ
 npm install axios //初回のみ
 npm start
@@ -16,7 +16,7 @@ npm start
 
 動画保存する場合は別タブでサーバを起動する
 ```terminal
-cd app
+cd multiple_graph\app
 node server.js
 ```
 
@@ -26,5 +26,5 @@ node server.js
 git add .
 git commit -m "アプリケーションの説明を追加"
 
-git push -u origin add_description
+git push -u origin main
 ```
