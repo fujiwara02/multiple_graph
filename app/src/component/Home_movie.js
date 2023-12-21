@@ -1,16 +1,13 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import BarComponent from './Home_graph.js';
-
 import ReactPlayer from 'react-player';
 import './Home.css';
 import * as colorModule from './color_file.js';
 import {video_number} from './number_outputs.js';
 import movieList from './MovieList';
 
-
 const App = () => {
- 
   const [videoDuration, setVideoDuration] = useState(0);
   const playerRef = useRef(null);
   const [playbackRate, setPlaybackRate] = useState(1);
@@ -24,35 +21,36 @@ const App = () => {
   );
 
   const navigate = useNavigate();
-
   const goToLink = (path) => {//リンク先で再ロードし、グラフを更新する
     navigate(path);
     window.location.reload();
   };
 
-  const dynamicModules = {};
-  const image = {};
-  const video = {};
-
-
+  const dynamicModules = {}; //データファイルの配列
+  const image = {}; //画像ファイルの配列
+  const video = {}; //動画ファイルの配列
 
 for (let i = 1; i <= video_number; i++) {
-  dynamicModules[`dynamicModule${i}`] = require(`./${i}_outputs.js`);
-  image[`image${i}`] = require(`./image/${i}.jpg`);
-  video[`video${i}`] = require(`./movie/${movieList[i]}.mp4`);
+  dynamicModules[`dynamicModule${i}`] = require(`./${i}_outputs.js`); //データファイル読み込み
+  image[`image${i}`] = require(`./image/${i}.jpg`); //画像ファイル読み込み
+  video[`video${i}`] = require(`./movie/${movieList[i]}.mp4`); //動画ファイル読み込み
 }
-
   const myArrayList = [];
 
   for (let count = 1; count <= video_number; count++) {
     const values1 = Object.values(dynamicModules['dynamicModule' + count]);
     let myArray = values1[2];
-    myArrayList.push(myArray);
+  
+    // Concatenate elements with commas and push to myArrayList
+    const concatenatedString = myArray.join(', '); // Use ',' as the separator
+    myArrayList.push(concatenatedString);
   }
+  
+  
+  
 
   const values1 = Object.values(dynamicModules['dynamicModule' + ans]);
   let myArray7 = values1[2]; //単語
-
   const roundedNumArray = [];
 
   for (let i = 3; i < values1.length; i++) {
@@ -124,19 +122,14 @@ for (let i = 1; i <= video_number; i++) {
     return <>{squares}</>;
   };
 
-  const data = [{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{}];
-  
-
   const generateLogoClickHandler = (ans) => {
     return () => {
       goToLink(`/Home_movie/${ans}`);
     };
   };
- 
   
   return (
     <>
-
       <div className="title30">
         <ReactPlayer
           ref={playerRef}
@@ -149,50 +142,36 @@ for (let i = 1; i <= video_number; i++) {
           playbackRate={playbackRate}
           onDuration={handleDuration}
   />
-
-         <div className="scrollable-list">
-
-         {/* Assuming video_number is defined */}
-{Array.from({ length: video_number }, (_, index) => (
-  <div key={index}>
-    <a onClick={generateLogoClickHandler(index + 1)}>
-      <img src={image[`image${index + 1}`]} width={120} height={88} alt="Logo" />
-    </a>
-    <a onClick={generateLogoClickHandler(index + 1)} className="white-title22">
-      {myArrayList[index]}
-    </a>
-    <br />
-  </div>
-))}
-
-
-      </div> 
+        <div className="scrollable-list">
+          {Array.from({ length: video_number }, (_, index) => (
+            <div key={index}>
+              <a onClick={generateLogoClickHandler(index + 1)}>
+                <img src={image[`image${index + 1}`]} width={120} height={88} alt="Logo" />
+              </a>
+              <a onClick={generateLogoClickHandler(index + 1)} className="white-title22">
+              {myArrayList[index]}
+              </a><br />
+            </div>
+          ))}
+        </div>
       </div>
-
-      <div className="title31">
-
-     
-      <BarComponent
-        randomIndex={randomIndex}
-        onXDataChange={handleXDataChange} //左バーの秒数を習得
-        onYDataChange={handleYDataChange} //右バーの秒数を習得
-        onZDataChange={handleZDataChange}
-        onSDataChange={handleSDataChange}
-        onMovieStop = {onMovieStop} //動画を止める
-      />
-
+      <div className="title31">   
+        <BarComponent
+          randomIndex={randomIndex}
+          onXDataChange={handleXDataChange} //左バーの秒数を習得
+          onYDataChange={handleYDataChange} //右バーの秒数を習得
+          onZDataChange={handleZDataChange}
+          onSDataChange={handleSDataChange}
+          onMovieStop = {onMovieStop} //動画を止める
+        />
       <div >
   
       <a className="title33">バー間秒数: {y_second ? 
             (y_second - x_second).toFixed(3) + ' 秒' 
             : (videoDuration - x_second).toFixed(3) + ' 秒'}</a><br></br>
-
-<RenderWordSquares />
-      </div> 
-
-      </div>
+      <RenderWordSquares />
+      </div></div>
     </>
   );
 };
-
 export default App;

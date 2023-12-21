@@ -8,18 +8,21 @@ import * as colorModule from './color_file.js';
 const StockCharts = () => {
 
   const dynamicModules = {};
-    const image = {};
-    for (let i = 1; i <= video_number; i++) {
-      dynamicModules[`dynamicModule${i}`] = require(`./${i}_outputs.js`);
-      image[`image${i}`] = require(`./image/${i}.jpg`);
-    }
+  const image = {};
+  for (let i = 1; i <= video_number; i++) {
+    dynamicModules[`dynamicModule${i}`] = require(`./${i}_outputs.js`); //データファイル読み込み
+    image[`image${i}`] = require(`./image/${i}.jpg`); //画像ファイル読み込み
+  }
 
-    const myArrayList = [];
-    for (let ans = 1; ans <= video_number; ans++) {
-      const values1 = Object.values(dynamicModules['dynamicModule' + ans]);
-      let myArray = values1[2];
-      myArrayList.push(myArray);
-    }
+  const myArrayList = [];
+  for (let ans = 1; ans <= video_number; ans++) { //すべての要素
+    const values1 = Object.values(dynamicModules['dynamicModule' + ans]);
+    let myArray = values1[2]; //単語ファイルのみをmyArrayListにpush
+    
+    // Concatenate elements with commas and push to myArrayList
+    const concatenatedString = myArray.join(', '); // Use ',' as the separator
+    myArrayList.push(concatenatedString);
+  }
 
   useEffect(() => {
     for (let n = 1; n <= video_number; n++) {
@@ -34,7 +37,7 @@ const StockCharts = () => {
     }
   }, []);
 
-  // Generate random data
+  // グラフ作成
   const generateData = (n) => {
     let date = new Date();
     date.setHours(0, 0, 0, 0);
@@ -153,7 +156,7 @@ const StockCharts = () => {
     series.data.setAll(data);
 
     console.log(n);
-    for (let i = 1; i < Object.keys(data[0]).length; i++) {
+    for (let i = 1; i < Object.keys(data[0]).length; i++) { //グラフのデータと色決め
       let randomIndex = Math.floor(Math.random() * colorModule.colors.length);
       let inf1 = colorModule.colors[randomIndex];
 
