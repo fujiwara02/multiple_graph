@@ -127,6 +127,12 @@ for (let i = 1; i <= video_number; i++) {
       goToLink(`/Home_movie/${ans}`);
     };
   };
+
+  const MovieLink = () => {
+    return () => {
+      goToLink(`/`);
+    };
+  };
   
   return (
     <>
@@ -168,7 +174,9 @@ for (let i = 1; i <= video_number; i++) {
   
       <a className="title33">バー間秒数: {y_second ? 
             (y_second - x_second).toFixed(3) + ' 秒' 
-            : (videoDuration - x_second).toFixed(3) + ' 秒'}</a><br></br>
+            : (videoDuration - x_second).toFixed(3) + ' 秒'}</a>
+
+      <a className="title39" onClick={MovieLink()}>動画一覧へ</a><br></br>
       <RenderWordSquares />
       </div></div>
     </>

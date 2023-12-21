@@ -85,15 +85,6 @@ const Chart = ({randomIndex, onXDataChange, onYDataChange, onZDataChange, onSDat
       return input;
     };
 
-    const createLink = () => {
-      const linkContainer = document.createElement('div');
-      const link = document.createElement('a');
-      link.href = 'https://example.com'; // Set your desired link URL
-      link.textContent = 'Click me for the link'; // Set your desired link text
-      linkContainer.appendChild(link);
-      document.getElementById('link-container').appendChild(linkContainer);
-    };
-
     let scrollValue = 100;
     const handleScrollChange = (event) => {
       scrollValue = event.target.value;
@@ -559,7 +550,6 @@ for (let i = 3; i < values1.length; i++) {
     const button2 = createButton2();
     const button3 = createButton3();
 
-
     return () => {
       chart.dispose();
       scrollbar.removeEventListener('input', () => {});
@@ -577,8 +567,6 @@ for (let i = 3; i < values1.length; i++) {
       button3.removeEventListener('click', () => {});
       document.getElementById('button-container3').removeChild(button3);
 
-     
-      
       videoElement.onloadedmetadata = null;
     };
   }, []);
@@ -602,8 +590,6 @@ for (let i = 3; i < values1.length; i++) {
 
       <a className="title38">
       <a id="button-container3"></a></a>
-
-      
 
     <div className="title31">
 

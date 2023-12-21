@@ -61,7 +61,8 @@
 
 .white-title21{
   padding: 0px 17px 0px 3px;
-  
+  position: relative; /* ポジションを設定 */
+  top: 3px; /* 上方向に移動する値を設定（必要に応じて調整） */
   
 }
 
@@ -137,6 +138,10 @@
   
 }
 
+.title39 {
+  
+  text-decoration: underline; /* Underline when clicked */
+}
 .title41{
   display: flex;
   flex-direction: row;
@@ -154,6 +159,8 @@
   height: 10px;
   padding: 0px 0px 0px 20px;
   cursor: pointer;
+  position: relative; /* ポジションを設定 */
+  top: 3px; /* 上方向に移動する値を設定（必要に応じて調整） */
 }
 
 
