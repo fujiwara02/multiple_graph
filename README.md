@@ -31,8 +31,5 @@ node server.js
 ## メモ
 
 ```terminal
-git add .
-git commit -m "アプリケーションの説明を追加"
-
-git push -u origin main
+「動画一覧へ」のリンクから飛ぶより、左altで飛んだほうが半分の処理時間で戻れる
 ```
