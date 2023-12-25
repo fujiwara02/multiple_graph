@@ -7,8 +7,11 @@ git clone git@github.com:fujiwara02/multiple_graph.git
 
 # データの配置場所
 ```terminal
-cd ~\multiple_graph\app\src\component  //outputs.pickle(データファイル), movieList.py(データと動画の対応関係)
-cd ~\multiple_graph\app\src\component\movie  //動画
+//outputs.pickle(データファイル), movieList.py(データと動画の対応関係)
+cd ~\multiple_graph\app\src\component  
+
+//動画(手話動画すべて)
+cd ~\multiple_graph\app\src\component\movie  
 ```
 
 # 手動デプロイ
