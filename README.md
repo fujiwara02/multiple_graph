@@ -5,10 +5,10 @@ cd ~
 git clone git@github.com:fujiwara02/multiple_graph.git 
 ```
 
-# Data
+# データの配置場所
 ```terminal
-cd ~\multiple_graph\app\src\component  //outputs.pickleとmovieList.pyを配置
-cd ~\multiple_graph\app\src\component\movie  //動画を配置
+cd ~\multiple_graph\app\src\component  //outputs.pickle(データファイル), movieList.py(データと動画の対応関係)
+cd ~\multiple_graph\app\src\component\movie  //動画
 ```
 
 # 手動デプロイ
@@ -25,7 +25,7 @@ cd ~\multiple_graph\app
 node server.js
 ```
 
-## How to work
+## メモ
 
 ```terminal
 git add .
