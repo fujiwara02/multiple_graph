@@ -5,7 +5,7 @@ cd ~
 git clone git@github.com:fujiwara02/multiple_graph.git 
 ```
 
-## データの配置場所 (データを変えるとき毎回コピペする)
+## データの配置場所 (データを変えるときコピペする)
 outputs.pickle(データファイル), movieList.py(データと動画の対応関係)を以下の場所に
 ```terminal
 cd ~\multiple_graph\app\src\component  
@@ -15,7 +15,7 @@ cd ~\multiple_graph\app\src\component
 cd ~\multiple_graph\app\src\component\movie  
 ```
 
-## データファイルを変更した後に実行する (データを変えるとき毎回実行する)
+## データファイルを変更した後に実行する (データを変えるとき実行する)
 ```terminal
 cd ~\multiple_graph\app\src\component  
 python video_data.py
@@ -37,5 +37,6 @@ node server.js
 
 ## メモ
 データファイルの数は、50個以下推奨 (処理時間がかかるため)
+
 「動画一覧へ」のリンクから飛ぶより、左altで飛んだほうが半分の処理時間で戻れる
 
