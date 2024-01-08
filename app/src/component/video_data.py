@@ -15,11 +15,11 @@ class StaticType(TypedDict):
   seq_len: int
 
 #outputs[338][86][231]　index, time, kind
-OUTPUT_FILE = "C:/Users/mno41/multiple_graph/app/src/component/outputs.pickle" 
+OUTPUT_FILE = "./outputs.pickle" 
 
 out: dict[Literal["outputs", "output_lengths", "targets", "target_lengths"], torch.Tensor] = pickle.load(open(OUTPUT_FILE, "rb"))
 
-static: StaticType = pickle.load(open("C:/Users/mno41/multiple_graph/app/src/component/KSLD1.9.static.pkl", "rb"))
+static: StaticType = pickle.load(open("./KSLD1.9.static.pkl", "rb"))
 #C:\Users\mno41\scrollbar_graph\app\src\component
 
 
@@ -27,13 +27,13 @@ def data_get(idx, number1):#データ番号、ファイル番号
 
   #idx=335の使われている単語の組み合わせ(1次元)
   target = out["targets"][idx, :out["target_lengths"][idx]]
-  print(target)
 
   #単語の合致率、合計が1になるように調節している(2次元)
   output = out["outputs"][idx, :out["output_lengths"][idx]].softmax(-1)
 
   #数値から単語に変換する ['私' '弟' '趣味' '映画' '見る']
   target_label = static["terms"].inverse_transform(target)
+  print(target_label)
 
   #tensorから1要素づつ抜き出す
   target_label_2 = "','" .join(map(str, target_label))   
