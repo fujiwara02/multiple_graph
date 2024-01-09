@@ -18,11 +18,18 @@ cd ~\multiple_graph\app\src\component\movie
 
 ## データファイルを変更した後に実行する (データを変えるとき実行する)
 ```terminal
-cd ~\multiple_graph\app\src\component  
-python                    //pythonがインストールされてない場合
-pip install torch         //初回のみ
-pip install scikit-learn  //初回のみ
-pip install opencv-python //初回のみ
+cd ~\multiple_graph\app\src\component 
+``` 
+pythonがインストールされてない場合
+```terminal
+python                    
+```
+初回のみ実行
+```terminal
+pip install torch         
+pip install scikit-learn  
+pip install opencv-python
+```
 python video_data.py
 ```
 
@@ -31,8 +38,13 @@ python video_data.py
 npmがインストールされていない場合は、https://nodejs.org/en
 ```terminal
 cd ~\multiple_graph\app
-npm install react-scripts //初回のみ
-npm install axios         //初回のみ
+```
+初回のみ実行
+```terminal
+npm install react-scripts 
+npm install axios        
+```
+```terminal
 npm start
 ```
 
