@@ -2,8 +2,9 @@
 動画をダウンロードフォルダに保存するため、ホームディレクトリに読み込む
 ```terminal
 cd ~ 
-git clone git@github.com:fujiwara02/multiple_graph.git 
+git clone https://github.com/fujiwara02/multiple_graph.git 
 ```
+gitがインストールされていない場合は(https://git-scm.com/downloads)
 
 ## データの配置場所 (データを変えるときコピペする)
 outputs.pickle(データファイル), movieList.py(データと動画の対応関係)を以下の場所に
@@ -18,14 +19,20 @@ cd ~\multiple_graph\app\src\component\movie
 ## データファイルを変更した後に実行する (データを変えるとき実行する)
 ```terminal
 cd ~\multiple_graph\app\src\component  
+python                    //pythonがインストールされてない場合
+pip install torch         //初回のみ
+pip install scikit-learn  //初回のみ
+pip install opencv-python //初回のみ
 python video_data.py
 ```
 
 ## 手動デプロイ (毎回実行する)
+
+npmがインストールされていない場合は、https://nodejs.org/en
 ```terminal
 cd ~\multiple_graph\app
 npm install react-scripts //初回のみ
-npm install axios //初回のみ
+npm install axios         //初回のみ
 npm start
 ```
 
