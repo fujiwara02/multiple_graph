@@ -17,6 +17,7 @@ cd ~\multiple_graph\app\src\component\movie
 ```
 
 ## データファイルを変更した後に実行する (データを変えるとき実行する)
+プログラムの場所へ移動
 ```terminal
 cd ~\multiple_graph\app\src\component 
 ``` 
@@ -30,6 +31,7 @@ pip install torch
 pip install scikit-learn  
 pip install opencv-python
 ```
+プログラムを実行して、データファイルを作成する
 ```terminal
 python video_data.py
 ```
