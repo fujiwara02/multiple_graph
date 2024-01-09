@@ -30,6 +30,7 @@ pip install torch
 pip install scikit-learn  
 pip install opencv-python
 ```
+```terminal
 python video_data.py
 ```
 
@@ -44,6 +45,7 @@ cd ~\multiple_graph\app
 npm install react-scripts 
 npm install axios        
 ```
+webページを起動させる
 ```terminal
 npm start
 ```
