@@ -79,96 +79,77 @@ const StockCharts = () => {
     col3.style.padding = "0.3em 1em 0.3em 0em"; //上、右、下、左のスペース
     col3.style.float = "left"; //要素が重ならないように左側に回り込ませる
     row.appendChild(col3);
-    createValueChart(col3, data, n); //グラフの設定
+    createValueChart(col3, data, n); //グラフを作成する
 
-    const col1 = document.createElement("div");
+    const col1 = document.createElement("div");//div要素を作成
     col1.innerHTML = ticker;
-    col1.style.fontSize = "1.8em";
-    col1.style.width = "30%";
-    col1.style.padding = "0.55em 0em 0.2em 1em";
+    col1.style.fontSize = "1.8em"; //フォントの大きさ
+    col1.style.width = "30%"; //横幅
+    col1.style.padding = "0.55em 0em 0.2em 1em";//上、右、下、左のスペース
     col1.style.float = "left"; //要素が重ならないように左側に回り込ませる
     row.appendChild(col1); //タイトル
 
     // リンクを作成
     const link = document.createElement("a");
-    link.href = "/Home_movie/" + n; // リンク先URLを指定
-    link.textContent = ticker + "を見る"; // リンクの表示テキスト
-    link.style.textDecoration = "none"; // 下線をなくす（リンクスタイルを変更する場合）
-    link.style.color = "blue"; // リンクの色を変更するなど、必要なスタイルを追加
-    link.style.fontSize = "1em";
-    link.style.width = "20%";
-    link.style.height = "35px";
-    link.style.padding = "2em 0em 0em 0em";
+    link.href = "/Home_movie/" + n; //リンク先URLを指定
+    link.textContent = ticker + "を見る"; //リンクの表示テキスト
+    link.style.textDecoration = "none"; //下線をなくす
+    link.style.color = "blue"; //リンクの色
+    link.style.fontSize = "1em"; //フォントの大きさ
+    link.style.width = "20%"; //リンクの幅
+    link.style.height = "35px"; //リンクの縦幅
+    link.style.padding = "2em 0em 0em 0em"; //上、右、下、左のスペース
     link.style.float = "left"; //要素が重ならないように左側に回り込ませる
-
-    row.appendChild(link); // col3 内にリンクを追加b
+    row.appendChild(link); 
   }
 
   const createValueChart = (container, data, n) => {
     const root = am5.Root.new(container);
 
-    root.setThemes([
+    root.setThemes([ //軸の数値を表示しない小さなグラフを作成
       am5themes_Micro.new(root)
     ]);
-
+    //chart(グラフ)を作成する
     const chart = root.container.children.push(am5xy.XYChart.new(root, {
-      panX: false,
-      panY: false,
-      wheelX: "none",
-      wheelY: "none"
+      panX: false, //スライドを不能にする
+      panY: false, //スライドを不能にする
+      wheelX: "none", //拡大を不能にする
+      wheelY: "none" //拡大を不能にする
     }));
 
-    chart.plotContainer.set("wheelable", false);
-    chart.zoomOutButton.set("forceHidden", true);
+    chart.plotContainer.set("wheelable", false); //ズーム操作できない
+    chart.zoomOutButton.set("forceHidden", true); //ズームアウトボタンを非表示に
 
-    
-    const xAxis = chart.xAxes.push(am5xy.DateAxis.new(root, {
-    maxDeviation: 0,
-    baseInterval: { timeUnit: "day", count: 1 },
+    const xAxis = chart.xAxes.push(am5xy.DateAxis.new(root, { //X軸を作成する
+    maxDeviation: 0, //データの最大ずれ(データがX軸の範囲外にならないように)
+    baseInterval: { timeUnit: "day", count: 1 }, //ベースの時間間隔を1日に設定
     renderer: am5xy.AxisRendererX.new(root, {})
-  }));
+    }));
 
-    const yAxis = chart.yAxes.push(am5xy.ValueAxis.new(root, {
-      strictMinMax: true,
-      extraMax: 0.02,
-      extraMin: 0.02,
+    const yAxis = chart.yAxes.push(am5xy.ValueAxis.new(root, { //Y軸を作成する
+      strictMinMax: true, //データがy軸の範囲外にならないように
+      extraMax: 0.02, //最大値に追加される空白の割合
+      extraMin: 0.02, //最小値に追加される空白の割合
       renderer: am5xy.AxisRendererY.new(root, {})
     }));
 
-    const series = chart.series.push(am5xy.LineSeries.new(root, {
-      xAxis: xAxis,
-      yAxis: yAxis,
-      valueYField: "value",
-      valueXField: "date",
-      stroke: am5.color(0x00b300)
-    }));
-
-    series.strokes.template.setAll({
-      strokeWidth: 2
-    });
-    series.data.setAll(data);
-
-    console.log(n);
-    for (let i = 1; i < Object.keys(data[0]).length; i++) { //グラフのデータと色決め
-      let randomIndex = Math.floor(Math.random() * colorModule.colors.length);
-      let inf1 = colorModule.colors[randomIndex];
+    for (let i = 1; i < Object.keys(data[0]).length; i++) { //グラフの数プラス1回
+      let randomIndex = Math.floor(Math.random() * colorModule.colors.length); //乱数を発生させる
+      let inf1 = colorModule.colors[randomIndex]; //乱数のRGBを入手する
 
       const series = chart.series.push(am5xy.LineSeries.new(root, {
         xAxis: xAxis,
         yAxis: yAxis,
-        valueYField: i === Object.keys(data[0]).length - 1 ? "value0" : "value" + i,
+        valueYField: i === Object.keys(data[0]).length - 1 ? "value0" : "value" + i, //最後のみ全て0の線を描画する(valueはデータの数値は入っている)
         valueXField: "date",
-        stroke: i === Object.keys(data[0]).length - 1 ? am5.color(0x000000) : `rgb(${inf1[0]}, ${inf1[1]}, ${inf1[2]})`,
+        stroke: i === Object.keys(data[0]).length - 1 ? am5.color(0x000000) : `rgb(${inf1[0]}, ${inf1[1]}, ${inf1[2]})`, //最後のみ黒を描画(それ以外は乱数)
       }));
     
       series.strokes.template.setAll({
         strokeWidth: 2
       });
-    
       series.data.setAll(data);
     } 
-
-
   }
   return (
     <div id="chartdiv" style={{ width: '100%', height: '500px' }}></div>
