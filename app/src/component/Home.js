@@ -3,7 +3,7 @@ import * as am5 from '@amcharts/amcharts5';
 import * as am5xy from '@amcharts/amcharts5/xy';
 import am5themes_Micro from '@amcharts/amcharts5/themes/Micro'; //座標軸なしグラフ
 import {video_number} from './number_outputs.js'; //動画の数
-import * as colorModule from './color_file.js'; //グラフの色
+import * as colorModule from './color_file.js'; //グラフに使用するカラーの一覧
 
 const StockCharts = () => {
 
