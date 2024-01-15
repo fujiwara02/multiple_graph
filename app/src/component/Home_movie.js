@@ -12,12 +12,12 @@ const App = () => {
   const playerRef = useRef(null); //動画を作成
   const [playbackRate, setPlaybackRate] = useState(1); //再生速度
   const [isPlaying, setIsPlaying] = useState(false); //ビデオの再生状態を制御(true:再生中)
-  const [x_second, setX_second] = useState(0); //左のスクロールバーの秒数
-  const [y_second, setY_second] = useState(0); //右のスクロールバーの秒数
+  const [x_second, setX_second] = useState(0); //スクロールバー(start)の秒数
+  const [y_second, setY_second] = useState(0); //スクロールバー(end)の秒数
   const [s_second, setS_second] = useState(0); //タイムラインバーの秒数
   const {ans} = useParams(); //何番目のデータを前ページから取得する
 
-  let [randomIndex, setRandomIndex] = useState( //グラフの色を何番目から始めるかを乱数で決める
+  let [randomIndex] = useState( //グラフの色を何番目から始めるかを乱数で決める
     Math.floor(Math.random() * colorModule.colors.length)
   ); 
 
@@ -61,12 +61,12 @@ const App = () => {
     setVideoDuration(duration); //動画の長さを代入
   };
 
-  //左のバーを動かしたとき
+  //スクロールバー(start)を動かしたとき
   const handleXDataChange = (newValue, long) => { //再生速度、動画の長さ
     setX_second(long * newValue / 729.28125) //x座標を習得
   };
 
-  //右のバーを動かしたとき
+  //スクロールバー(end)を動かしたとき
   const handleYDataChange = (newValue, long) => { //再生速度、動画の長さ
     setY_second(long * newValue / 729.28125) //x座標を習得
   };
@@ -97,7 +97,6 @@ const App = () => {
   const getRandomColor = () => { //色の開始位置を乱数で決める
     let inf1 = colorModule.colors[randomIndex % colorModule.colors.length]; //RGBを別ファイルから呼び出す(乱数を要素数内の値になるように調整)
     randomIndex = randomIndex + 1; //連続した要素を使う
-
     const randomColor = `rgb(${inf1[0]}, ${inf1[1]}, ${inf1[2]})`; //取得したRGB値を文字列として組み立てる
     return randomColor;
   };
@@ -153,11 +152,11 @@ const App = () => {
         <div className="scrollable-list"> 
           {Array.from({ length: video_number }, (_, index) => ( //右上の動画一覧を作成する
             <div key={index}>
-              <a onClick={generateLogoClickHandler(index + 1)}> 
-                <img src={image[`image${index + 1}`]} width={120} height={88} alt="Logo" />
+              <a onClick={generateLogoClickHandler(index + 1)} > {/*クリックした動画へのリンク */}
+                <img src={image[`image${index + 1}`]} width={120} height={88} alt="Logo" /> {/*画像を指定 */}
               </a>
-              <a onClick={generateLogoClickHandler(index + 1)} className="white-title22"> 
-              {myArrayList[index]} 
+              <a onClick={generateLogoClickHandler(index + 1)} className="white-title22"> {/*クリックした動画へのリンク */}
+              {myArrayList[index]} {/*単語を指定 */}
               </a><br />
             </div>
           ))}
@@ -176,7 +175,7 @@ const App = () => {
       <div >
   
       <a className="title33">バー間秒数: {y_second ? 
-            (y_second - x_second).toFixed(3) + ' 秒'  //右のバーを動かすまで座標を習得できないので、動画の長さを使用する
+            (y_second - x_second).toFixed(3) + ' 秒'  //スクロールバー(end)は動かすまで座標を習得できないので、動画の長さを使用する
             : (videoDuration - x_second).toFixed(3) + ' 秒'}</a>
 
       <a className="title39" onClick={MovieLink()}>動画一覧へ</a><br></br> 

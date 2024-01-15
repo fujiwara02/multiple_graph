@@ -1,41 +1,40 @@
-import React, { useState, useEffect} from 'react';
-import * as am5 from '@amcharts/amcharts5';
-import './Home.css';
+import React, {useEffect} from 'react';
+import * as am5 from '@amcharts/amcharts5'; //グラフ作成
+import './Home.css'; //css(デザイン)
 import * as am5xy from '@amcharts/amcharts5/xy';
-import {useParams } from 'react-router-dom';
-import axios from 'axios';
-import * as colorModule from './color_file.js';
-import {video_number} from './number_outputs.js';
-import movieList from './MovieList';
-import { ToastContainer, toast } from 'react-toastify';
+import {useParams } from 'react-router-dom'; //前画面からの要素を習得
+import axios from 'axios'; //動画保存
+import * as colorModule from './color_file.js'; //グラフに使用するカラーの一覧
+import {video_number} from './number_outputs.js'; //動画の数
+import movieList from './MovieList'; //動画の順番一覧
+import { ToastContainer, toast } from 'react-toastify'; //保存メッセージ表示用
 import 'react-toastify/dist/ReactToastify.css';
 
-const Chart = ({randomIndex, onXDataChange, onYDataChange, onZDataChange, onSDataChange, onEDataChange, onMovieStop}) => {
+const Chart = ({randomIndex, onXDataChange, onYDataChange, onZDataChange, onSDataChange, onEDataChange, onMovieStop}) => { //Home_movieの関数を呼び出す
   
   const {ans} = useParams(); //何番目の動画か
-
   useEffect(() => {
     const videoElement = document.createElement('video');
     let long = 10; //動画の長さ
-    let start = 0; //startバー(0-1)
-    let end = 0; //endバー(0-1)
-    let y = 0; //再生箇所(start)
-    let z = 0; //再生箇所(end)
+    let start = 0; //スクロールバー(start)[0-1の範囲で表す]
+    let end = 0; //スクロールバー(end)[0-1の範囲で表す]
+    let y = 0; //スクロールバー(start)[0-729.28125の範囲で表す]
+    let z = 0; //スクロールバー(end)[0-729.28125の範囲で表す]
     let x_data = 0; //バーの位置を保存(start)
     let y_data = 729.28125; //バーの位置を保存(end)
-    let animationActive = false;// アニメーションを制御するフラグ
-    let start1 = 0; //アニメーション時にstartを保存
+    let animationActive = false;// アニメーションを制御するフラグ(falseは停止)
+    let start1 = 0; //アニメーション時にstart位置を保存
     
-    const dynamicModules = {};
-    for (let i = 1; i <= video_number; i++) {
-      dynamicModules[`dynamicModule${i}`] = require(`./${i}_outputs.js`);
+    const dynamicModules = {}; //データファイルの配列
+    for (let i = 1; i <= video_number; i++) { //動画の数だけループ
+      dynamicModules[`dynamicModule${i}`] = require(`./${i}_outputs.js`); //データファイル読み込み
     }
 
-    const values1 = Object.values(dynamicModules[`dynamicModule` + ans]);
-    let myArray5 = values1[0]; //all_zero
-    let myArray6 = values1[1]; //all_one
+    const values1 = Object.values(dynamicModules[`dynamicModule` + ans]); //ans番目のデータのみを代入
+    let myArray5 = values1[0]; //すべて0のファイル
+    let myArray6 = values1[1]; //すべて1のファイル
     
-    videoElement.onloadedmetadata = () => {
+    videoElement.onloadedmetadata = () => { //動画の長さを習得する関数
       long = videoElement.duration; //動画の長さ
     };
     videoElement.src = require('./movie/'+movieList[ans]+'.mp4'); 
@@ -205,30 +204,29 @@ const Chart = ({randomIndex, onXDataChange, onYDataChange, onZDataChange, onSDat
     });
     const seriesConfigs = [];
 
-//let randomIndex = Math.floor(Math.random() * colorModule.colors.length);
-for (let i = 3; i < values1.length; i++) {
-  let inf1 = colorModule.colors[randomIndex % colorModule.colors.length];
-  randomIndex = randomIndex + 1;
+    for (let i = 3; i < values1.length; i++) {
+      let inf1 = colorModule.colors[randomIndex % colorModule.colors.length];
+      randomIndex = randomIndex + 1;
 
-  const series = chart.series.push(am5xy.LineSeries.new(root, {
-    name: `Series ${i}`,
-    xAxis: xAxis,
-    yAxis: yAxis,
-    valueYField: `value${i}`,
-    valueXField: "date",
-    stroke: `rgba(${inf1[0]},${inf1[1]},${inf1[2]}, 1)`,
-  }));
+      const series = chart.series.push(am5xy.LineSeries.new(root, {
+        name: `Series ${i}`,
+        xAxis: xAxis,
+        yAxis: yAxis,
+        valueYField: `value${i}`,
+        valueXField: "date",
+        stroke: `rgba(${inf1[0]},${inf1[1]},${inf1[2]}, 1)`,
+      }));
 
-  const data = values1[i].map((value, dataIndex) => ({
-    date: dataIndex * 8400,
-    [`value${i}`]: value
-  }));
-  series.data.setAll(data);
-  seriesConfigs.push(series); 
-}
+      const data = values1[i].map((value, dataIndex) => ({
+        date: dataIndex * 8400,
+        [`value${i}`]: value
+      }));
+      series.data.setAll(data);
+      seriesConfigs.push(series); 
+    }
 
-     // 黒で上書き
-     const series_black = chart.series.push(am5xy.LineSeries.new(root, {
+    // 黒で上書き
+    const series_black = chart.series.push(am5xy.LineSeries.new(root, {
       name: "Series 5", // 新しいデータシリーズの名前
       xAxis: xAxis,     // 使用するX軸を指定（日付軸）
       yAxis: yAxis,     // 使用するY軸を指定（値軸）
@@ -326,42 +324,38 @@ for (let i = 3; i < values1.length; i++) {
       return 0;
     });
 
-    // タイムスクロールバーをx軸の範囲に固定
+    //スクロールバー(start)(バーを動かすとき実行される関数)
     resizeButton.adapters.add("x", function (x) {
-      return Math.max(0, Math.min(y_data - 3, x));
+      return Math.max(0, Math.min(y_data - 3, x));//スクロールバー(start)がスクロールバー(end)より後ろに行かないように
     });
 
-    //タイムスクロールバーをx軸の範囲に固定(バーを動かすとき実行される関数)
+    //スクロールバー(end)(バーを動かすとき実行される関数)
     resizeButton2.adapters.add("x", function (x) {
-
-      //バーの初期位置を変更する
-      if (!resizeButton.isFirstRun) {
-        const position1 = xAxis.positionToValue(1);
+      if (!resizeButton.isFirstRun) { //スクロールバー(end)が一度も動いていないとき
+        const position1 = xAxis.positionToValue(1); //初期位置を1(右端)にする
         range2.set("value", position1);
       }
-      return Math.max(0, Math.max(x_data + 3, x));
+      return Math.max(0, Math.max(x_data + 3, x));//スクロールバー(end)がスクロールバー(start)より前に行かないように
     });
 
-    //タイムスクロールバーをx軸の範囲に固定(バーを動かすとき実行される関数)
+    //タイムラインバー(バーを動かすとき実行される関数)
     resizeButton3.adapters.add("x", function (x) {
-
-      //バーの初期位置を変更する
-      if (!resizeButton.isMiddleRun) {
-        const position = xAxis.positionToValue(0.5);
-        range3.set("value", position);
+      if (!resizeButton.isMiddleRun) { //タイムラインバーが一度も動いていないとき
+        const position = xAxis.positionToValue(0.5); //初期位置を0.5(真ん中)にする
+        range3.set("value", position); //代入する
       }
       return Math.max(0, Math.min(chart.plotContainer.width(), x));
     });
-    resizeButton.isFirstRun = false; // 右バーの初期位置
-    resizeButton.isAnimation = true; // アニメーションを停止
+    resizeButton.isFirstRun = false; // スクロールバー(end)が一度も動いていない
+    resizeButton.isAnimation = true; // 一時停止を切り替えるフラグ(trueは一時停止していない)
 
-    //まとめ
+    //最初から再生、部分再生、一時停止(再開時)に使用する
     function handleButtonClick4() {
 
-      resizeButton.isFirstRun = true;
+      resizeButton.isFirstRun = true; //スクロールバー(end)の初期位置を
       resizeButton.isMiddleRun = true;
       animationActive = true; //アニメーションを制御するフラグ
-      resizeButton.isAnimation = true;//一時停止を再生状態に変える
+      resizeButton.isAnimation = true; //一時停止を再生状態に変える
 
       let rangeValue = 0;
       let animationStart; 
@@ -429,7 +423,7 @@ for (let i = 3; i < values1.length; i++) {
       else if(!resizeButton.isAnimation && !animationActive){//再生
         y = start * 729.28125;
         z = end * 729.28125;
-        start1 = start;
+        start1 = start; //スタート位置を保存
         handleButtonClick4();
       }
     }
