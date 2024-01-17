@@ -352,14 +352,14 @@ const Chart = ({randomIndex, onXDataChange, onYDataChange, onZDataChange, onSDat
     //最初から再生、部分再生、一時停止(再開時)に使用する
     function handleButtonClick4() {
 
-      resizeButton.isFirstRun = true; //スクロールバー(end)の初期位置を
-      resizeButton.isMiddleRun = true;
-      animationActive = true; //アニメーションを制御するフラグ
-      resizeButton.isAnimation = true; //一時停止を再生状態に変える
+      resizeButton.isFirstRun = true; //スクロールバー(end)の初期位置を解除
+      resizeButton.isMiddleRun = true; //タイムラインバーの初期位置を解除
+      animationActive = true; //アニメーションを再生中に変える(この関数で使用)
+      resizeButton.isAnimation = true; //アニメーションフラグを再生中に変える(handleButtonClick2で使用)
 
       let rangeValue = 0;
-      let animationStart; 
-      let animationDuration = ((long * 1000) * (z - y)) / (729.28125 * (scrollValue / 100)); // 動画時間 * スライド間計算 / 倍速
+      let animationStart; //
+      let animationDuration = ((long * 1000) * (z - y)) / (729.28125 * (scrollValue / 100)); //再生時間(動画時間 * スライド間計算[0-1] / 倍速)
 
       function animateRangeExpansion(timestamp) {
         if (!animationStart) { //アニメーション動作中は作動しない
@@ -383,48 +383,47 @@ const Chart = ({randomIndex, onXDataChange, onYDataChange, onZDataChange, onSDat
           requestAnimationFrame(animateRangeExpansion);
         }
       }
-      onZDataChange(scrollValue / 100, y, long); //再生速度、start、end、動画の長さ
-      requestAnimationFrame(animateRangeExpansion);// アニメーション(スクロールバー)を開始
+      onZDataChange(scrollValue / 100, y, long); //Home_movie(再生速度、start、動画の長さ)
+      requestAnimationFrame(animateRangeExpansion);// アニメーションを開始
     }
 
     //最初から再生
     function handleButtonClick() {
       if(!animationActive){ //アニメーション動作中は作動しない
-        y = 0;
-        z = 729.28125;
-        start = 0;
-        end = 1;
-        start1 = start; 
-        handleButtonClick4();
+        y = 0;         //動画の再生開始位置[0-729.28125]
+        z = 729.28125; //動画の再生終了位置[0-729.28125]
+        start = 0;     //アニメーション時間計算時などに必要[0-1]
+        end = 1;       //アニメーション時間計算時などに必要[0-1]
+        start1 = start; //スタート位置を保存(タイムラインバーの座標計算時に使用)
+        handleButtonClick4(); //動画再生
       } 
     }
 
     //部分再生
     function handleButtonClick1() {
     
-      if(!animationActive){
-      y = resizeButton.x(); 
-      z = resizeButton2.x();
-      start = y / 729.28125
-      end = z / 729.28125;
-      start1 = start; //アニメーション
-      handleButtonClick4();   
+      if(!animationActive){ //アニメーション動作中は作動しない
+      y = resizeButton.x(); //動画の再生開始位置[0-729.28125]
+      z = resizeButton2.x();//動画の再生終了位置[0-729.28125]
+      start = y / 729.28125 //アニメーション時間計算時などに必要[0-1]
+      end = z / 729.28125;  //アニメーション時間計算時などに必要[0-1]
+      start1 = start; //スタート位置を保存(タイムラインバーの座標計算時に使用)
+      handleButtonClick4(); //動画再生
       }
     }
 
-    //一時停止
+    //一時停止、その位置から再生
     function handleButtonClick2() {
-
-      if(resizeButton.isAnimation && animationActive){//一時停止
-        resizeButton.isAnimation = false;//状態の切り替え(この関数のみ)
-        animationActive = false; //カウントを終了するためのフラグ
-        onMovieStop();
+      if(resizeButton.isAnimation && animationActive){//一時停止(フラグ(再生時) & アニメーション(再生時))
+        resizeButton.isAnimation = false; //フラグを停止に変える
+        animationActive = false; //アニメーションを停止する
+        onMovieStop(); //動画を停止する
       }
-      else if(!resizeButton.isAnimation && !animationActive){//再生
-        y = start * 729.28125;
-        z = end * 729.28125;
-        start1 = start; //スタート位置を保存
-        handleButtonClick4();
+      else if(!resizeButton.isAnimation && !animationActive){//再生(フラグ(一時停止時) & アニメーション(一時停止時))
+        y = start * 729.28125; //動画の再生開始位置[0-729.28125]
+        z = end * 729.28125;   //動画の再生終了位置[0-729.28125]
+        start1 = start; //スタート位置を保存(タイムラインバーの座標計算時に使用)
+        handleButtonClick4(); //動画再生
       }
     }
 
