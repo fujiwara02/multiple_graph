@@ -18,8 +18,8 @@ const Chart = ({randomIndex, onXDataChange, onYDataChange, onZDataChange, onSDat
     let long = 10; //動画の長さ
     let animationActive = false;// アニメーションを制御するフラグ(falseは停止)
 
-    let start = 0; //スクロールバー(start)[0-1の範囲で表す]
-    let end = 1; //スクロールバー(end)[0-1の範囲で表す]
+    let start = 0; //動画の開始位置[0-1の範囲で表す]
+    let end = 1; //動画の終了位置[0-1の範囲で表す]
     let timeline = 0.5; //タイムラインバーの位置[0-1の範囲で表す]
       
     const dynamicModules = {}; //データファイルの配列
@@ -54,7 +54,7 @@ const Chart = ({randomIndex, onXDataChange, onYDataChange, onZDataChange, onSDat
 
     const createButton2 = () => {
       const button = document.createElement('button');
-      button.innerText = '一時停止';
+      button.innerText = '再生ー停止';
       button.addEventListener('click', () => handleButtonClick2());
       document.getElementById('button-container2').appendChild(button);
       return button;
@@ -350,20 +350,20 @@ const Chart = ({randomIndex, onXDataChange, onYDataChange, onZDataChange, onSDat
 
       resizeButton.isFirstRun = true; //スクロールバー(end)の初期位置を解除
       resizeButton.isMiddleRun = true; //タイムラインバーの初期位置を解除
-      animationActive = true; //アニメーションを再生中に変える(この関数で使用)
+      animationActive = true; //アニメーションを再生中に変える
       resizeButton.isAnimation = true; //アニメーションフラグを再生中に変える(handleButtonClick2で使用)
 
-      let rangeValue = 0;
-      let animationStart; 
+      let rangeValue = 0; //グラフの範囲を超えないように
+      let animationStart; //animateRangeExpansion開始フラグ
       let animationDuration = ((long * 1000) * (end - start)) / (scrollValue / 100); //再生時間(動画時間 * スライド間計算[0-1] / 倍速)
 
       function animateRangeExpansion(timestamp) {
-        if (!animationStart) { //アニメーション動作中は作動しない
-          animationStart = timestamp;
+        if (!animationStart) { //最初のみ実行
+          animationStart = timestamp; //timestampは時間関数で、初期値を代入する
         }
-        const progress = timestamp - animationStart;
-        const progressPercentage = Math.min(progress / animationDuration, 1);
-        rangeValue = Math.min(progressPercentage, 1);
+        const progress = timestamp - animationStart; //開始からの時間計測
+        const progressPercentage = Math.min(progress / animationDuration, 1); //タイムラインバーがグラフの範囲を超えないようにする
+        rangeValue = Math.min(progressPercentage, 1); 
         const newValue = xAxis.positionToValue(start + rangeValue * (end - start));//加算(start位置)、掛け算(長さ)
         range3.set("value", newValue);
         
@@ -374,7 +374,7 @@ const Chart = ({randomIndex, onXDataChange, onYDataChange, onZDataChange, onSDat
           onMovieStop();
           animationActive = false;
           resizeButton.isAnimation = false;
-          timeline = 0;
+          timeline = resizeButton.x() / 729.28125;
         }
         if (progressPercentage < 1 && animationActive) {
           requestAnimationFrame(animateRangeExpansion);
@@ -397,7 +397,7 @@ const Chart = ({randomIndex, onXDataChange, onYDataChange, onZDataChange, onSDat
     //部分再生
     function handleButtonClick1() {
       if(!animationActive){ //アニメーション動作中は作動しない
-      start = resizeButton.x() / 729.28125 //動画の再生開始位置[0-1]
+      start = resizeButton.x() / 729.28125; //動画の再生開始位置[0-1]
       end = resizeButton2.x() / 729.28125;  //動画の再生終了位置[0-1]
       timeline = start; //タイムラインバーをstartの位置にする
       handleButtonClick4(); //動画再生
