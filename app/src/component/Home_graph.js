@@ -53,7 +53,7 @@ const Chart = ({randomIndex, onXDataChange, onYDataChange, onZDataChange, onSDat
 
     const createButton2 = () => { //ボタンを作成する
       const button = document.createElement('button');
-      button.innerText = '再生ー停止'; //表示するテキスト
+      button.innerText = '再生'; //表示するテキスト
       button.addEventListener('click', () => handleButtonClick2()); //handleButtonClick2関数を呼び出す
       document.getElementById('button-container2').appendChild(button);
       return button;
