@@ -71,6 +71,22 @@ const Chart = ({randomIndex, onXDataChange, onYDataChange, onZDataChange, onSDat
       return button;
     };
 
+    const createButton4 = () => { //ボタンを作成する
+      const button = document.createElement('button');
+      button.innerText = '⇦'; //表示するテキスト
+      button.addEventListener('click', () => handleButtonClick5()); //handleButtonClick関数を呼び出す
+      document.getElementById('button-container4').appendChild(button);
+      return button;
+    };
+
+    const createButton5 = () => { //ボタンを作成する
+      const button = document.createElement('button');
+      button.innerText = '⇨'; //表示するテキスト
+      button.addEventListener('click', () => handleButtonClick6()); //handleButtonClick関数を呼び出す
+      document.getElementById('button-container5').appendChild(button);
+      return button;
+    };
+
     const createInput = () => { //名前入力欄
       const input = document.createElement('input');
       input.setAttribute('type', 'text');
@@ -420,6 +436,24 @@ const Chart = ({randomIndex, onXDataChange, onYDataChange, onZDataChange, onSDat
       executeCommand(); 
       showToast(); //保存成功
     }
+
+    function handleButtonClick5() { //コマ送り(戻る)
+      resizeButton.isMiddleRun = true; //タイムラインバーの固定を解除
+      if(timeline > 0.01){timeline = timeline - (1 / (40 * long))} //1秒間に40回
+      else{timeline = 0;}
+      const newValue = xAxis.positionToValue(timeline); //[1696345200000~1700665200000]の座標
+      range3.set("value", newValue); //バーを移動する
+      onSDataChange(timeline * 729.28125, long);//バーと動画を対応させている
+    }
+
+    function handleButtonClick6() { //コマ送り(進む)
+      resizeButton.isMiddleRun = true; //タイムラインバーの固定を解除
+      if(timeline < 0.99){timeline = timeline + (1 / (40 * long))} //1秒間に40回
+      else{timeline = 1;}
+      const newValue = xAxis.positionToValue(timeline); //[1696345200000~1700665200000]の座標
+      range3.set("value", newValue); //バーを移動する
+      onSDataChange(timeline * 729.28125, long);//バーと動画を対応させている
+    }
   
     resizeButton.events.on("dragged", function () { //スクロールバー(start)を動かしたときに実行させる関数
       start = resizeButton.x() / 729.28125; //動画の開始位置を更新する
@@ -470,10 +504,12 @@ const Chart = ({randomIndex, onXDataChange, onYDataChange, onZDataChange, onSDat
       sprite: resizeButton3
     }));
    
-    const button = createButton();
-    const button1 = createButton1();
-    const button2 = createButton2();
-    const button3 = createButton3();
+    const button = createButton();//最初から再生
+    const button1 = createButton1();//部分再生
+    const button2 = createButton2();//再生ー停止
+    const button3 = createButton3();//動画保存
+    const button4 = createButton4();//コマ送り
+    const button5 = createButton5();//コマ送り
 
     return () => {
       chart.dispose();
@@ -492,29 +528,43 @@ const Chart = ({randomIndex, onXDataChange, onYDataChange, onZDataChange, onSDat
       button3.removeEventListener('click', () => {});
       document.getElementById('button-container3').removeChild(button3);//動画保存
 
+      button4.removeEventListener('click', () => {});
+      document.getElementById('button-container4').removeChild(button4);//コマ送り
+
+      button5.removeEventListener('click', () => {});
+      document.getElementById('button-container5').removeChild(button5);//コマ送り
+
       videoElement.onloadedmetadata = null;
     };
   }, []);
 
   return (    
   <div>
-      <a className="title32">
+      <a className="title32"> {/*最初から再生 */}
       <a id="button-container"></a></a>
 
-      <a className="title34">
+      <a className="title34"> {/*部分再生 */}
       <a id="button-container1"></a></a>
 
-      <a className="title35">
+      <a className="title35"> {/*再生　一時停止 */}
       <a id="button-container2"></a></a>
 
-      <a className="title36">
+      <a className="title36"> {/*再生祖kじゅど */}
       0.25倍 <a id="scrollbar-container"></a> 1.00倍</a>
 
-      <a className="title37">
+      <a className="title42"> {/*コマ送り(戻る) */}
+      <a id="button-container4"></a></a>
+
+      <a className="title43"> {/*コマ送り(進む) */}
+      <a id="button-container5"></a></a>
+
+      <a className="title37"> {/*入力欄*/}
       <a id="input-container"></a></a>
 
-      <a className="title38">
+      <a className="title38"> {/*動画保存 */}
       <a id="button-container3"></a></a>
+
+      
       <ToastContainer />
 
     <div className="title31">
