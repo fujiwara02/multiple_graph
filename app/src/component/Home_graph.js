@@ -346,7 +346,7 @@ const Chart = ({randomIndex, onXDataChange, onYDataChange, onZDataChange, onSDat
           onMovieStop(); //Home_movieで動画を止める
           animationActive = false; //アニメーションを停止にする
           resizeButton.isAnimation = false; //アニメーションフラグを停止に変える
-          timeline = 0; //タイムラインバーを最初に戻す
+          end = 1;
         }
         if (progressPercentage < 1 && animationActive) { //最後まで達するか、一時停止されるまで
           requestAnimationFrame(animateRangeExpansion); //アニメーションを続ける
@@ -394,9 +394,10 @@ const Chart = ({randomIndex, onXDataChange, onYDataChange, onZDataChange, onSDat
         onMovieStop(); //動画を停止する
       }
       else if(!resizeButton.isAnimation && !animationActive){//再生(フラグ(一時停止時) & アニメーション(一時停止時))
+        if(timeline != end){
         start = timeline; //タイムラインバーの位置を代入
-        end = 1
         handleButtonClick4(); //動画再生
+        }
       }
     }
 
