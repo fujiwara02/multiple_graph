@@ -19,7 +19,6 @@ const StockCharts = () => {
 
   const generateMyArrayList = (word) => {
     const result = [];
-
     for (let ans = 1; ans <= video_number; ans++) { 
       const values1 = Object.values(dynamicModules['dynamicModule' + ans]); //データファイルを読み込み
       let myArray = values1[2]; //単語ファイルのみを代入
