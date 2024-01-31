@@ -20,6 +20,10 @@ const Chart = ({randomIndex, onXDataChange, onYDataChange, onZDataChange, onSDat
     let start = 0; //動画の開始位置[0-1の範囲で表す]
     let end = 1; //動画の終了位置[0-1の範囲で表す]
     let timeline = 0.5; //タイムラインバーの位置[0-1の範囲で表す]
+
+    let left_bar = 0;//左バーの位置
+    let right_bar = 1;//右バーの位置
+    let timeline_bar = 0.5;//タイムラインバーの位置
       
     const dynamicModules = {}; //データファイルの配列
     for (let i = 1; i <= video_number; i++) { //動画の数だけループ
@@ -27,18 +31,19 @@ const Chart = ({randomIndex, onXDataChange, onYDataChange, onZDataChange, onSDat
     }
 
     const values1 = Object.values(dynamicModules[`dynamicModule` + ans]); //ans番目のデータのみを代入
+    console.log(values1)
     let myArray5 = values1[0]; //すべて0のファイル
     let myArray6 = values1[1]; //すべて1のファイル
     
     videoElement.onloadedmetadata = () => { //動画の長さを習得する関数
       long = videoElement.duration; //動画の長さ
     };
-    videoElement.src = require('./movie/'+movieList[ans]+'.mp4'); //動画の場所を読み込む
+    videoElement.src = require('./movie/'+movieList[ans]); //動画の場所を読み込む
 
     const createButton = () => { //ボタンを作成する
       const button = document.createElement('button');
       button.innerText = '最初から再生'; //表示するテキスト
-      button.addEventListener('click', () => handleButtonClick()); //handleButtonClick関数を呼び出す
+      button.addEventListener('click', () => fromTheBeginning()); //handleButtonClick関数を呼び出す
       document.getElementById('button-container').appendChild(button);
       return button;
     };
@@ -46,7 +51,7 @@ const Chart = ({randomIndex, onXDataChange, onYDataChange, onZDataChange, onSDat
     const createButton1 = () => { //ボタンを作成する
       const button = document.createElement('button');
       button.innerText = '部分再生'; //表示するテキスト
-      button.addEventListener('click', () => handleButtonClick1()); //handleButtonClick1関数を呼び出す
+      button.addEventListener('click', () => Partially()); //handleButtonClick1関数を呼び出す
       document.getElementById('button-container1').appendChild(button);
       return button;
     };
@@ -54,7 +59,7 @@ const Chart = ({randomIndex, onXDataChange, onYDataChange, onZDataChange, onSDat
     const createButton2 = () => { //ボタンを作成する
       const button = document.createElement('button');
       button.innerText = '再生'; //表示するテキスト
-      button.addEventListener('click', () => handleButtonClick2()); //handleButtonClick2関数を呼び出す
+      button.addEventListener('click', () => timeLineBar()); //handleButtonClick2関数を呼び出す
       document.getElementById('button-container2').appendChild(button);
       return button;
     };
@@ -66,23 +71,23 @@ const Chart = ({randomIndex, onXDataChange, onYDataChange, onZDataChange, onSDat
       const existingInput = inputContainer.querySelector('input');
       
       if (!existingInput) {createInput();} //存在していない場合のみ名前入力欄を作成する
-      button.addEventListener('click', () => handleButtonClick3()); //handleButtonClick2関数を呼び出す
+      button.addEventListener('click', () => movieSaving()); //handleButtonClick2関数を呼び出す
       document.getElementById('button-container3').appendChild(button);
       return button;
     };
 
     const createButton4 = () => { //ボタンを作成する
       const button = document.createElement('button');
-      button.innerText = '⇦'; //表示するテキスト
-      button.addEventListener('click', () => handleButtonClick5()); //handleButtonClick関数を呼び出す
+      button.innerText = '左'; //表示するテキスト
+      button.addEventListener('click', () => frameAdvance()); //handleButtonClick関数を呼び出す
       document.getElementById('button-container4').appendChild(button);
       return button;
     };
 
     const createButton5 = () => { //ボタンを作成する
       const button = document.createElement('button');
-      button.innerText = '⇨'; //表示するテキスト
-      button.addEventListener('click', () => handleButtonClick6()); //handleButtonClick関数を呼び出す
+      button.innerText = '右'; //表示するテキスト
+      button.addEventListener('click', () => frameRewind()); //handleButtonClick関数を呼び出す
       document.getElementById('button-container5').appendChild(button);
       return button;
     };
@@ -336,7 +341,7 @@ const Chart = ({randomIndex, onXDataChange, onYDataChange, onZDataChange, onSDat
     resizeButton.isAnimation = false; // 一時停止を切り替えるフラグ(trueは一時停止していない)
 
     //最初から再生、部分再生、一時停止(再開時)に使用する
-    function handleButtonClick4() {
+    function animationStart() {
 
       resizeButton.isFirstRun = true; //スクロールバー(end)の初期位置を解除
       resizeButton.isMiddleRun = true; //タイムラインバーの初期位置を解除
@@ -373,7 +378,7 @@ const Chart = ({randomIndex, onXDataChange, onYDataChange, onZDataChange, onSDat
     }
 
     //最初から再生
-    function handleButtonClick() {
+    function fromTheBeginning() {
       if(resizeButton.isAnimation && animationActive){//一時停止(フラグ(再生時) & アニメーション(再生時))
         resizeButton.isAnimation = false; //フラグを停止に変える
         animationActive = false; //アニメーションを停止する
@@ -382,13 +387,12 @@ const Chart = ({randomIndex, onXDataChange, onYDataChange, onZDataChange, onSDat
       else if(!resizeButton.isAnimation && !animationActive){//再生(フラグ(一時停止時) & アニメーション(一時停止時))
         start = 0;     //動画の再生開始位置[0-1]
         end = 1;       //動画の再生終了位置[0-1]
-        timeline = start; //タイムラインバーをstartの位置にする
-        handleButtonClick4(); //動画再生
+        animationStart(); //動画再生
       }
     }
 
     //部分再生
-    function handleButtonClick1() {
+    function Partially() {
       if(resizeButton.isAnimation && animationActive){//一時停止(フラグ(再生時) & アニメーション(再生時))
         resizeButton.isAnimation = false; //フラグを停止に変える
         animationActive = false; //アニメーションを停止する
@@ -397,35 +401,34 @@ const Chart = ({randomIndex, onXDataChange, onYDataChange, onZDataChange, onSDat
       else if(!resizeButton.isAnimation && !animationActive){//再生(フラグ(一時停止時) & アニメーション(一時停止時))
         start = resizeButton.x() / 729.28125; //動画の再生開始位置[0-1]
         end = resizeButton2.x() / 729.28125;  //動画の再生終了位置[0-1]
-        timeline = start; //タイムラインバーをstartの位置にする
-        handleButtonClick4(); //動画再生
+        animationStart(); //動画再生
       }
     }
 
     //一時停止、その位置から再生
-    function handleButtonClick2() {
+    function timeLineBar() {
       if(resizeButton.isAnimation && animationActive){//一時停止(フラグ(再生時) & アニメーション(再生時))
         resizeButton.isAnimation = false; //フラグを停止に変える
         animationActive = false; //アニメーションを停止する
         onMovieStop(); //動画を停止する
       }
       else if(!resizeButton.isAnimation && !animationActive){//再生(フラグ(一時停止時) & アニメーション(一時停止時))
-        if(timeline != end){
-        start = timeline; //タイムラインバーの位置を代入
-        handleButtonClick4(); //動画再生
+        if(resizeButton3.x() / 729.28125 != end){
+        start = resizeButton3.x() / 729.28125; //タイムラインバーの位置を代入
+        animationStart(); //動画再生
         }
       }
     }
 
     //動画保存
-    function handleButtonClick3() {
+    function movieSaving() {
       const inputValue = document.getElementById('input-container').querySelector('input').value;
       let command1 = `"./node_modules/ffmpeg-static/ffmpeg.exe" -ss `; //使うツール
       let command2 =` -i "./src/component/movie/`+ movieList[ans] + `.mp4" -t `; //コピー元動画
       let command3 = ` -c:v copy -c:a copy "../../Downloads/` + inputValue + `.mp4"`; //コピー先動画
 
-      let start_second = start * long; //始まる時刻
-      let end_second = (end * long) - (start * long); //録画時間
+      let start_second = left_bar * long; //始まる時刻
+      let end_second = (right_bar * long) - (left_bar * long); //録画時間
       let command = command1 + start_second + (command2) + end_second + (command3); //連結する
 
       const executeCommand = async () => { //サーバー側に送る
@@ -437,18 +440,20 @@ const Chart = ({randomIndex, onXDataChange, onYDataChange, onZDataChange, onSDat
       showToast(); //保存成功
     }
 
-    function handleButtonClick5() { //コマ送り(戻る)
+    function frameAdvance() { //コマ送り(戻る)
       resizeButton.isMiddleRun = true; //タイムラインバーの固定を解除
-      if(timeline > 0.01){timeline = timeline - (1 / (40 * long))} //1秒間に40回
+      timeline = resizeButton3.x() / 729.28125;//動画の現在位置を更新する
+      if(timeline > 0.01){timeline = timeline - (1 / (30 * long))} //1秒間に30回
       else{timeline = 0;}
       const newValue = xAxis.positionToValue(timeline); //[1696345200000~1700665200000]の座標
       range3.set("value", newValue); //バーを移動する
       onSDataChange(timeline * 729.28125, long);//バーと動画を対応させている
     }
 
-    function handleButtonClick6() { //コマ送り(進む)
+    function frameRewind() { //コマ送り(進む)
       resizeButton.isMiddleRun = true; //タイムラインバーの固定を解除
-      if(timeline < 0.99){timeline = timeline + (1 / (40 * long))} //1秒間に40回
+      timeline = resizeButton3.x() / 729.28125;//動画の現在位置を更新する
+      if(timeline < 0.99){timeline = timeline + (1 / (30 * long))} //1秒間に30回
       else{timeline = 1;}
       const newValue = xAxis.positionToValue(timeline); //[1696345200000~1700665200000]の座標
       range3.set("value", newValue); //バーを移動する
@@ -456,9 +461,9 @@ const Chart = ({randomIndex, onXDataChange, onYDataChange, onZDataChange, onSDat
     }
   
     resizeButton.events.on("dragged", function () { //スクロールバー(start)を動かしたときに実行させる関数
-      start = resizeButton.x() / 729.28125; //動画の開始位置を更新する
-      onXDataChange(start * 729.28125, long); //スクロールバー(start)の秒数を送る
-      const position = xAxis.toAxisPosition(start * 729.28125 / chart.plotContainer.width()); //[0~1]の座標
+      left_bar = resizeButton.x() / 729.28125; //動画の開始位置を更新する
+      onXDataChange(left_bar * 729.28125, long); //スクロールバー(start)の秒数を送る
+      const position = xAxis.toAxisPosition(left_bar * 729.28125 / chart.plotContainer.width()); //[0~1]の座標
       const newValue = xAxis.positionToValue(position); //[1696345200000~1700665200000]の座標
 
       range.set("value", newValue); //バーの位置を変える
@@ -468,9 +473,9 @@ const Chart = ({randomIndex, onXDataChange, onYDataChange, onZDataChange, onSDat
 
     resizeButton2.events.on("dragged", function () { //スクロールバー(end)を動かしたときに実行させる関数
       resizeButton.isFirstRun = true; 
-      end = resizeButton2.x() / 729.28125; //動画の終了位置を更新する
-      onYDataChange(end * 729.28125, long);//スクロールバー(start)の秒数を送る
-      const position = xAxis.toAxisPosition(end * 729.28125 / chart.plotContainer.width()); //[0~1]の座標
+      right_bar = resizeButton2.x() / 729.28125; //動画の終了位置を更新する
+      onYDataChange(right_bar * 729.28125, long);//スクロールバー(start)の秒数を送る
+      const position = xAxis.toAxisPosition(right_bar * 729.28125 / chart.plotContainer.width()); //[0~1]の座標
       const newValue = xAxis.positionToValue(position); //[1696345200000~1700665200000]の座標
 
       range2.set("value", newValue); //バーの位置を変える
@@ -482,12 +487,12 @@ const Chart = ({randomIndex, onXDataChange, onYDataChange, onZDataChange, onSDat
     resizeButton3.events.on("dragged", function () { //タイムラインバーを動かしたときに実行させる関数
 
       resizeButton.isMiddleRun = true;
-      timeline = resizeButton3.x() / 729.28125;//動画の現在位置を更新する
-      const position = xAxis.toAxisPosition(timeline * 729.28125 / chart.plotContainer.width()); //[0~1]の座標
+      timeline_bar = resizeButton3.x() / 729.28125;//動画の現在位置を更新する
+      const position = xAxis.toAxisPosition(timeline_bar * 729.28125 / chart.plotContainer.width()); //[0~1]の座標
       const newValue = xAxis.positionToValue(position); //[1696345200000~1700665200000]の座標
      
       range3.set("value", newValue);//バーの位置を変える
-      onSDataChange(timeline * 729.28125, long);//バーと動画を対応させている
+      onSDataChange(timeline_bar * 729.28125, long);//バーと動画を対応させている
       seriesRangeDataItem3.set("value", newValue);//マークを移動する
       seriesRangeDataItem3.set("endValue", xAxis.getPrivate("min"));
     });
@@ -549,7 +554,7 @@ const Chart = ({randomIndex, onXDataChange, onYDataChange, onZDataChange, onSDat
       <a className="title35"> {/*再生　一時停止 */}
       <a id="button-container2"></a></a>
 
-      <a className="title36"> {/*再生祖kじゅど */}
+      <a className="title36"> {/*再生速度 */}
       0.25倍 <a id="scrollbar-container"></a> 1.00倍</a>
 
       <a className="title42"> {/*コマ送り(戻る) */}

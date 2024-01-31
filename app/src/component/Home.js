@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import * as am5 from '@amcharts/amcharts5';
 import * as am5xy from '@amcharts/amcharts5/xy';
 import am5themes_Micro from '@amcharts/amcharts5/themes/Micro'; //座標軸なしグラフ
@@ -7,33 +7,108 @@ import * as colorModule from './color_file.js'; //グラフに使用するカラ
 
 const StockCharts = () => {
 
+  const [chartData, setChartData] = useState([]);
   const dynamicModules = {}; //データファイル配列作成
   const image = {}; //画像ファイル配列作成
+  let flag = Array.from({ length: video_number }, () => true);
+
   for (let i = 1; i <= video_number; i++) {
     dynamicModules[`dynamicModule${i}`] = require(`./${i}_outputs.js`); //データファイル読み込み
     image[`image${i}`] = require(`./image/${i}.jpg`); //画像ファイル読み込み
   }
 
-  const myArrayList = []; //画面に表示する単語ファイルの配列を作成
-  for (let ans = 1; ans <= video_number; ans++) { 
-    const values1 = Object.values(dynamicModules['dynamicModule' + ans]); //データファイルを読み込み
-    let myArray = values1[2]; //単語ファイルのみを代入
-    const concatenatedString = myArray.join(', '); //要素の間にコンマとスペースを追加する
-    myArrayList.push(concatenatedString); //代入する
-  }
+  const generateMyArrayList = (word) => {
+    const result = [];
 
-  useEffect(() => {
-    for (let n = 1; n <= video_number; n++) { //1要素ごとに実行する
+    for (let ans = 1; ans <= video_number; ans++) { 
+      const values1 = Object.values(dynamicModules['dynamicModule' + ans]); //データファイルを読み込み
+      let myArray = values1[2]; //単語ファイルのみを代入
+      const concatenatedString = myArray.join(', '); //要素の間にコンマとスペースを追加する
+        result.push(concatenatedString); //代入する
+      if(word==''){flag[ans] = true;}
+      else{
+        flag[ans] = false;
+        for(let ans2 = 0; ans2 <= myArray.length-1; ans2++){
+          if(myArray[ans2] == word){
+            flag[ans] = true;
+          }
+        }
+      }
+    }
+    return result;
+  };
+
+  const generateData1 = (myArrayList) => {
+    for (let n = 1; n <= video_number; n++) { //絞り込みが実行されたときに実行する
       const data = generateData(n); //データの読み込み
 
       const chartContainer = document.createElement('div'); //div要素を作成
       chartContainer.style.width = '100%'; //各要素の横幅
       chartContainer.style.height = '50px'; //各要素の縦幅
 
-      document.getElementById('chartdiv').appendChild(chartContainer); //chartに代入
-      renderChartRow(myArrayList[n-1], chartContainer, data, n); //一行毎の要素構成やスペースなどを作成
+      if(flag[n]){
+        document.getElementById('chartdiv').appendChild(chartContainer); //chartに代入
+        renderChartRow(myArrayList[n-1], chartContainer, data, n); //一行毎の要素構成やスペースなどを作成
+      }
     }
-  }, []);
+  }
+
+  useEffect(() => {
+    const createButton3 = () => { //ボタンを作成する
+      const button = document.createElement('button');
+      button.innerText = '絞り込み'; //表示するテキスト
+      let inputContainer = document.getElementById('input-container');
+      
+      if (!inputContainer) {
+        inputContainer = createInputContainer(); // inputContainerが存在しない場合は作成する
+      } else {
+        const existingInput = inputContainer.querySelector('input');
+        if (!existingInput) {
+          createInput(inputContainer); // 存在しているがinputが存在しない場合は名前入力欄を作成する
+        }
+      }
+      button.addEventListener('click', () => movieSaving()); //handleButtonClick2関数を呼び出す
+      document.getElementById('button-container3').appendChild(button);
+      return button;
+    };
+    
+    const createInputContainer = () => { //名前入力欄の親要素を作成する
+      const inputContainer = document.createElement('div');
+      inputContainer.setAttribute('id', 'input-container');
+      document.body.appendChild(inputContainer);
+      return inputContainer;
+    };
+    
+    const createInput = (inputContainer) => { //名前入力欄
+      const input = document.createElement('input');
+      input.setAttribute('type', 'text');
+      input.setAttribute('placeholder', 'Enter Name'); //表示するテキスト
+      inputContainer.appendChild(input);
+      return input;
+    };
+    let myArrayList = generateMyArrayList('');
+    generateData1(myArrayList);
+
+    //動画保存
+    function movieSaving() {
+      const inputValue = document.getElementById('input-container').querySelector('input').value;
+      console.log(inputValue)
+
+      //既存のグラフを削除
+      const chartDiv = document.getElementById('chartdiv');
+      while (chartDiv.firstChild) {
+        chartDiv.removeChild(chartDiv.firstChild);
+      }
+      myArrayList = generateMyArrayList(inputValue);
+      generateData1(myArrayList);
+    }
+
+    const button3 = createButton3();//動画保存
+    return () => {
+      button3.removeEventListener('click', () => {});
+      document.getElementById('button-container3').removeChild(button3);//動画保存
+    };
+  }, [chartData]);
 
   const generateData = (n) => { //グラフデータ読み込み
     let date = new Date();
@@ -132,7 +207,7 @@ const StockCharts = () => {
       extraMin: 0.02, //最小値に追加される空白の割合
       renderer: am5xy.AxisRendererY.new(root, {})
     }));
-
+    console.log(n);
     for (let i = 1; i < Object.keys(data[0]).length; i++) { //グラフの数プラス1回
       let randomIndex = Math.floor(Math.random() * colorModule.colors.length); //乱数を発生させる
       let inf1 = colorModule.colors[randomIndex]; //乱数のRGBを入手する
@@ -152,7 +227,12 @@ const StockCharts = () => {
     } 
   }
   return (
-    <div id="chartdiv" style={{ width: '100%', height: '500px' }}></div>
+    <>
+      <a className="title37"> {/*入力欄*/}
+      <a id="input-container"></a></a><a className="title38"> {/*動画保存 */}
+      <a id="button-container3"></a></a><div id="chartdiv" style={{ width: '100%', height: '500px' }}></div></>
+
+
   );
 };
 

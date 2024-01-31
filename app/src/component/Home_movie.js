@@ -35,7 +35,7 @@ const App = () => {
 
     dynamicModules[`dynamicModule${i}`] = require(`./${i}_outputs.js`); //データファイル読み込み
     image[`image${i}`] = require(`./image/${i}.jpg`); //画像ファイル読み込み
-    video[`video${i}`] = require(`./movie/${movieList[i]}.mp4`); //動画ファイル読み込み
+    video[`video${i}`] = require(`./movie/${movieList[i]}`); //動画ファイル読み込み
   }
   const myArrayList = [];
 
@@ -62,28 +62,28 @@ const App = () => {
   };
 
   //スクロールバー(start)を動かしたとき
-  const handleXDataChange = (newValue, long) => { //再生速度、動画の長さ
+  const startChange = (newValue, long) => { //再生速度、動画の長さ
     setX_second(long * newValue / 729.28125) //x座標を習得
   };
 
   //スクロールバー(end)を動かしたとき
-  const handleYDataChange = (newValue, long) => { //再生速度、動画の長さ
+  const endChange = (newValue, long) => { //再生速度、動画の長さ
     setY_second(long * newValue / 729.28125) //x座標を習得
   };
 
   //タイムラインバーを動かしたとき(手動)
-  const handleSDataChange = (newValue, long) => { //再生速度、動画の長さ
+  const timelineChange1 = (newValue, long) => { //再生速度、動画の長さ
     setS_second(long * newValue / 729.28125) //動画の秒数
     playerRef.current.seekTo(long * newValue / 729.28125, 'seconds');//バーと動画を対応させている
   }
 
   //タイムラインバーを動かしたとき(再生中)
-  const handleEDataChange = (start, long) => { //再生速度、動画の長さ
+  const timelineChange2 = (start, long) => { //再生速度、動画の長さ
     setS_second(long * start) //x座標を習得
   };
 
   //最初から再生、部分再生、一時停止(再開時)に使用する
-  const handleZDataChange = (newValue, y, long) => { //再生速度、開始位置、動画の長さ
+  const onMovieStart = (newValue, y, long) => { //再生速度、開始位置、動画の長さ
     setPlaybackRate(newValue); //再生速度を代入
     playerRef.current.seekTo(long * y / 729.28125 , 'seconds');//動画を再生
     setIsPlaying(true);// 自動再生を開始
@@ -94,7 +94,7 @@ const App = () => {
     setIsPlaying(false);// 自動再生を停止
   };  
 
-  const getRandomColor = () => { //色の開始位置を乱数で決める
+  const getColor = () => { //色の開始位置を乱数で決める
     let inf1 = colorModule.colors[randomIndex % colorModule.colors.length]; //RGBを別ファイルから呼び出す(乱数を要素数内の値になるように調整)
     randomIndex = randomIndex + 1; //連続した要素を使う
     const randomColor = `rgb(${inf1[0]}, ${inf1[1]}, ${inf1[2]})`; //取得したRGB値を文字列として組み立てる
@@ -108,11 +108,11 @@ const App = () => {
     </>
   );
   
-  const RenderWordSquares = () => { //正方形と単語を作成する
+  const WordSquares = () => { //正方形と単語を作成する
     const squares = myArray7.map((word, index) => ( //単語、カウント
       <>
         <WordSquare
-          color={getRandomColor()} //乱数で決める
+          color={getColor()} //乱数で決める
           word={word} //単語
           value={roundedNumArray[index]} //単語の隣の数値
         />
@@ -123,7 +123,7 @@ const App = () => {
     return <>{squares}</>;
   };
 
-  const generateLogoClickHandler = (ans) => { //ansは動画の番号
+  const LogoClick = (ans) => { //ansは動画の番号
     return () => {
       goToLink(`/Home_movie/${ans}`); //異なる動画の画面に移動する
     };
@@ -152,10 +152,10 @@ const App = () => {
         <div className="scrollable-list"> 
           {Array.from({ length: video_number }, (_, index) => ( //右上の動画一覧を作成する
             <div key={index}>
-              <a onClick={generateLogoClickHandler(index + 1)} > {/*クリックした動画へのリンク */}
+              <a onClick={LogoClick(index + 1)} > {/*クリックした動画へのリンク */}
                 <img src={image[`image${index + 1}`]} width={120} height={88} alt="Logo" /> {/*画像を指定 */}
               </a>
-              <a onClick={generateLogoClickHandler(index + 1)} className="white-title22"> {/*クリックした動画へのリンク */}
+              <a onClick={LogoClick(index + 1)} className="white-title22"> {/*クリックした動画へのリンク */}
               {myArrayList[index]} {/*単語を指定 */}
               </a><br />
             </div>
@@ -165,11 +165,11 @@ const App = () => {
       <div className="title31">   
         <BarComponent
           randomIndex={randomIndex} //色の開始位置を乱数として送る(単語とグラフの色を対応させるため)
-          onXDataChange={handleXDataChange} //左バーの秒数を習得
-          onYDataChange={handleYDataChange} //右バーの秒数を習得
-          onZDataChange={handleZDataChange} //動画を再生する
-          onSDataChange={handleSDataChange} //タイムラインバーの秒数を習得(手動で動かすとき)
-          onEDataChange={handleEDataChange} //タイムラインバーの秒数を習得(再生中)
+          onXDataChange={startChange} //左バーの秒数を習得
+          onYDataChange={endChange} //右バーの秒数を習得
+          onZDataChange={onMovieStart} //動画を再生する
+          onSDataChange={timelineChange1} //タイムラインバーの秒数を習得(手動で動かすとき)
+          onEDataChange={timelineChange2} //タイムラインバーの秒数を習得(再生中)
           onMovieStop = {onMovieStop} //動画を止める
         />
       <div >
@@ -179,7 +179,7 @@ const App = () => {
             : (videoDuration - x_second).toFixed(3) + ' 秒'}</a>
 
       <a className="title39" onClick={MovieLink()}>動画一覧へ</a><br></br> 
-      <RenderWordSquares /> 
+      <WordSquares /> 
       
       </div></div>
     </>

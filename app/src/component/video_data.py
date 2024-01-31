@@ -89,7 +89,7 @@ def MovieList_get():#動画の順番がわかるように、数値付けする�
     for count in range(len(movie_index)):#動画の数だけ繰り返す
       fout.write(str(count + 1)) #1足す理由は、indexが1から始まるようにプログラムしてしまったから
       fout.write(": '")
-      fout.write(movie_index[count + 1]) #動画のタイトルの名前が入る
+      fout.write(movie_index[count]) #動画のタイトルの名前が入る
       fout.write("',")
     fout.write("}; module.exports = movie_index;")
 
@@ -115,7 +115,7 @@ MovieList_get() #動画のリスト
 for count in range(len(movie_index)): #動画(文章)の数だけ繰り返す
   data_get(count,count + 1) #データ番号、ファイル番号
 
-  video_path = f"./movie/{movie_index[count + 1]}.mp4" #サムネイルを作成する動画ファイルの場所と名前
+  video_path = f"./movie/{movie_index[count]}" #サムネイルを作成する動画ファイルの場所と名前
   output_path = f"./image/{count + 1}.jpg" #作成するサムネイルの場所と名前
 
   capture_single_frame(video_path, output_path) #サムネイルを作成
