@@ -213,7 +213,7 @@ const Chart = ({randomIndex, onXDataChange, onYDataChange, onZDataChange, onSDat
         yAxis: yAxis,
         valueYField: `value${i}`,
         valueXField: "date",
-        stroke: `rgba(${inf1[0]},${inf1[1]},${inf1[2]}, 1)`,
+        stroke: `rgba(205,205,205, 1)`,
       }));
 
       const data = values1[i].map((value, dataIndex) => ({

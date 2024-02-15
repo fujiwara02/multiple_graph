@@ -17,19 +17,21 @@ const StockCharts = () => {
     image[`image${i}`] = require(`./image/${i}.jpg`); //画像ファイル読み込み
   }
 
+  //絞り込み検索を行うためのフラグを作成する
   const generateMyArrayList = (word) => {
     const result = [];
-    for (let ans = 1; ans <= video_number; ans++) { 
+    for (let ans = 1; ans <= video_number; ans++) { //動画の数だけ実行
       const values1 = Object.values(dynamicModules['dynamicModule' + ans]); //データファイルを読み込み
       let myArray = values1[2]; //単語ファイルのみを代入
-      const concatenatedString = myArray.join(', '); //要素の間にコンマとスペースを追加する
-        result.push(concatenatedString); //代入する
-      if(word==''){flag[ans] = true;}
+      const concatenatedString = myArray.join(', '); //要素の間にコンマとスペースを追加する(これは画面表示用であり、検索用ではない)
+      result.push(concatenatedString); //代入する
+
+      if(word==''){flag[ans] = true;} //入力欄が空欄ならすべてをtrueに
       else{
-        flag[ans] = false;
-        for(let ans2 = 0; ans2 <= myArray.length-1; ans2++){
-          if(myArray[ans2] == word){
-            flag[ans] = true;
+        flag[ans] = false; //最初にすべてfalseを代入
+        for(let ans2 = 0; ans2 <= myArray.length-1; ans2++){ //単語の数だけ実行
+          if(myArray[ans2] == word){ 
+            flag[ans] = true; //一致した場合のみtrueを代入
           }
         }
       }
@@ -37,23 +39,27 @@ const StockCharts = () => {
     return result;
   };
 
-  const generateData1 = (myArrayList) => {
-    for (let n = 1; n <= video_number; n++) { //絞り込みが実行されたときに実行する
+  const generateChartRows = (myArrayList) => { //画面を作成する
+    for (let n = 1; n <= video_number; n++) { //1行づつ作成している
       const data = generateData(n); //データの読み込み
 
       const chartContainer = document.createElement('div'); //div要素を作成
       chartContainer.style.width = '100%'; //各要素の横幅
       chartContainer.style.height = '50px'; //各要素の縦幅
 
-      if(flag[n]){
+      if(flag[n]){ //絞り込み検索で、trueのもののみ通している
         document.getElementById('chartdiv').appendChild(chartContainer); //chartに代入
         renderChartRow(myArrayList[n-1], chartContainer, data, n); //一行毎の要素構成やスペースなどを作成
       }
     }
   }
 
-  useEffect(() => {
-    const createButton3 = () => { //ボタンを作成する
+  useEffect(() => { //useEffect内がMain関数
+
+    let myArrayList = generateMyArrayList(''); //初回のみ実行される(空文字列を入れて全表示)
+    generateChartRows(myArrayList); //画面を描画する
+
+    const createButton3 = () => { //ボタンを作成する(動的に作成している)
       const button = document.createElement('button');
       button.innerText = '絞り込み'; //表示するテキスト
       let inputContainer = document.getElementById('input-container');
@@ -62,50 +68,48 @@ const StockCharts = () => {
         inputContainer = createInputContainer(); // inputContainerが存在しない場合は作成する
       } else {
         const existingInput = inputContainer.querySelector('input');
-        if (!existingInput) {
+        if (!existingInput) { //すでにある場合は、いくつも作成しない
           createInput(inputContainer); // 存在しているがinputが存在しない場合は名前入力欄を作成する
         }
       }
-      button.addEventListener('click', () => movieSaving()); //handleButtonClick2関数を呼び出す
+      button.addEventListener('click', () => filter_videos()); //handleButtonClick2関数を呼び出す
       document.getElementById('button-container3').appendChild(button);
       return button;
     };
     
-    const createInputContainer = () => { //名前入力欄の親要素を作成する
+    const createInputContainer = () => { //単語入力欄の親要素を作成する
       const inputContainer = document.createElement('div');
       inputContainer.setAttribute('id', 'input-container');
       document.body.appendChild(inputContainer);
       return inputContainer;
     };
     
-    const createInput = (inputContainer) => { //名前入力欄
+    const createInput = (inputContainer) => { //単語入力欄
       const input = document.createElement('input');
       input.setAttribute('type', 'text');
       input.setAttribute('placeholder', 'Enter Name'); //表示するテキスト
       inputContainer.appendChild(input);
       return input;
     };
-    let myArrayList = generateMyArrayList('');
-    generateData1(myArrayList);
 
-    //動画保存
-    function movieSaving() {
-      const inputValue = document.getElementById('input-container').querySelector('input').value;
+    //動画絞り込み
+    function filter_videos() { //ボタンが押されたときに実行
+      const inputValue = document.getElementById('input-container').querySelector('input').value; //入力された単語を読み取り
       console.log(inputValue)
 
-      //既存のグラフを削除
-      const chartDiv = document.getElementById('chartdiv');
+      const chartDiv = document.getElementById('chartdiv');//既存の入力欄を削除
       while (chartDiv.firstChild) {
-        chartDiv.removeChild(chartDiv.firstChild);
+        chartDiv.removeChild(chartDiv.firstChild); 
       }
-      myArrayList = generateMyArrayList(inputValue);
-      generateData1(myArrayList);
+
+      myArrayList = generateMyArrayList(inputValue); //動画の絞り込み時に実行される
+      generateChartRows(myArrayList); //画面の要素を作成
     }
 
-    const button3 = createButton3();//動画保存
+    const button3 = createButton3(); //動画絞り込みボタン
     return () => {
-      button3.removeEventListener('click', () => {});
-      document.getElementById('button-container3').removeChild(button3);//動画保存
+      button3.removeEventListener('click', () => {}); //絞り込みボタンを表示する
+      document.getElementById('button-container3').removeChild(button3);
     };
   }, [chartData]);
 
@@ -220,16 +224,16 @@ const StockCharts = () => {
       }));
     
       series.strokes.template.setAll({
-        strokeWidth: 2
+        strokeWidth: 2 //グラフの太さを2に設定
       });
       series.data.setAll(data);
     } 
   }
   return (
     <>
-      <a className="title37"> {/*入力欄*/}
-      <a id="input-container"></a></a><a className="title38"> {/*動画保存 */}
-      <a id="button-container3"></a></a><div id="chartdiv" style={{ width: '100%', height: '500px' }}></div></>
+      <a className="title37"> 
+      <a id="input-container"></a></a><a className="title38"> {/*入力欄*/}
+      <a id="button-container3"></a></a><div id="chartdiv" style={{ width: '100%', height: '500px' }}>{/*動画絞り込み */}</div></>
 
 
   );
