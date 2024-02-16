@@ -6,7 +6,7 @@ const app = express();
 const port = 3001;
 
 app.use(express.json());
-app.use(cors()); // CORS ミドルウェアを追加
+app.use(cors()); 
 
 app.post('/execute-command', (req, res) => {
   const { command } = req.body;
