@@ -27,7 +27,6 @@ def data_get(idx, number1):#データ番号、ファイル番号
 
   #idxの使われている単語の組み合わせ(1次元)
   target = out["targets"][idx, :out["target_lengths"][idx]] #idx(特定の文章)だけを取り出す
-  print(target)
 
   #単語の合致率、合計が1になるように調節している(2次元)
   output = out["outputs"][idx, :out["output_lengths"][idx]].softmax(-1) #idx(特定の文章)だけを取り出す
@@ -38,7 +37,6 @@ def data_get(idx, number1):#データ番号、ファイル番号
 
   #target_labelから1要素(単語)づつ抜き出し間に ',' を追加する
   target_label_2 = "','" .join(map(str, target_label)) #私','父','車','買う','しました etc
-  print(target_label_2)
   
   #すべての要素が0のjavascriptファイルを作成する(グラフの黒い線を描くのに使用)
   with codecs.open(str(number1) + '_outputs.js', 'w', encoding='utf-8') as fout:#ファイルに書き換える(write)
