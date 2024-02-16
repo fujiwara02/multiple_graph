@@ -2,7 +2,7 @@
 動画をダウンロードフォルダに保存するため、ホームディレクトリに読み込む
 ```terminal
 cd ~ 
-git clone https://github.com/fujiwara02/multiple_graph.git 
+git clone https://github.com/Kimura-Lab-NIT-Toyota/multiple_graph.git 
 ```
 gitがインストールされていない場合は(https://git-scm.com/downloads)
 
